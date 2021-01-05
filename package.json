@@ -1,0 +1,37 @@
+{
+  "name": "solovevserg.github.io",
+  "version": "1.0.0",
+  "description": "Sergei Solovev analyst, web designer and developer portfolio static web page",
+  "main": "index.js",
+  "scripts": {
+    "build": "node  ./node_modules/static-i18n/bin/static-i18n.js -l en -i en -i ru src -o dist",
+    "prepublish": "node ./scripts/prepublish.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/solovevserg/solovevserg.github.io.git"
+  },
+  "keywords": [
+    "portfolio",
+    "sergei",
+    "solovev",
+    "generative",
+    "art",
+    "web",
+    "design",
+    "data",
+    "vizualisation"
+  ],
+  "author": "Sergei Solovev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/solovevserg/solovevserg.github.io/issues"
+  },
+  "homepage": "https://github.com/solovevserg/solovevserg.github.io#readme",
+  "devDependencies": {
+    "static-i18n": "^0.2.10"
+  },
+  "dependencies": {
+    "tiny-slider": "^2.9.3"
+  }
+}
