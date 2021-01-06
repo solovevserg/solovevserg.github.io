@@ -115,9 +115,11 @@
                 </h1>
                 <p></p>
 
+                <button data-micromodal-trigger="modal-1" class="case">PRESS    </button>
                 <div class="cases__slider">
-                    <div class="case"></div>
-                    <div class="case"></div>
+                    <div class="case">
+                        
+                    </div>
                     <div class="case"></div>
                     <div class="case"></div>
                     <div class="case"></div>
@@ -140,6 +142,7 @@
                     Just say hi
                 </h1>
                 <p></p>
+                <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/m4oZZhpMXP4?start=26" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -256,6 +259,28 @@
         });
     </script>
 
+    <!-- Micromodal -->
+
+    <div id="modal-1" aria-hidden="true">
+        <div tabindex="-1" data-micromodal-close>
+            <div role="dialog" aria-modal="true" aria-labelledby="modal-1-title">
+                <header>
+                    <h2 id="modal-1-title">
+                        Modal Title
+                    </h2>
+                    <button aria-label="Close modal" data-micromodal-close></button>
+                </header>
+                <div id="modal-1-content">
+                    Modal Content
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
+    <script>
+        MicroModal.init();
+    </script>
     <!-- END OF SCRIPT SECTION -->
 </body>
 
