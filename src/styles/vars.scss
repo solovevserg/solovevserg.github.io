@@ -1,11 +1,13 @@
 :root {
+    --font-family: Rubik;
+
     --default: white;
     --contrast: rgb(26, 31, 36);
     --primary: #faf;
     --secondary: #aff;
 
     --padding: 50px;
-    --side-padding: calc(var(--padding) * 3);
+    --side-padding: calc(var(--padding) * 5);
 
     --max-container-width: 1200px;
     --transition: 0.6s cubic-bezier(0.65, 0, 0.35, 1);

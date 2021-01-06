@@ -7,22 +7,35 @@
     <title>Document</title>
 
     <!-- STYLES SECTION -->
+
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
+
     <!-- Tiny slider -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css">
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;900&display=swap" rel="stylesheet">
+
     <!-- END OF STYLE SECTION -->
 
 </head>
 
-<body>
+<body class="dark">
 
     <aside>
+        <div class="overlay"></div>
         <nav>
             <menu>
                 <a href="#welcome">
                     <!-- <img src="logo" alt=""> -->
-                    <div class="logo">S</div>
+                    <!-- <div class="logo">S</div> -->
                 </a>
                 <li><a href="#welcome">
                         <span>Welcome</span><i class="material-icons md-36">home</i>
@@ -33,8 +46,8 @@
                 <li><a href="#cases">
                         <span>Cases</span><i class="material-icons md-36">work</i>
                     </a></li>
-                <li><a href="#expirience">
-                        <span>Expirience</span><i class="material-icons md-36">verified</i>
+                <li><a href="#experience">
+                        <span>experience</span><i class="material-icons md-36">verified</i>
                     </a></li>
                 <li><a href="#contacts">
                         <span>Contacts</span><i class="material-icons md-36">mark_chat_unread</i>
@@ -44,21 +57,25 @@
     </aside>
 
     <main>
-        <header>
+        <header id="welcome">
             <div class="parallax-container">
                 <div data-depth="0.1" class="gradient-layer layer">
                 </div>
                 <div data-depth="0.3" class="oriented-noise-layer layer">
                 </div>
                 <div data-depth="0.5" class="geometry-back-layer layer">
+                    <svg></svg>
+                </div>
+                <div data-depth="0.55" class="sergei-solovev-photo-layer layer">
+                    <img src="/src/assets/img/sergei-solovev-silhouette.svg" class="silhouette" alt="">
                 </div>
                 <div data-depth="0.6" class="sergei-solovev-photo-layer layer">
                     <img src="/src/assets/img/sergei-solovev.png" alt="">
                 </div>
-                <div data-depth="0.6" class="sergei-solovev-photo-layer layer">
-                    <img src="/src/assets/img/sergei-solovev-silhouette.svg" class="silhouette" alt="">
-                </div>
                 <div data-depth="0.9" class="geometry-front-layer layer">
+                    <svg></svg>
+                    <!-- <iframe width="500px" height="687" frameborder="0" style="position: absolute; right: 30px; transform: scale(1.6); filter: blur(9px)"
+  src="https://observablehq.com/embed/@mkfreeman/creating-generative-art?cell=continuouslyAnimating"></iframe> -->
                 </div>
                 <div class="loading-screen-layer layer">
 
@@ -66,24 +83,66 @@
             </div>
             <div class="welcome__content">
                 <div class="container">
-                    <h1 data-t="welcome.hello">Hi! I am Sergei Solovev</h1>
+                    <h1 data-t="welcome.hello" class="thin">Hi! I am Sergei Solovev</h1>
                     <h1>Analyst</h1>
                     <h1>UX/UI Designer</h1>
                     <h1>Web Developer</h1>
                     <p>
-                        I help client reach their goals due to my data analysis skills, UX/UI passion and software
-                        development expirience. Thus I love <span class="hobbie-slider"></span>
+                        I help client reach their goals due to my data analysis skills, <br> UX/UI passion and software
+                        development experience. <br> Thus I love <span class="hobbie-slider"></span>
                     </p>
                 </div>
             </div>
 
 
         </header>
+        <section id="skills">
+            <div class="container">
 
-        <section class="skills"></section>
-        <section class=""></section>
-        <section class="skills"></section>
-        <section class="skills"></section>
+                <h1>
+                    My skills
+                </h1>
+                <p>Click node to expand. Hover to see details.</p>
+                <iframe width="100%" height="584" frameborder="0"
+                    src="https://observablehq.com/embed/@solovevserg/vertical-collapsible-d3-flextree-d3-v6?cell=tree"></iframe>
+            </div>
+        </section>
+        <section id="cases">
+            <div class="container">
+
+                <h1>
+                    What I have done
+                </h1>
+                <p></p>
+
+                <div class="cases__slider">
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                    <div class="case"></div>
+                </div>
+            </div>
+        </section>
+        <section id="experience">
+            <div class="container">
+
+                <h1>
+                    Experience
+                </h1>
+                <p></p>
+            </div>
+        </section>
+        <section id="contacts">
+            <div class="container">
+
+                <h1>
+                    Just say hi
+                </h1>
+                <p></p>
+            </div>
+        </section>
+
 
     </main>
 
@@ -180,8 +239,23 @@
 
     <script>
         var parallax = document.querySelector('.parallax-container');
-        var parallaxInstance = new Parallax(parallax);
+        var parallaxInstance = new Parallax(parallax, {
+            hoverOnly: true,
+            relativeInput: true,
+            clipRelativeInput: true,
+        });
     </script>
+    <!-- Tiny Slider -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+    <script>
+        const slider = tns({
+            container: '.cases__slider',
+            "slideBy": "page",
+            "mouseDrag": true,
+            "swipeAngle": false,
+        });
+    </script>
+
     <!-- END OF SCRIPT SECTION -->
 </body>
 
