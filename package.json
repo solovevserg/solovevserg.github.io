@@ -2,7 +2,7 @@
   "name": "solovevserg.github.io",
   "version": "1.0.0",
   "description": "Sergei Solovev analyst, web designer and developer portfolio static web page",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "build": "node  ./node_modules/static-i18n/bin/static-i18n.js -l en -i en -i ru src -o dist",
     "prepublish": "node ./scripts/prepublish.js"
@@ -29,7 +29,13 @@
   },
   "homepage": "https://github.com/solovevserg/solovevserg.github.io#readme",
   "devDependencies": {
-    "static-i18n": "^0.2.10"
+    "css-loader": "^5.0.1",
+    "sass": "^1.32.0",
+    "sass-loader": "^10.1.0",
+    "static-i18n": "^0.2.10",
+    "style-loader": "^2.0.0",
+    "webpack": "^5.11.1",
+    "webpack-cli": "^4.3.1"
   },
   "dependencies": {
     "tiny-slider": "^2.9.3"
