@@ -22,6 +22,9 @@ const scriptsLoadQueue = [
         src: 'https://cdnjs.cloudflare.com/ajax/libs/d3/5.0.0/d3.min.js',
         callback: () => {
 
+            // Code inspired by Michael Freeman
+            // https://observablehq.com/@mkfreeman/creating-generative-art
+            
             function startCircles(selector) {
 
                 const colorScale = d3.interpolateRgb("#C58BFE", "#63F6FF")
