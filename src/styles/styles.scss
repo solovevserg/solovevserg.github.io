@@ -1,0 +1,139 @@
+@import "vars.scss";
+@import "fonts.scss";
+@import "elements.scss";
+
+html,
+body, main {
+  margin: 0;
+  font-family: Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  height: 100%;
+}
+
+body {
+  // background: var(--dafault);
+  // background: var(--contrast);
+  scroll-behavior: smooth;
+  width: 100%;
+  overflow: hidden;
+}
+
+.section {
+  padding: var(--padding) 0;
+}
+
+.container {
+  display: block;
+  max-width: var(--max-container-width);
+  width: 100%;
+  padding: 0 var(--side-padding);
+  margin: auto;
+}
+
+// Menu
+
+aside {
+  position: fixed;
+  top: -30px;
+  bottom: -30px;
+  left: 0;
+  width: var(--side-padding);
+  z-index: 1000;
+
+  &:hover {
+    nav {
+      transform: translateX(100%);
+    }
+  }
+  nav {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    bottom: 0;
+    width: 300px;
+
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 6px rgba(120, 120, 255, 0.479);
+    background-color: #99f6;
+
+    transform: translateX(50px);
+    transition: transform var(--transition);
+
+    menu {
+      margin: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      li {
+        display: block;
+        a {
+          box-sizing: border-box;
+          padding: 20px;
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+// Header
+
+header {
+  height: 100%;
+  position: relative;
+  .parallax-container {
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    left: -5%;
+    top: -5%;
+    transform: scale(1.1);
+
+    .layer {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      .inner-layer {
+        width: 150%;
+        height: 150%;
+        top: -25%;
+        left: -25%;
+        right: -25%;
+        bottom: -25%;
+      }
+    }
+
+    .gradient-layer {
+      background: url('/src/assets/img/gradient.svg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .oriented-noise-layer {
+      mix-blend-mode: overlay;
+
+    }
+    .oriented-noise-layer > canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    .sergei-solovev-photo-layer > img {
+      position: absolute;
+      right: 10%;
+      bottom: -5%;
+      height: 90%;
+
+      // TODO: make it work
+      &.silhouette {
+        opacity: 0;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
