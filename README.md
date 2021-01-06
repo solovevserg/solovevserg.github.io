@@ -1,12 +1,11 @@
-# solovevserg.github.io
-My portfolio web page
+# [solovevserg.github.io](http://solovevserg.github.io/)
+Sergei Solovev portfolio web page
 
 ## Related resources
 
 [Макет сайта в Google Docs](https://docs.google.com/document/d/1R0ZSZmoWXxbb74h259gdvb3qB4bljpnhp1OAVOiFwmQ/edit#heading=h.ctxivxey5sp)
 
 [Аналитика аудитории сайта в Google Docs](https://docs.google.com/document/d/1R0ZSZmoWXxbb74h259gdvb3qB4bljpnhp1OAVOiFwmQ/edit#heading=h.ctxivxey5sp)
-## TODO
 
 ### до 10 января
 * выписать основные сенменты ЦА
