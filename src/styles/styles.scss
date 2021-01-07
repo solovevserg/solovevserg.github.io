@@ -23,11 +23,11 @@ body {
   header {
     background: transparent;
   }
-
 }
 
 section,
-header, footer {
+header,
+footer {
   min-height: 100%;
   width: 100%;
   box-sizing: border-box;
@@ -36,7 +36,6 @@ header, footer {
 section {
   padding-top: 50px;
 }
-
 
 .container {
   display: block;
@@ -226,6 +225,19 @@ header {
       height: 300px;
       margin: 10px;
       background: red;
+    }
+  }
+}
+
+#contacts {
+  .container {
+    .contacts__content-wrapper {
+      display: flex;
+      
+    }
+    .globe {
+      width: 20vw;
+      height: 20vw;
     }
   }
 }

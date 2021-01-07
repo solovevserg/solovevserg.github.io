@@ -34,7 +34,7 @@ h5,
 h1,
 .h1-like {
     font-weight: 900;
-    font-size: 50px;
+    font-size: 3em;
     &.thin {
         font-weight: 100;
     }
@@ -42,14 +42,17 @@ h1,
 
 h2,
 .h2-like {
+    font-size: 2em;
 }
 
 h3,
 .h3-like {
+    font-size: 1.5em;
 }
 
 h4,
 .h4-like {
+    font-size: 1.25em;
 }
 
 h5,
@@ -60,4 +63,5 @@ h5,
 
 p {
     line-height: 1.6em;
+    max-width: 25em;
 }
