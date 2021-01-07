@@ -4,7 +4,8 @@
   "description": "Sergei Solovev analyst, web designer and developer portfolio static web page",
   "main": "./src/index.js",
   "scripts": {
-    "build": "node  ./node_modules/static-i18n/bin/static-i18n.js -l en -i en -i ru src -o dist",
+    "prebuild": "node ./node_modules/webpack/bin/webpack.js",
+    "build": "node  ./node_modules/static-i18n/bin/static-i18n.js -l en -i en -i ru src -o .",
     "prepublish": "node ./scripts/prepublish.js"
   },
   "repository": {
