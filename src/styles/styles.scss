@@ -13,10 +13,10 @@ main {
 }
 
 body {
-  font-size: 20px;
   width: 100%;
   overflow-x: hidden;
   transition: background var(--transition);
+  font-size: var(--font-size);
 
   background: var(--default);
   color: var(--contrast);
@@ -56,6 +56,10 @@ aside {
   width: var(--side-padding);
   z-index: 1000;
 
+  @media (max-width: 1050px) {
+    display: none;
+  }
+
   .overlay {
     opacity: 0;
     position: fixed;
@@ -88,7 +92,7 @@ aside {
     box-shadow: 4px 0 6px rgba(120, 120, 255, 0.479);
     background-color: #99f6;
 
-    transform: translateX(50px);
+    transform: translateX(70px);
     transition: transform var(--transition);
 
     menu {
@@ -105,6 +109,7 @@ aside {
           display: flex;
           justify-content: space-between;
           width: 100%;
+          color: var(--default);
         }
       }
     }
@@ -165,9 +170,13 @@ header {
         // max-width: 100%;
         > img {
           position: absolute;
-          right: -20%;
+          right: -20px;
           bottom: -5%;
           height: 90%;
+
+          @media (max-width: 1050px) {
+            height: 60%;
+          }
 
           // TODO: make it work
           &.silhouette {
@@ -197,6 +206,15 @@ header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
+
+    @media (max-width: 1050px) {
+      align-items: flex-start;
+      padding-top: 2em;
+    }
+
+    h1 {
+      margin: 0;
+    }
 
     .cta {
     }
@@ -235,6 +253,11 @@ header {
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      @media (max-width: 1050px) {
+        flex-direction: column;
+      }
+
       .contacts__content {
         display: flex;
 
@@ -249,6 +272,7 @@ header {
       }
     }
     .globe {
+      overflow: hidden;
       width: 30vw;
       height: 30vw;
       transition: var(--transition);
@@ -258,7 +282,6 @@ header {
 }
 
 .dark {
-
   .globe {
     filter: none !important;
   }
