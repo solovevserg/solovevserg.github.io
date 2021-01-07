@@ -67,10 +67,14 @@
                     <svg></svg>
                 </div>
                 <div data-depth="0.55" class="sergei-solovev-photo-layer layer">
-                    <img src="/src/assets/img/sergei-solovev-silhouette.svg" class="silhouette" alt="">
+                    <div class="container ">
+                        <img src="/src/assets/img/sergei-solovev-silhouette.svg" class="silhouette" alt="">
+                    </div>
                 </div>
                 <div data-depth="0.6" class="sergei-solovev-photo-layer layer">
-                    <img src="/src/assets/img/sergei-solovev.png" alt="">
+                    <div class="container ">
+                        <img src="/src/assets/img/sergei-solovev.png" alt="">
+                    </div>
                 </div>
                 <div data-depth="0.9" class="geometry-front-layer layer">
                     <svg></svg>
@@ -88,23 +92,34 @@
                     <h1>UX/UI Designer</h1>
                     <h1>Web Developer</h1>
                     <p>
-                        I help client reach their goals due to my data analysis skills, <br> UX/UI passion and software
+                        I help clients reach their goals due to my data analysis skills, <br> UX/UI passion and software
                         development experience. <br> Thus I love <span class="hobbie-slider"></span>
                     </p>
+                    <div class="cta">
+                        <a href="#cases">
+                            <button>see casees</button>
+                        </a>
+                        <a href="#contacts">
+                            <button>Contact me</button>
+                        </a>
+                    </div>
                 </div>
             </div>
 
 
         </header>
         <section id="skills">
+            <svg class="skills-tree">
+            </svg>
             <div class="container">
 
                 <h1>
                     My skills
                 </h1>
                 <p>Click node to expand. Hover to see details.</p>
-                <iframe width="100%" height="584" frameborder="0"
-                    src="https://observablehq.com/embed/@solovevserg/vertical-collapsible-d3-flextree-d3-v6?cell=tree"></iframe>
+
+                <!-- <iframe width="100%" height="584" frameborder="0"
+                    src="https://observablehq.com/embed/@solovevserg/vertical-collapsible-d3-flextree-d3-v6?cell=tree"></iframe> -->
             </div>
         </section>
         <section id="cases">
@@ -115,10 +130,10 @@
                 </h1>
                 <p></p>
 
-                <button data-micromodal-trigger="modal-1" class="case">PRESS    </button>
+                <button data-micromodal-trigger="modal-1" class="case">PRESS </button>
                 <div class="cases__slider">
                     <div class="case">
-                        
+
                     </div>
                     <div class="case"></div>
                     <div class="case"></div>
@@ -142,7 +157,7 @@
                     Just say hi
                 </h1>
                 <p></p>
-                <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/m4oZZhpMXP4?start=26" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <!-- <iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/m4oZZhpMXP4?start=26" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
             </div>
         </section>
 
@@ -165,76 +180,23 @@
     <!-- Typed -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
     <script>
-        function shuffle(array) {
-            return array.sort(() => Math.random() - 0.5);
+        async function startTyped() {
+            const hobbies = await fetch('/data/hobbies.json').then(r => r.json())
+            const options = {
+                strings: hobbies,
+                typeSpeed: 80,
+                loop: true,
+                loopCount: Infinity,
+                backSpeed: 27,
+                smartBackspace: true,
+                shuffle: true,
+                backDelay: 300,
+            };
+            const typed = new Typed('.hobbie-slider', options);
+            return typed;
         }
 
-        const skills = [
-            'to help <b>you</b> ❤',
-            'to work in a team',
-            'to take pictures',
-            'to edit video',
-            'to make interactive visualizations',
-            'to write code',
-            'to work in <i>Figma</i>',
-            'to hang in <i>Photoshop<i>',
-            'to save beautiful pictures on Pinterest',
-            'to travel',
-            'to work with friends 🙌',
-            'to make strategic plans',
-            'to reflect your life',
-            'to launch new projects',
-            'to study',
-            'to read books on philosophy',
-            'to drink tea with friends',
-            'to cooking turkey in the oven',
-            'to hug 🤗 with nice people ',
-            'to do sport',
-            'to sing folk songs',
-            'to dance bachata',
-            'to analyze social networks',
-            'to build mathematical models',
-            'to write scientific articles',
-            'to teach other people',
-            'to prepare presentations',
-            'to go to the theater',
-            'to share IT experience',
-            'to meet cool people',
-            'to work with professionals',
-            'to create sites',
-            'to create applications',
-            'to design software',
-            'to design very user-friendly UX',
-            'to help people get results',
-            'to help people build and achieve goals',
-            'to improve your workplace',
-            'to try new approaches and technologies in work',
-            'to work on complex projects',
-            'to do highly aesthetic things',
-            'to thai massage',
-            'to write code in TypeScript',
-            'to develop Angular Apps',
-            'to create JS applications',
-            'to design complex distributed systems',
-            'to chat live',
-            'to telegram',
-            'to write Python Code 🐍',
-            'to read good code',
-            'to create cool projects',
-            'to help the customer to embody the most daring ideas',
-            'to work on ambitious projects',
-        ];
-        var options = {
-            strings: shuffle(skills),
-            typeSpeed: 80,
-            loop: true,
-            loopCount: Infinity,
-            backSpeed: 27,
-            smartBackspace: true,
-            shuffle: true,
-            backDelay: 300,
-        };
-        var typed = new Typed('.hobbie-slider', options);
+        startTyped();
     </script>
 
     <!-- Parallax -->
