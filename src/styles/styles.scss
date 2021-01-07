@@ -233,11 +233,36 @@ header {
   .container {
     .contacts__content-wrapper {
       display: flex;
-      
+      justify-content: space-between;
+      align-items: center;
+      .contacts__content {
+        display: flex;
+
+        .contact {
+          display: flex;
+          align-items: center;
+          padding: 20px;
+          img {
+            max-height: 48px;
+          }
+        }
+      }
     }
     .globe {
-      width: 20vw;
-      height: 20vw;
+      width: 30vw;
+      height: 30vw;
+      transition: var(--transition);
+      filter: invert(1);
     }
+  }
+}
+
+.dark {
+
+  .globe {
+    filter: none !important;
+  }
+  .github {
+    filter: invert(1);
   }
 }
