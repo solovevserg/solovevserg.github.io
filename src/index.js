@@ -131,7 +131,7 @@ async function renderSkills() {
 
     node.append('circle')
         .attr("r", d => d.size)
-        .style("fill", "var(--default)")
+        .style("fill", "var(--contrast)")
 
     node.append("image")
         .attr('href', d => d.imageSrc)
@@ -143,7 +143,7 @@ async function renderSkills() {
         .text(d => d.name)
         .attr('x', 6)
         .attr('y', 3)
-        .style("fill", "var(--default)")
+        .style("fill", "var(--contrast)")
         .style("font-size", d => d.size)
 
 

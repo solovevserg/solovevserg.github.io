@@ -18,27 +18,25 @@ body {
   overflow-x: hidden;
   transition: background var(--transition);
 
-  &.dark {
-    background: var(--contrast);
-    > main > :not(header) > * {
-      color: var(--default);
-    }
+  background: var(--default);
+  color: var(--contrast);
+  header {
+    background: transparent;
   }
+
 }
 
 section,
-header {
+header, footer {
   min-height: 100%;
   width: 100%;
   box-sizing: border-box;
+}
 
-  &:nth-child(even) {
-    // background: #f003;
-  }
+section {
+  padding-top: 50px;
 }
-.section {
-  padding: var(--padding) 0;
-}
+
 
 .container {
   display: block;
@@ -120,6 +118,7 @@ header {
   height: 100%;
   position: relative;
   overflow: hidden;
+  color: var(--contrast);
   .parallax-container {
     position: absolute;
     width: 110%;
@@ -201,7 +200,6 @@ header {
     justify-content: flex-start;
 
     .cta {
-      
     }
   }
 }
