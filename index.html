@@ -1,252 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sergei Solovev | Web Developer</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Document</title>
-
-    <!-- STYLES SECTION -->
-
-    <style>
-        body {
-            font-family: sans-serif;
-        }
-    </style>
-
-    <!-- Tiny slider -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.3/tiny-slider.css">
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;900&display=swap" rel="stylesheet">
-
-    <!-- END OF STYLE SECTION -->
-
-</head>
-
-<body class="dark">
-
-    <aside class="dark">
-        <div class="overlay"></div>
-        <nav>
-            <menu>
-                <a href="#welcome">
-                    <!-- <img src="logo" alt=""> -->
-                    <!-- <div class="logo">S</div> -->
-                </a>
-                <li><a href="#welcome">
-                        <span>Welcome</span><i class="material-icons md-36">home</i>
-                    </a></li>
-                <li><a href="#skills">
-                        <span>Skills</span><i class="material-icons md-36">handyman</i>
-                    </a></li>
-                <!-- <li><a href="#cases">
-                        <span>Cases</span><i class="material-icons md-36">work</i>
-                    </a></li>
-                <li><a href="#experience">
-                        <span>experience</span><i class="material-icons md-36">verified</i>
-                    </a></li> -->
-                <li><a href="#contacts">
-                        <span>Contacts</span><i class="material-icons md-36">mark_chat_unread</i>
-                    </a></li>
-            </menu>
-        </nav>
-    </aside>
-
+    <!-- TODO: Add OGP tags -->
+    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav></nav>
     <main>
-        <header id="welcome" class="light">
-            <div class="parallax-container">
-                <div data-depth="0.1" class="gradient-layer layer">
-                </div>
-                <div data-depth="0.3" class="oriented-noise-layer layer">
-                </div>
-                <div data-depth="0.5" class="geometry-back-layer layer">
-                    <svg/>
-                </div>
-                <div data-depth="0.55" class="sergei-solovev-photo-layer layer">
-                    <div class="container ">
-                        <img src="/src/assets/img/sergei-solovev-silhouette.svg" class="silhouette" alt>
-                    </div>
-                </div>
-                <div data-depth="0.6" class="sergei-solovev-photo-layer layer">
-                    <div class="container ">
-                        <img src="/src/assets/img/sergei-solovev.png" alt>
-                    </div>
-                </div>
-                <div data-depth="0.9" class="geometry-front-layer layer">
-                    <svg/>
-                </div>
-                <div class="loading-screen-layer layer">
+      <header class="container">
+        <h1 class="section__header header__headline">Сергей Соловьев</h1>
+        <p>Фуллстек веб-разработчик, аналитик, преподаватель</p>
+        <!-- <img src="/img/avatar.jpg" height="200" alt="Sergei Solovev, web-developer"> -->
+      </header>
+      <section class="container headline">
+        <h2 class="section__header">
+          <span class="material-icons">work</span>
+          Список проектов
+        </h2>
+        <p>За посдедние два года, наши заказчики получили более 15 готовых решений. В том числе проекты для российских вузов и частных компаний. Вот некоторые из наших кейсов:        </p>
 
-                </div>
-            </div>
-            <div class="welcome__content">
-                <div class="container">
-                    <h1 class="thin">Hi, I am Sergei Solovev</h1>
-                    <h1>Analyst</h1>
-                    <h1>UX/UI Designer</h1>
-                    <h1>Web Developer</h1>
-                    <p>
-                        I help clients reach their goals due to my data analysis skills, <br> UX/UI passion and software
-                        development experience. <br> Thus I love <span class="hobbie-slider"></span>
-                    </p>
-                    <div class="cta">
-                        <a href="#skills">
-                            <button>My skills</button>
-                        </a>
-                        <a href="#contacts">
-                            <button>Contact me</button>
-                        </a>
-                    </div>
-                </div>
-            </div>
+        <div class="controls">
+          <div class="control--radio">
+            <input
+              type="radio"
+              id="projects__radio--all"
+              name="projects"
+              value="all"
+              checked
+            />
+            <label for="projects__radio--all">Все проекты</label>
+          </div>
 
+          <div class="control--radio">
+            <input
+              type="radio"
+              id="projects__radio--web-development"
+              name="projects"
+              value="web-development"
+            />
+            <label for="projects__radio--web-development">веб-разработка</label>
+          </div>
 
-        </header>
-        <section id="skills">
-            <svg class="skills-tree">
-            </svg>
-            <div class="container">
+          <div class="control--radio">
+            <input
+              type="radio"
+              id="projects__radio--web-desgin"
+              name="projects"
+              value="web-desgin"
+            />
+            <label for="projects__radio--web-desgin">веб-дизайн</label>
+          </div>
 
-                <h1>
-                    My skills
-                </h1>
-                <p>Click node to expand. Hover to see details.</p>
+          <div class="control--radio">
+            <input
+              type="radio"
+              id="projects__radio--education"
+              name="projects"
+              value="education"
+            />
+            <label for="projects__radio--education">Образование</label>
+          </div>
 
-                <!-- <iframe width="100%" height="584" frameborder="0"
-                    src="https://observablehq.com/embed/@solovevserg/vertical-collapsible-d3-flextree-d3-v6?cell=tree"></iframe> -->
-            </div>
-        </section>
-        <!-- <section id="cases">
-            <div class="container">
+          <div class="control--radio">
+            <input
+              type="radio"
+              id="projects__radio--bots"
+              name="projects"
+              value="bots"
+            />
+            <label for="projects__radio--bots">Боты</label>
+          </div>
+        </div>
 
-                <h1>
-                    What I have done
-                </h1>
-                <p></p>
-
-                
-                <div class="cases__slider">
-                    <div class="case">
-
-                    </div>
-                    <div class="case"></div>
-                    <div class="case"></div>
-                    <div class="case"></div>
-                </div>
-            </div>
-        </section>
-        <section id="experience">
-            <div class="container">
-
-                <h1>
-                    Experience
-                </h1>
-                <p></p>
-            </div>
-        </section> -->
-        <section id="contacts">
-            <div class="container">
-
-                <h1>
-                    Just say hi
-                </h1>
-                <p>
-                    Do you want to start a project with me, have any questions or just ready to say hi, feel free to
-                    text me whenever and wherever you want.
-
-                </p>
-                <div class="contacts__content-wrapper">
-
-                    <div class="contacts__content">
-                        <a class="contact" href="https://github.com/solovevserg">
-                            <img src="/src/assets/img/icons/github.png" class="github" alt="GitHub logo">
-                        </a>
-                        <a class="contact" href="https://instagram.com/serg.sol">
-                            <img src="/src/assets/img/icons/instagram.png" alt="Instagram logo">
-                        </a>
-                        <a class="contact" href="https://t.me/sergsol">
-                            <img src="/src/assets/img/icons/pinterest.png" alt="Pinterest logo">
-                        </a>
-                        <a class="contact" href="https://t.me/sergsol">
-                            <img src="/src/assets/img/icons/telegram.png" alt="Telegram logo">
-                        </a>
-                    </div>
-                    <iframe class="globe" src="/globe-vertex-texture/index.html" frameborder="0"></iframe>
-                </div>
-            </div>
-        </section>
-
-
+        <ul class="card-grid">
+          <li class="card">
+            <div
+              class="card__img"
+              style="background-image: url('/img/projects/pkdd-logo.png')"
+            ></div>
+            <h4>
+                ПКДД
+            </h4>
+            <p>
+                500 будущих управленцев из РАНХиГС учатся удалённо при помощи ПКДД
+            </p>
+          </li>
+        </ul>
+      </section>
+      <section class="container">Контакты</section>
+      <section class="container"></section>
+      <section class="container"></section>
+      <section class="container"></section>
+      <section class="container"></section>
+      <section class="container"></section>
+      <section class="container"></section>
+      <section class="container"></section>
+      <section class="container"></section>
+      <footer class="container"></footer>
     </main>
-
-
-    <!-- SCRIPT SECTION -->
-    <script src="/dist/main.js"></script>
-
-    <!-- Oriented noise -->
-    <script src="/third-party/oriented.js"></script>
-    <script>
-        initOriented('.oriented-noise-layer', {
-            startX: 0.73,
-            startY: 0.57
-        });
-    </script>
-
-    <!-- Typed -->
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
-    <script>
-        async function startTyped() {
-            const hobbies = await fetch('/data/hobbies.json').then(r => r.json())
-            const options = {
-                strings: hobbies,
-                typeSpeed: 80,
-                loop: true,
-                loopCount: Infinity,
-                backSpeed: 27,
-                smartBackspace: true,
-                shuffle: true,
-                backDelay: 300,
-            };
-            const typed = new Typed('.hobbie-slider', options);
-            return typed;
-        }
-
-        startTyped();
-    </script>
-
-    <!-- Parallax -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/parallax/3.1.0/parallax.min.js"></script>
-
-    <script>
-        var parallax = document.querySelector('.parallax-container');
-        var parallaxInstance = new Parallax(parallax, {
-            hoverOnly: true,
-            relativeInput: true,
-            clipRelativeInput: true,
-        });
-    </script>
-    <!-- Tiny Slider -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-    <script>
-        const slider = tns({
-            container: '.cases__slider',
-            "slideBy": "page",
-            "mouseDrag": true,
-            "swipeAngle": false,
-        });
-    </script>
-
-    <!-- Micromodal -->
-
-    <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
-    <script>
-        MicroModal.init();
-    </script>
-    <!-- END OF SCRIPT SECTION -->
-</body>
-
+  </body>
 </html>
