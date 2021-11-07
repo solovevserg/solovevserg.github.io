@@ -314,6 +314,8 @@ body:not(.desktop) .card-grid {
   overflow: hidden;
 }
 
+
+
 .card .card__preview {
   position: absolute;
   top: 0;
@@ -322,6 +324,7 @@ body:not(.desktop) .card-grid {
   width: 200px;
   display: flex;
   background-color: var(--color-card-bg);
+  overflow: hidden;
 }
 
 .mobile .card .card__preview {
@@ -338,6 +341,7 @@ body:not(.desktop) .card-grid {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  transition: var(--transition);
 }
 
 .card__content {
@@ -352,11 +356,11 @@ body:not(.desktop) .card-grid {
   margin-top: 75px;
 }
 
-.card__content .card__content__header {
+.card .card__content .card__content__header {
   margin: 0;
 }
 
-.card__content .card__content__footer {
+.card .card__content .card__content__footer {
   margin-top: auto;
   padding-top: calc(var(--indent) / 2);
   display: flex;
@@ -364,6 +368,17 @@ body:not(.desktop) .card-grid {
   align-items: baseline;
 }
 
+.card .card__content .card__content__footer .learn-more-invitation{
+  transition: var(--transition);
+}
+
+body.desktop .card:hover .card__content__footer .learn-more-invitation { 
+  transform: translateX(-10px);
+}
+
+body.desktop .card:hover .card__content__footer .learn-more-invitation:hover {
+  transform: translateX(0px);
+}
 /* Contacts */
 
 #contacts .contacts__media {
