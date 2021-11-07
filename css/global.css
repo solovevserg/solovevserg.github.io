@@ -324,8 +324,12 @@ body:not(.desktop) .card-grid {
   background-color: var(--color-card-bg);
 }
 
-.mobile .card__preview {
-  display: none;
+.mobile .card .card__preview {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 75px;
+  width: 100%;
 }
 
 .card .card__preview .card__preview__img {
@@ -343,8 +347,9 @@ body:not(.desktop) .card-grid {
   padding: var(--indent);
 }
 
-.mobile .card__content {
+.mobile .card .card__content {
   margin-left: 0;
+  margin-top: 75px;
 }
 
 .card__content .card__content__header {
@@ -363,6 +368,7 @@ body:not(.desktop) .card-grid {
 
 #contacts .contacts__media {
   display: flex;
+  padding-bottom: calc(var(--indent) * 3);
 }
 
 #contacts .contacts__media .contacts__medium {
@@ -420,4 +426,10 @@ body:not(.desktop) .card-grid {
   font-family: "Material Icons";
   font-weight: 900;
   line-height: 2em;
+}
+
+/* Appear */
+
+.before-loaded {
+  opacity: 0;
 }
