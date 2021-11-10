@@ -234,6 +234,11 @@ header#welcome .welcome__ctas {
   width: 100px;
 }
 
+#about .about__content .about__content__description p:first-of-type {
+  margin-top: 0;
+
+}
+
 body.mobile #about .about__content .about__content__avatar {
   width: 100%;
 }
