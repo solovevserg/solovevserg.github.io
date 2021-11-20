@@ -226,11 +226,11 @@ header#welcome .welcome__ctas {
 
 #about .about__content {
   display: flex;
+  gap: var(--indent);
 }
 
 #about .about__content .about__content__avatar {
   border-radius: var(--radius);
-  margin-right: var(--indent);
   width: 100px;
 }
 
