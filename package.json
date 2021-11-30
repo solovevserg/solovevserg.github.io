@@ -30,15 +30,18 @@
   },
   "homepage": "https://github.com/solovevserg/solovevserg.github.io#readme",
   "devDependencies": {
+    "@11ty/eleventy": "^0.12.1",
     "css-loader": "^5.0.1",
     "sass": "^1.32.0",
     "sass-loader": "^10.1.0",
-    "static-i18n": "^0.2.10",
+    "static-i18n": "^0.2.1",
     "style-loader": "^2.0.0",
     "webpack": "^5.11.1",
     "webpack-cli": "^4.3.1"
   },
   "dependencies": {
+    "@notionhq/client": "^0.4.9",
+    "notion-page-to-html": "^1.1.2",
     "tiny-slider": "^2.9.3"
   }
 }
