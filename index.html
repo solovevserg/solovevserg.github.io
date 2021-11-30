@@ -55,27 +55,49 @@
         document.body.style.opacity = 1;
       }, 300);
     </script>
-    <nav></nav>
-    <main>
-      <header data-aos="fade-right" class="container" id="welcome">
-        <p class="header__text">👋 Всем привет! Меня зовут</p>
-        <h1 class="section__header header__headline">Сергей Соловьев</h1>
-        <p class="header__text">
-          Я фулстек-веб тимлид, аналитик, преподаватель
-        </p>
-        <br />
-        <div class="welcome__ctas">
-          <a class="button-like" target="_blank" href="https://hh.ru/applicant/resumes/view?resume=78b19b1dff097442f70039ed1f666643556a49">Смотреть CV</a>
-          <a class="button-like" href="#contacts">Связаться со мной</a>
-        </div>
-        <a class="haeder__scroll-invitation" href="#about">
-          <span class="material-icons">keyboard_double_arrow_down</span>
-          Скроль, чтобы увидеть навыки и проекты
+    <nav>
+      <div class="container nav-container">
+        <h5 class="nav__caption">
+          <a href="/">📰 Сайт Сергея Соловьева</a>
+        </h5>
+        <a target="_blank" href="https://t.me/sergsol">
+          <img
+            class="nav__medium__icon"
+            draggable="false"
+            src="/img/media/telegram.png"
+            alt="Solovev Sergei in Telegram"
+          />
         </a>
-        <!-- <img draggable="false" src="/img/avatar.jpg" height="200" alt="Sergei Solovev, web-developer"> -->
+      </div>
+    </nav>
+
+    <main>
+      <header data-aos="fade-right" id="welcome">
+        <div class="container header-container">
+          <p class="header__text">👋 Всем привет! Меня зовут</p>
+          <h1 class="section__header header__headline">Сергей Соловьев</h1>
+          <p class="header__text">
+            Я фулстек-веб тимлид, аналитик, преподаватель
+          </p>
+          <br />
+          <div class="welcome__ctas">
+            <a
+              class="button-like"
+              target="_blank"
+              href="https://hh.ru/applicant/resumes/view?resume=78b19b1dff097442f70039ed1f666643556a49"
+              >Смотреть CV</a
+            >
+            <a class="button-like" href="#contacts">Связаться со мной</a>
+          </div>
+          <a class="haeder__scroll-invitation" href="#about">
+            <span class="material-icons">keyboard_double_arrow_down</span>
+            Скроль, чтобы увидеть навыки и проекты
+          </a>
+          <!-- <img draggable="false" src="/img/avatar.jpg" height="200" alt="Sergei Solovev, web-developer"> -->
+        </div>
       </header>
 
-        <section class="container" id="about">
+      <section class="container" id="about">
         <h2 class="section__header" data-aos="fade-right">
           <span class="material-icons">surfing</span>
           Обо мне
@@ -89,8 +111,9 @@
           />
           <div class="about__content__description">
             <p>
-              Родился и вырос в Москве, 22 года. Уже 10 лет я пишу код и изучаю языки программирования. Сейчас возглавляю
-              отделы фронтенд-разработки и аналитики в
+              Родился и вырос в Москве, 22 года. Уже 10 лет я пишу код и изучаю
+              языки программирования. Сейчас возглавляю отделы
+              фронтенд-разработки и аналитики в
               <a href="https://qoollo.com/" target="_blank">Qoollo</a>. Веду с
               партнерами проекты под брендом
               <a href="https://sdal.pw/" target="_blank">SDAL</a>. Участвую в
@@ -100,9 +123,9 @@
             <p>
               Учусь на 6-м курсе прикладной информатики (информационной
               аналитики) в
-              <a href="https://bmstu.ru/" target="_blank">МГТУ Баумана</a>. Совмещаю в
-              научных исследованиях темы IT, анализа и визуализации данных,
-              социально-гуманитарных наук. Увлекаюсь лингвистикой и
+              <a href="https://bmstu.ru/" target="_blank">МГТУ Баумана</a>.
+              Совмещаю в научных исследованиях темы IT, анализа и визуализации
+              данных, социально-гуманитарных наук. Увлекаюсь лингвистикой и
               урбанистикой.
             </p>
             <p>
@@ -200,9 +223,9 @@
           Мои навыки
         </h2>
         <p>
-          В своём развитии делаю упор на веб-фронтенд и аналитику.
-          Много раз участвовал в проектировании информационных систем с нуля. С
-          2019 преподаю. Начиная с 2020 много занимаюсь менеджментом в IT.
+          В своём развитии делаю упор на веб-фронтенд и аналитику. Много раз
+          участвовал в проектировании информационных систем с нуля. С 2019
+          преподаю. Начиная с 2020 много занимаюсь менеджментом в IT.
         </p>
         <div class="split-layout">
           <div>
@@ -241,6 +264,57 @@
           </div>
         </div>
       </section>
+
+      <!-- <section class="container" id="blog">
+        <h2 class="section__header" data-aos="fade-right">
+          <span class="material-icons">newspaper</span>
+          Блог
+        </h2>
+        <p>
+          Я люблю делиться с миром своими инсайтами и результатми своих
+          исследований. Уверен, вы найдёте что-нибудь полезное для себя среди
+          моих мыслей.
+        </p>
+        <ul class="blog__articles card-grid">
+          <li class="card" data-aos="fade-up">
+            <div class="card__preview">
+              <div
+                class="card__preview__img"
+                style="
+                  background-image: url('/img/projects/sgn.png');
+                  background-size: 50px;
+                "
+              ></div>
+            </div>
+            <div class="card__content">
+              <h4 class="card__content__header">Курс Веб в МГТУ</h4>
+              <p class="card__content__description">
+                Преподавательская практика магистра. Я перепроектировал с нуля
+                курс по вебу для второго курса аналитиков, добавив туда элементы
+                даты и внедрив формат командных проектов. Провел часть занятий,
+                курировал педагогов и проекты.
+              </p>
+              <div class="tags-list">
+                <!-- <span class="tag" data-value="web">Веб</span> -->
+                <!-- <span class="tag" data-value="ux-ui">UX/UI</span> -->
+                <!-- <span class="tag" data-value="data">Data</span> -->
+                <span class="tag" data-value="management">Менеджмент</span>
+                <span class="tag" data-value="education">Образование</span>
+              </div>
+              <div class="card__content__footer">
+                <time class="card__content__footer__caption" datetime="2018"
+                  >01.12.2021</time
+                >
+                <a
+                  class="learn-more-invitation"
+                  href="articles/10-проблем-в-архитектуре-Ангуляра.html"
+                  >Читать статью
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section> -->
 
       <section class="container" id="projects">
         <h2 class="section__header" data-aos="fade-right">
@@ -492,9 +566,10 @@
             <div class="card__content">
               <h4 class="card__content__header">RideNow Taxi</h4>
               <p class="card__content__description">
-                Присоединился к стартапу. Возглавлял проектирование и разработку в проекте
-                агрегатора типа Яндекс.Такси, состоящем из мобильных приложений
-                пассажира и водителя, серверной части и бота поддержки.
+                Присоединился к стартапу. Возглавлял проектирование и разработку
+                в проекте агрегатора типа Яндекс.Такси, состоящем из мобильных
+                приложений пассажира и водителя, серверной части и бота
+                поддержки.
               </p>
               <div class="tags-list">
                 <span class="tag" data-value="web">Веб</span>
@@ -782,8 +857,7 @@
 
           <!-- Qoollo Summer 2021 -->
           <li class="card" data-aos="fade-up">
-            <div class="card__preview"
-            style="background: #030303;">
+            <div class="card__preview" style="background: #030303">
               <div
                 class="card__preview__img"
                 style="
@@ -820,7 +894,7 @@
             </div>
           </li>
 
-                    <!-- Абитуриент МГТУ -->
+          <!-- Абитуриент МГТУ -->
           <li class="card" data-aos="fade-up">
             <div class="card__preview">
               <div
@@ -892,8 +966,6 @@
               </div>
             </div>
           </li>
-
-
 
           <!-- Ваш проект -->
           <li class="card" data-aos="fade-up">
@@ -993,68 +1065,70 @@
         </ol>
       </section>
 
-      <footer class="container" id="contacts">
-        <h2 data-aos="fade-right">
-          <span class="material-icons">forum</span>
-          Контакты
-        </h2>
-        <p>
-          Я живу в Москве. Всегда готов выпить чашечку чая в кафе и обсудить
-          очередной суперинновационный проект в сфере веб-разработки, анализа
-          данных, социальных наук или образования 😉 Для общения предпочитаю
-          Телеграм.
-        </p>
-        <div class="section__content contacts__media">
-          <a
-            class="contacts__medium"
-            target="_blank"
-            href="https://t.me/sergsol"
-          >
-            <img
-              draggable="false"
-              src="/img/media/telegram.png"
-              alt="Telegram logo"
-            />
-          </a>
-          <a
-            class="contacts__medium"
-            target="_blank"
-            href="https://github.com/solovevserg"
-          >
-            <img
-              draggable="false"
-              src="/img/media/github.png"
-              class="github"
-              alt="GitHub logo"
-            />
-          </a>
-          <a
-            class="contacts__medium"
-            target="_blank"
-            href="https://www.pinterest.ru/solovevserg/"
-          >
-            <img
-              draggable="false"
-              src="/img/media/pinterest.png"
-              alt="Pinterest logo"
-            />
-          </a>
-          <a
-            class="contacts__medium"
-            target="_blank"
-            href="https://instagram.com/serg.sol"
-          >
-            <img
-              draggable="false"
-              src="/img/media/instagram.png"
-              alt="Instagram logo"
-            />
-          </a>
+      <footer id="contacts">
+        <div class="container">
+          <h2 data-aos="fade-right">
+            <span class="material-icons">forum</span>
+            Контакты
+          </h2>
+          <p>
+            Я живу в Москве. Всегда готов выпить чашечку чая в кафе и обсудить
+            очередной суперинновационный проект в сфере веб-разработки, анализа
+            данных, социальных наук или образования 😉 Для общения предпочитаю
+            Телеграм.
+          </p>
+          <div class="section__content contacts__media">
+            <a
+              class="contacts__medium"
+              target="_blank"
+              href="https://t.me/sergsol"
+            >
+              <img
+                draggable="false"
+                src="/img/media/telegram.png"
+                alt="Telegram logo"
+              />
+            </a>
+            <a
+              class="contacts__medium"
+              target="_blank"
+              href="https://github.com/solovevserg"
+            >
+              <img
+                draggable="false"
+                src="/img/media/github.png"
+                class="github"
+                alt="GitHub logo"
+              />
+            </a>
+            <a
+              class="contacts__medium"
+              target="_blank"
+              href="https://www.pinterest.ru/solovevserg/"
+            >
+              <img
+                draggable="false"
+                src="/img/media/pinterest.png"
+                alt="Pinterest logo"
+              />
+            </a>
+            <a
+              class="contacts__medium"
+              target="_blank"
+              href="https://instagram.com/serg.sol"
+            >
+              <img
+                draggable="false"
+                src="/img/media/instagram.png"
+                alt="Instagram logo"
+              />
+            </a>
+          </div>
+          <p>
+            &copy; <a href="https://t.me/sergsol">Сергей Соловьев</a>,
+            <span id="this-year">2021</span>
+          </p>
         </div>
-        <p>
-          &copy; <a href="https://t.me/sergsol">Сергей Соловьев</a>,
-          <span id="this-year">2021</span>
-        </p>
       </footer>
     </main>
 
@@ -1114,6 +1188,21 @@
       resize();
     </script>
 
+    <script>
+      // Updates class nav-scrolled when scrolled
+      const SCROLL_DELAY = 80;
+
+      const nav = document.querySelector("nav");
+
+      function updateNav() {
+        const scrollY = window.scrollY;
+        nav.classList.toggle("nav--scrolled", scrollY > SCROLL_DELAY);
+      }
+
+      window.addEventListener("scroll", updateNav);
+      updateNav();
+    </script>
+
     <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
     <script>
       // Animation init
@@ -1124,13 +1213,18 @@
     </script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-J5R1RP57ZZ"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-J5R1RP57ZZ"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-J5R1RP57ZZ');
+      gtag("config", "G-J5R1RP57ZZ");
     </script>
   </body>
 </html>

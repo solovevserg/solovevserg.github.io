@@ -31,6 +31,7 @@
   --font-size-h6: calc(var(--font-size) * 1); */
 }
 
+
 /* :root {
     --font-size: 16px;
     --font-size-h1: calc(var(--font-size) * 8);
@@ -136,6 +137,7 @@ p {
 a, .a-like {
   text-decoration: none;
   color: var(--color-primary);
+  box-sizing: content-box;
 }
 
 .button-like,
@@ -171,7 +173,7 @@ button:hover {
   max-width: 1200px;
   width: 100%;
   box-sizing: border-box;
-  margin: auto;
+  margin: 0 auto var(--indent) auto;
   padding: 0 var(--indent);
 }
 
@@ -185,17 +187,60 @@ button:hover {
   flex: 1;
 }
 
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* background: var(--color-card-bg); */
+  transform: translateY(-100%);
+  transition: var(--transition);
+  z-index: 1000;
+  /* opacity: .5; */
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.55);  
+ 
+}
+
+
+nav.nav--scrolled {
+  transform: translateY(0);
+}
+
+nav .nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+  padding-top: var(--indent);
+  padding-bottom: var(--indent);
+}
+
+nav .nav__caption {
+  cursor: pointer;
+  margin: 0;
+}
+
+nav .nav__medium__icon {
+  width: calc(var(--indent) * 2);
+}
+
 /* WELCOME */
 
 header#welcome {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
   /* background: linear-gradient(var(--color-bg) 80%, rgb(28, 29, 29)); */
 }
 
+header#welcome .header-container  {
+  display: flex;
+  flex-direction: column;
+}
+
 header#welcome .header__headline {
-  font-size: calc(var(--font-size) * 3 + 5vw);
+  font-size: calc(var(--font-size) * 2.5 + 5.5vw);
   display: inline-block;
   margin: 0;
   line-height: 0.85em;
@@ -385,6 +430,10 @@ body.desktop .card:hover .card__content__footer .learn-more-invitation:hover {
   transform: translateX(0px);
 }
 /* Contacts */
+
+#contacts {
+  background-color: var(--color-card-bg);
+}
 
 #contacts .contacts__media {
   display: flex;
