@@ -5,7 +5,10 @@
   "main": "./src/index.js",
   "scripts": {
     "load-articles": "node build-scripts/download-articles.mjs",
-    "build": "npm run load-articles && npx @11ty/eleventy && mv _site/* .",
+    "build:notion": "npm run load-articles",
+    "build:ejs": "npx @11ty/eleventy",
+    "build:mv": "mv _site/* .",
+    "build": "npm run build:notion && npm run build:ejs && npm run build:mv",
     "start": "npx @11ty/eleventy --serve",
     "prepublish": "node ./scripts/prepublish.js"
   },
