@@ -101,6 +101,7 @@
   ];
   if (restrictedOrigins.includes(location.origin)) {
     const href = location.href.replace(location.origin, 'https://sergsol.com');
+    console.warn('Redirecting to', href);
     this.location.replace(href);
   }
 </script>
