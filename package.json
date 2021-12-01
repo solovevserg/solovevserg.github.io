@@ -4,8 +4,9 @@
   "description": "Sergei Solovev analyst, web designer and developer portfolio static web page",
   "main": "./src/index.js",
   "scripts": {
-    "prebuild": "node ./node_modules/webpack/bin/webpack.js",
-    "build": "node  ./node_modules/static-i18n/bin/static-i18n.js -l en -i en -i ru src -o .",
+    "load-articles": "node build-scripts/download-articles.mjs",
+    "build": "npm run load-articles && npx @11ty/eleventy && mv _site/* .",
+    "start": "npx @11ty/eleventy --serve",
     "prepublish": "node ./scripts/prepublish.js"
   },
   "repository": {
