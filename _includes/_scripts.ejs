@@ -1,95 +1,105 @@
+<script>
+  // Подставляет текущий год в конец страницы
+  document.getElementById("this-year").innerText = new Date().getFullYear();
+</script>
 
-    <script>
-        // Подставляет текущий год в конец страницы
-        document.getElementById("this-year").innerText = new Date().getFullYear();
-      </script>
-  
-      <script>
-        // Фильтрация проектов по типу
-        const radios = document.querySelectorAll(
-          '#projects .controls input[type="radio"]'
-        );
-        radios.forEach((radio) => {
-          radio.addEventListener("change", (e) => {
-            const query = e.target.value;
-            filterProjects(query);
-          });
-        });
-  
-        function filterProjects(query) {
-          document.querySelectorAll("#projects .card").forEach((card) => {
-            if (
-              query === "all" ||
-              card.querySelector(`.tag[data-value=${query}]`)
-            ) {
-              card.style.display = "block";
-            } else {
-              card.style.display = "none";
-            }
-          });
-        }
-      </script>
-  
-      <script>
-        // Adds breakpoints for responsiveness
-        const MOBILE_TO_TABLET = 600;
-        const TABLET_TO_DESKTOP = 1100;
-  
-        function resize() {
-          const width = window.innerWidth;
-  
-          const classes = {
-            desktop: width > TABLET_TO_DESKTOP,
-            tablet: width >= MOBILE_TO_TABLET && width <= TABLET_TO_DESKTOP,
-            mobile: width < MOBILE_TO_TABLET,
-          };
-  
-          for (const cls in classes) {
-            if (Object.hasOwnProperty.call(classes, cls)) {
-              document.body.classList.toggle(cls, classes[cls]);
-            }
-          }
-        }
-  
-        window.addEventListener("resize", resize);
-        resize();
-      </script>
-  
-      <script>
-        // Updates class nav-scrolled when scrolled
-        const SCROLL_DELAY = 80;
-  
-        const nav = document.querySelector("nav");
-  
-        function updateNav() {
-          const scrollY = window.scrollY;
-          nav.classList.toggle("nav--scrolled", scrollY > SCROLL_DELAY);
-        }
-  
-        window.addEventListener("scroll", updateNav);
-        updateNav();
-      </script>
-  
-      <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
-      <script>
-        // Animation init
-        AOS.init({
-          once: true,
-          disable: "mobile",
-        });
-      </script>
-  
-      <!-- Global site tag (gtag.js) - Google Analytics -->
-      <script
-        async
-        src="https://www.googletagmanager.com/gtag/js?id=G-J5R1RP57ZZ"
-      ></script>
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag("js", new Date());
-  
-        gtag("config", "G-J5R1RP57ZZ");
-      </script>
+<script>
+  // Фильтрация проектов по типу
+  const radios = document.querySelectorAll(
+    '#projects .controls input[type="radio"]'
+  );
+  radios.forEach((radio) => {
+    radio.addEventListener("change", (e) => {
+      const query = e.target.value;
+      filterProjects(query);
+    });
+  });
+
+  function filterProjects(query) {
+    document.querySelectorAll("#projects .card").forEach((card) => {
+      if (query === "all" || card.querySelector(`.tag[data-value=${query}]`)) {
+        card.style.display = "block";
+      } else {
+        card.style.display = "none";
+      }
+    });
+  }
+</script>
+
+<script>
+  // Adds breakpoints for responsiveness
+  const MOBILE_TO_TABLET = 600;
+  const TABLET_TO_DESKTOP = 1100;
+
+  function resize() {
+    const width = window.innerWidth;
+
+    const classes = {
+      desktop: width > TABLET_TO_DESKTOP,
+      tablet: width >= MOBILE_TO_TABLET && width <= TABLET_TO_DESKTOP,
+      mobile: width < MOBILE_TO_TABLET,
+    };
+
+    for (const cls in classes) {
+      if (Object.hasOwnProperty.call(classes, cls)) {
+        document.body.classList.toggle(cls, classes[cls]);
+      }
+    }
+  }
+
+  window.addEventListener("resize", resize);
+  resize();
+</script>
+
+<script>
+  // Updates class nav-scrolled when scrolled
+  const SCROLL_DELAY = 80;
+
+  const nav = document.querySelector("nav");
+
+  function updateNav() {
+    const scrollY = window.scrollY;
+    nav.classList.toggle("nav--scrolled", scrollY > SCROLL_DELAY);
+  }
+
+  window.addEventListener("scroll", updateNav);
+  updateNav();
+</script>
+
+<!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
+<script>
+  // Animation init
+  AOS.init({
+    once: true,
+    disable: "mobile",
+  });
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-J5R1RP57ZZ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "G-J5R1RP57ZZ");
+</script>
+
+<script>
+  const restrictedOrigins = [
+    "https://solovevserg.github.io/",
+    "http://solovevserg.github.io/",
+    "http://sergsol.com/",
+    "http://sergsol.ru/",
+    "https://sergsol.ru/",
+  ];
+  if (restrictedOrigins.includes(location.origin)) {
+    const href = location.href.replace(location.origin, 'https://sergsol.com');
+    this.location.replace(href);
+  }
+</script>
