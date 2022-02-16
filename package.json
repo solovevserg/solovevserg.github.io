@@ -5,10 +5,12 @@
   "main": "./src/index.js",
   "scripts": {
     "load-articles": "node build-scripts/download-articles.mjs",
+    "prebuild": "rm -rf articles ru",
     "build:notion": "npm run load-articles",
     "build:ejs": "npx @11ty/eleventy",
     "build:mv": "mv _site/* .",
-    "build": "npm run build:notion && npm run build:ejs && npm run build:mv",
+    "build:i18n": "npx static-i18n -o . --l en --i en --i ru --localesPath ./src/locales --replace true .",
+    "build": "npm run build:notion && npm run build:ejs && npm run build:mv && npm run build:i18n",
     "start": "npx @11ty/eleventy --serve",
     "prepublish": "node ./scripts/prepublish.js"
   },
@@ -38,7 +40,7 @@
     "css-loader": "^5.0.1",
     "sass": "^1.32.0",
     "sass-loader": "^10.1.0",
-    "static-i18n": "^0.2.1",
+    "static-i18n": "^0.2.10",
     "style-loader": "^2.0.0",
     "webpack": "^5.11.1",
     "webpack-cli": "^4.3.1"

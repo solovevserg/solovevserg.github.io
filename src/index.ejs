@@ -5,14 +5,16 @@
   </head>
   <body>
     <% include /_page-fade-in-animation.ejs %> 
-    <% include /_nav.ejs %> 
+    <% include /_nav.ejs %>
     <main>
       <header data-aos="fade-right" id="welcome">
         <div class="container header-container">
           <p class="header__text">👋 Всем привет! Меня зовут</p>
-          <h1 class="section__header header__headline">Сергей Соловьев</h1>
+          <h1 class="section__header header__headline">
+            <t data-t>name</t>
+          </h1>
           <p class="header__text">
-            Я фулстек-веб тимлид, аналитик, преподаватель
+            <t data-t>i_am</t> <t data-t>profession</t>
           </p>
           <br />
           <div class="welcome__ctas">
