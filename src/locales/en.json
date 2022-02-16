@@ -1,5 +1,9 @@
 {
-  "name": "Sergey Solovev",
+  "name": "Sergei Solovev",
   "profession": "fullstack JS teamlead, analyst, teacher",
-  "i_am": "I am"
+  "i_am": "I am",
+  "hello_everyone": "👋 Hi, everyone! My name is",
+  "seeCV": "Look at CV",
+  "contact_me": "Contact me",
+  "scroll_to_see": "Scroll down to see projects and skills"
 }
