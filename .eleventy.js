@@ -11,7 +11,7 @@ module.exports = function (eleventyConfig) {
         // markdownTemplateEngine: "liquid",
         dir: {
           input: "src",
-          includes: "../_includes",
+          includes: "../src/_includes",
           data: "_data",
           output: "_site"
         }

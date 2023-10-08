@@ -4,15 +4,11 @@
   "description": "Sergei Solovev analyst, web designer and developer portfolio static web page",
   "main": "./src/index.js",
   "scripts": {
-    "load-articles": "node build-scripts/download-articles.mjs",
-    "prebuild": "rm -rf articles ru",
-    "build:notion": "npm run load-articles",
+    "prebuild": "rm -rf ru",
     "build:ejs": "npx @11ty/eleventy",
     "build:mv": "mv _site/* .",
     "build:i18n": "npx static-i18n -o . --l en --i en --i ru --localesPath ./src/locales --replace true --exclude node_modules .",
-    "build": "npm run build:notion && npm run build:ejs && npm run build:mv && npm run build:i18n",
-    "start": "npx @11ty/eleventy --serve",
-    "prepublish": "node ./scripts/prepublish.js"
+    "build": "npm run build:ejs && npm run build:mv && npm run build:i18n"
   },
   "repository": {
     "type": "git",

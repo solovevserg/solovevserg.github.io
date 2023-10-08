@@ -1,259 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
+
+<head>
+  <script>
+    // Rediects to HTTPS connection
+    const restrictedOrigins = [
+        "http://sergsol.dev",
+        "https://solovevserg.github.io",
+        "http://solovevserg.github.io",
+        "http://sergsol.com",
+        "https://sergsol.com",
+        "http://sergsol.ru",
+        "https://sergsol.ru",
+    ];
+
+    if (restrictedOrigins.includes(location.origin)) {
+        const href = location.href.replace(location.origin, 'https://sergsol.dev');
+        console.log('Redirecting to', href);
+        this.location.replace(href);
+    }
+</script>
+  <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sergei Solovev | fullstack JS teamlead, analyst, teacher</title>
+<title>
+  Sergei | I am a lead frontend developer, teacher and entrepreneur. Feel free to touch
+</title>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<!-- <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> -->
-<!-- <meta name="yandex-verification" content="cc884f2dc4cc2566"> -->
-
 <!-- OGP -->
-<meta property="og:title" content="Сергей Соловьев">
-<meta property="og:url" content="https://solovevserg.github.io/">
-<meta property="og:image" content="https://solovevserg.github.io/img/ogp-preview.png">
-<meta property="og:description" content="Фулстек-веб тимлид, аналитик, преподаватель.">
-<meta property="og:determiner" content="the">
-<meta property="og:locale" content="ru_RU">
-<meta property="og:locale:alternate" content="us_US">
-<meta property="og:site_name" content="Портфолио Сергея Соловьева">
+<meta property="og:title" content="Sergei Solovev">
+<meta property="og:url" content="https://sergsol.dev/">
+<meta property="og:image" content="https://sergsol.dev/img/ogp-preview-en.png">
+<meta property="og:description" content="I am a lead frontend developer, teacher and entrepreneur. Feel free to touch">
+<meta property="og:locale" content="us_US">
+<meta property="og:site_name" content="Sergei Solovev">
 
-<!-- FONTS -->
+
+<!-- STYLES -->
 <link rel="stylesheet" href="/css/global.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Open+Sans&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
- 
-  </head>
-  <body>
-    <script>
-  // Loading Animation
+</head>
 
-  document.body.style.opacity = 0;
-  setTimeout(() => {
-    document.body.style.transition = "var(--transition)";
-  });
-  setTimeout(() => {
-    document.body.style.opacity = 1;
-  }, 300);
-</script>
- 
-    <nav>
-  <div class="container nav-container">
-    <h5 class="nav__caption">
-      <a href="/">Sergei Solovev</a>
-    </h5>
-    <a target="_blank" href="https://t.me/sergsol">
-      <img class="nav__medium__icon" draggable="false" src="/img/media/telegram.png" alt="Solovev Sergei in Telegram">
-    </a>
-  </div>
-</nav>
-
-    <main>
-      <header data-aos="fade-right" id="welcome">
-        <div class="container header-container">
-          <p class="header__text">👋 Hi, everyone! My name is</p>
-          <h1 class="section__header header__headline">
-            Sergei Solovev
-          </h1>
-          <p class="header__text">
-            I am fullstack JS teamlead, analyst, teacher
-          </p>
-          <br>
-          <div class="welcome__ctas">
-            <a class="button-like" target="_blank" href="https://hh.ru/applicant/resumes/view?resume=78b19b1dff097442f70039ed1f666643556a49">Look at CV</a>
-            <a class="button-like" href="#contacts">Contact me</a>
-          </div>
-          <a class="haeder__scroll-invitation" href="#about">
-            <span class="material-icons">keyboard_double_arrow_down</span>
-            Scroll down to see projects and skills
-          </a>
-          <!-- <img draggable="false" src="/img/avatar.jpg" height="200" alt="Sergei Solovev, web-developer"> -->
-        </div>
-      </header>
-
-      <section class="container" id="about">
-        <h2 class="section__header" data-aos="fade-right">
-          <span class="material-icons">surfing</span>
-          About Me
-        </h2>
-        <div class="about__content split-layout">
-          <img draggable="false" class="about__content__avatar" src="/img/avatar.jpg" alt>
-          <div class="about__content__description">
-            <p>
-              I'm lead fullstack web developer from Moscow, 23 y.o. Magister alumni of applied computer sciences at BMSTU, Moscow. I have experience in development of UI for governmental and commercial systems. Since 2019 i have been conducted many educational events in universities and companies.
-            </p>
-          </div>
-        </div>
-        <p></p>
-      </section>
-
-      <section class="container" id="skills">
-        <h2 class="section__header" data-aos="fade-right">
-          <span class="material-icons">construction</span>
-              My Skills
-        </h2>
-        <p>
-          my_skills_comment
-        </p>
-        <div class="split-layout">
-          <div>
-            <h3>
-              Hards
-            </h3>
-            <ul>
-              <li>HTML</li>
-              <li>CSS/SCSS</li>
-              <li>JS/TS</li>
-              <li>RxJS</li>
-              <li><b> Angular/Ionic</b></li>
-              <li>Node/Express/NestJS</li>
-              <li>Pyhton/Jupyter/Google Colab</li>
-              <li>C#/ASP.NET Core</li>
-              <li>Docker/GitLab CI/CD</li>
-              <li>Adobe Ps/Pe/Ai/Ae/Au</li>
-              <li>MS Offcie/Google Docs</li>
-              <li>Figma</li>
-            </ul>
-          </div>
-          <div>
-            <h3>
-              Softs
-            </h3>
-            <ul>
-              <li>information structuring and analysis</li>
-              <li>Teams and project management</li>
-              <li>Project communications and documentation</li>
-              <li>Analytics documents and visualization</li>
-              <li>Teaching heterogenous audience</li>
-              <li>Abstract and creative thinking</li>
-              <li>Idea generation</li>
-              <li>Russian and English languages</li>
-              <li>Passionated love 💘 for sciecne, high-quality products and prefect code</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-
-      
-      
-      
-
-
-    </main>
-    <footer id="contacts">
-  <div class="container">
-    <h2 data-aos="fade-right">
-      <span class="material-icons">forum</span>
-      Contacts
-    </h2>
-    <p>
-      Feel free to write me about IT projects, educational initiatives or any other stuff. You can reach me on Telegram.
+<body class="welcome">
+  <img class="welcome__avatar" draggable="false" src="/img/avatar-full.jpg" alt="Sergei Solovev">
+  <main>
+    <p class="welcome__text">
+      👋 Hi, everyone! My name is
     </p>
-    <div class="section__content contacts__media">
-      <a class="contacts__medium" target="_blank" href="https://t.me/sergsol">
-        <img draggable="false" src="/img/media/telegram.png" alt="Telegram logo">
+    <h1 class="welcome__name">
+      Sergei Solovev<br>
+    </h1>
+    <p class="welcome__text">
+      I am a lead frontend developer, teacher and entrepreneur. Feel free to touch
+    </p>
+
+    <div class="welcome__contacts">
+      <a class="welcome__contacts-link" target="_blank" href="https://hh.ru/resume/78b19b1dff097442f70039ed1f666643556a49">
+        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/headhunter.svg" alt="HeadHunter">
       </a>
-      <a class="contacts__medium" target="_blank" href="https://github.com/solovevserg">
-        <img draggable="false" src="/img/media/github.png" class="github" alt="GitHub logo">
+      <a class="welcome__contacts-link" target="_blank" href="https://www.linkedin.com/in/solovevserg/">
+        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/linkedin.svg" alt="LinkedIn">
       </a>
-      <a class="contacts__medium" target="_blank" href="https://www.pinterest.ru/solovevserg/">
-        <img draggable="false" src="/img/media/pinterest.png" alt="Pinterest logo">
+      <a class="welcome__contacts-link" target="_blank" href="https://t.me/sergsol">
+        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/telegram.svg" alt="Telegram">
       </a>
-      <a class="contacts__medium" target="_blank" href="https://instagram.com/serg.sol">
-        <img draggable="false" src="/img/media/instagram.png" alt="Instagram logo">
+      <a class="welcome__contacts-link" target="_blank" href="https://github.com/solovevserg">
+        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/github.svg" alt="GitHub">
       </a>
     </div>
-    <p>
-      &copy; <a href="https://t.me/sergsol">
-        Sergei Solovev
-      </a>,
-      <span id="this-year">2022</span>
-    </p>
-  </div>
-</footer> 
-    <script>
+
+    <footer class="footer">
+      <p class="footer__copyright">
+        &copy; Sergei
+        Solovev, <span id="this-year">2023</span>
+      </p>
+      <p class="footer__language">
+        <a href="/">En</a> /
+        <a href="/ru">Ру</a>
+      </p>
+    </footer>
+  </main>
+
+  <script>
   // Подставляет текущий год в конец страницы
   document.getElementById("this-year").innerText = new Date().getFullYear();
-</script>
-
-<script>
-  // Фильтрация проектов по типу
-  const radios = document.querySelectorAll(
-    '#projects .controls input[type="radio"]'
-  );
-  radios.forEach((radio) => {
-    radio.addEventListener("change", (e) => {
-      const query = e.target.value;
-      filterProjects(query);
-    });
-  });
-
-  function filterProjects(query) {
-    document.querySelectorAll("#projects .card").forEach((card) => {
-      if (query === "all" || card.querySelector(`.tag[data-value=${query}]`)) {
-        card.style.display = "block";
-      } else {
-        card.style.display = "none";
-      }
-    });
-  }
-</script>
-
-<script>
-  // Adds breakpoints for responsiveness
-  const MOBILE_TO_TABLET = 600;
-  const TABLET_TO_DESKTOP = 1100;
-
-  function resize() {
-    const width = window.innerWidth;
-
-    const classes = {
-      desktop: width > TABLET_TO_DESKTOP,
-      tablet: width >= MOBILE_TO_TABLET && width <= TABLET_TO_DESKTOP,
-      mobile: width < MOBILE_TO_TABLET,
-    };
-
-    for (const cls in classes) {
-      if (Object.hasOwnProperty.call(classes, cls)) {
-        document.body.classList.toggle(cls, classes[cls]);
-      }
-    }
-  }
-
-  window.addEventListener("resize", resize);
-  resize();
-</script>
-
-<script>
-  // Updates class nav-scrolled when scrolled
-  const SCROLL_DELAY = 80;
-
-  const nav = document.querySelector("nav");
-
-  function updateNav() {
-    const scrollY = window.scrollY;
-    nav.classList.toggle("nav--scrolled", scrollY > SCROLL_DELAY);
-  }
-
-  window.addEventListener("scroll", updateNav);
-  updateNav();
-</script>
-
-<!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
-<script>
-  // Animation init
-  AOS.init({
-    once: true,
-    disable: "mobile",
-  });
 </script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -268,21 +104,17 @@
   gtag("config", "G-J5R1RP57ZZ");
 </script>
 
-<script>
-  // Rediects to HTTPS connection
-  const restrictedOrigins = [
-    "https://solovevserg.github.io/",
-    "http://solovevserg.github.io/",
-    "http://sergsol.com/",
-    "http://sergsol.ru/",
-    "https://sergsol.ru/",
-  ];
-  if (restrictedOrigins.includes(location.origin)) {
-    const href = location.href.replace(location.origin, 'https://sergsol.com');
-    console.warn('Redirecting to', href);
-    this.location.replace(href);
-  }
+  <script>
+  // Loading Animation
+
+  document.body.style.opacity = 0;
+  setTimeout(() => {
+    document.body.style.transition = "var(--transition)";
+  });
+  setTimeout(() => {
+    document.body.style.opacity = 1;
+  }, 300);
 </script>
- 
-  </body>
+</body>
+
 </html>

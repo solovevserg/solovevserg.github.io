@@ -1,0 +1,19 @@
+<script>
+  // Подставляет текущий год в конец страницы
+  document.getElementById("this-year").innerText = new Date().getFullYear();
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script
+  async
+  src="https://www.googletagmanager.com/gtag/js?id=G-J5R1RP57ZZ"
+></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+  gtag("js", new Date());
+
+  gtag("config", "G-J5R1RP57ZZ");
+</script>

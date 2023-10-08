@@ -1,115 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <% include /_head.ejs %> 
-  </head>
-  <body>
-    <% include /_page-fade-in-animation.ejs %> 
-    <% include /_nav.ejs %>
-    <main>
-      <header data-aos="fade-right" id="welcome">
-        <div class="container header-container">
-          <p class="header__text"><t data-t>hello_everyone</t></p>
-          <h1 class="section__header header__headline">
-            <t data-t>name</t>
-          </h1>
-          <p class="header__text">
-            <t data-t>i_am</t> <t data-t>profession</t>
-          </p>
-          <br />
-          <div class="welcome__ctas">
-            <a
-              class="button-like"
-              target="_blank"
-              href="https://hh.ru/applicant/resumes/view?resume=78b19b1dff097442f70039ed1f666643556a49"
-              ><t data-t>see_CV</t></a
-            >
-            <a class="button-like" href="#contacts"><t data-t>contact_me</t></a>
-          </div>
-          <a class="haeder__scroll-invitation" href="#about">
-            <span class="material-icons">keyboard_double_arrow_down</span>
-            <t data-t>scroll_to_see</t>
-          </a>
-          <!-- <img draggable="false" src="/img/avatar.jpg" height="200" alt="Sergei Solovev, web-developer"> -->
-        </div>
-      </header>
+<html data-attr-t lang-t="lang">
 
-      <section class="container" id="about">
-        <h2 class="section__header" data-aos="fade-right">
-          <span class="material-icons">surfing</span>
-          <t data-t>about_me</t>
-        </h2>
-        <div class="about__content split-layout">
-          <img
-            draggable="false"
-            class="about__content__avatar"
-            src="/img/avatar.jpg"
-            alt=""
-          />
-          <div class="about__content__description">
-            <p>
-              <t data-t>about_me_content</t>
-            </p>
-          </div>
-        </div>
-        <p></p>
-      </section>
+<head>
+  <% include /_domain-redirect.ejs %>
+  <% include /_head.ejs %>
+</head>
 
-      <section class="container" id="skills">
-        <h2 class="section__header" data-aos="fade-right">
-          <span class="material-icons">construction</span>
-              <t data-t>my_skills</t>
-        </h2>
-        <p>
-          <t data-t>my_skills_comment</t>
-        </p>
-        <div class="split-layout">
-          <div>
-            <h3>
-              <t data-t>hards</t>
-            </h3>
-            <ul>
-              <li>HTML</li>
-              <li>CSS/SCSS</li>
-              <li>JS/TS</li>
-              <li>RxJS</li>
-              <li><b> Angular/Ionic</b></li>
-              <li>Node/Express/NestJS</li>
-              <li>Pyhton/Jupyter/Google Colab</li>
-              <li>C#/ASP.NET Core</li>
-              <li>Docker/GitLab CI/CD</li>
-              <li>Adobe Ps/Pe/Ai/Ae/Au</li>
-              <li>MS Offcie/Google Docs</li>
-              <li>Figma</li>
-            </ul>
-          </div>
-          <div>
-            <h3>
-              <t data-t>softs</t>
-            </h3>
-            <ul>
-              <li><t data-t>analysis</t></li>
-              <li><t data-t>project_management</t></li>
-              <li><t data-t>communication</t></li>
-              <li><t data-t>documents</t></li>
-              <li><t data-t>teaching</t></li>
-              <li><t data-t>abstractions</t></li>
-              <li><t data-t>idea_generation</t></li>
-              <li><t data-t>languages</t></li>
-              <li><t data-t>quality</t></li>
-            </ul>
-          </div>
-        </div>
-      </section>
+<body class="welcome">
+  <img class="welcome__avatar" draggable="false" src="/img/avatar-full.jpg" alt="Sergei Solovev" />
+  <main>
+    <p class="welcome__text">
+      <t data-t>hello_everyone</t>
+    </p>
+    <h1 class="welcome__name">
+      <t data-t>full_name</t><br>
+    </h1>
+    <p class="welcome__text">
+      <t data-t>profession</t>
+    </p>
 
+    <div class="welcome__contacts">
+      <a class="welcome__contacts-link" target="_blank"
+        href="https://hh.ru/resume/78b19b1dff097442f70039ed1f666643556a49">
+        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/headhunter.svg" alt="HeadHunter" />
+      </a>
+      <a class="welcome__contacts-link" target="_blank" href="https://www.linkedin.com/in/solovevserg/">
+        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/linkedin.svg" alt="LinkedIn" />
+      </a>
+      <a class="welcome__contacts-link" target="_blank" href="https://t.me/sergsol">
+        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/telegram.svg" alt="Telegram" />
+      </a>
+      <a class="welcome__contacts-link" target="_blank" href="https://github.com/solovevserg">
+        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/github.svg" alt="GitHub" />
+      </a>
+    </div>
 
-      <%# include /_blog.ejs %>
-      <%# include /_projects.ejs %>
-      <%# include /_process.ejs %>
+    <footer class="footer">
+      <p class="footer__copyright">
+        &copy; <t data-t>name</t>
+        <t data-t>surname</t>, <span id="this-year">2023</span>
+      </p>
+      <p class="footer__language">
+        <a href="/">En</a> /
+        <a href="/ru">Ру</a>
+      </p>
+    </footer>
+  </main>
 
+  <% include /_scripts.ejs %>
+  <% include /_page-fade-in-animation.ejs %>
+</body>
 
-    </main>
-    <% include /_footer.ejs %> 
-    <% include /_scripts.ejs %> 
-  </body>
 </html>

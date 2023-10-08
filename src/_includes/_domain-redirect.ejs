@@ -1,0 +1,18 @@
+<script>
+    // Rediects to HTTPS connection
+    const restrictedOrigins = [
+        "http://sergsol.dev",
+        "https://solovevserg.github.io",
+        "http://solovevserg.github.io",
+        "http://sergsol.com",
+        "https://sergsol.com",
+        "http://sergsol.ru",
+        "https://sergsol.ru",
+    ];
+
+    if (restrictedOrigins.includes(location.origin)) {
+        const href = location.href.replace(location.origin, 'https://sergsol.dev');
+        console.log('Redirecting to', href);
+        this.location.replace(href);
+    }
+</script>
