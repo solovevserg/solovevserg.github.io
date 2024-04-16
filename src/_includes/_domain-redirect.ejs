@@ -10,8 +10,10 @@
         "https://sergsol.ru",
     ];
 
+    const target = 'https://solovevserg.github.io';
+
     if (restrictedOrigins.includes(location.origin)) {
-        const href = location.href.replace(location.origin, 'https://sergsol.dev');
+        const href = location.href.replace(location.origin, target);
         console.log('Redirecting to', href);
         this.location.replace(href);
     }
