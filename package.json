@@ -1,49 +1,24 @@
 {
-  "name": "solovevserg.github.io",
-  "version": "1.0.0",
-  "description": "Sergei Solovev analyst, web designer and developer portfolio static web page",
-  "main": "./src/index.js",
+  "name": "solovevserg-site",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "prebuild": "rm -rf ru",
-    "build:ejs": "npx @11ty/eleventy",
-    "build:mv": "mv _site/* .",
-    "build:i18n": "npx static-i18n -o . --l en --i en --i ru --localesPath ./src/locales --replace true --exclude node_modules .",
-    "build": "npm run build:ejs && npm run build:mv && npm run build:i18n"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/solovevserg/solovevserg.github.io.git"
-  },
-  "keywords": [
-    "portfolio",
-    "sergei",
-    "solovev",
-    "generative",
-    "art",
-    "web",
-    "design",
-    "data",
-    "vizualisation"
-  ],
-  "author": "Sergei Solovev",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/solovevserg/solovevserg.github.io/issues"
-  },
-  "homepage": "https://github.com/solovevserg/solovevserg.github.io#readme",
-  "devDependencies": {
-    "@11ty/eleventy": "^0.12.1",
-    "css-loader": "^5.0.1",
-    "sass": "^1.32.0",
-    "sass-loader": "^10.1.0",
-    "static-i18n": "^0.2.10",
-    "style-loader": "^2.0.0",
-    "webpack": "^5.11.1",
-    "webpack-cli": "^4.3.1"
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@notionhq/client": "^0.4.9",
-    "notion-page-to-html": "^1.1.2",
-    "tiny-slider": "^2.9.3"
+    "@nuxt/content": "^2.13.4",
+    "@nuxtjs/i18n": "^8.5.5",
+    "nuxt": "^3.15.4",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "http-server": "^14.1.1",
+    "typescript": "^5.7.3"
   }
 }

@@ -1,0 +1,29 @@
+{
+  "nav": {
+    "home": "Home",
+    "blog": "Blog",
+    "portfolio": "Portfolio"
+  },
+  "home": {
+    "hero": {
+      "greeting": "Hi, I'm",
+      "role": "Developer",
+      "cta_blog": "Read blog",
+      "cta_portfolio": "My projects"
+    },
+    "about": {
+      "title": "About me"
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "empty": "No posts yet."
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "empty": "No projects yet."
+  },
+  "footer": {
+    "rights": "All rights reserved"
+  }
+}
