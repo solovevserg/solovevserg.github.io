@@ -4,16 +4,124 @@
     "blog": "Blog",
     "portfolio": "Portfolio"
   },
-  "home": {
-    "hero": {
-      "greeting": "Hi, I'm",
-      "role": "Developer",
-      "cta_blog": "Read blog",
-      "cta_portfolio": "My projects"
-    },
-    "about": {
-      "title": "About me"
-    }
+  "hero": {
+    "role": "Lead Frontend Developer",
+    "tagline": ["Building interfaces.", "Leading teams.", "Teaching."],
+    "cta_contact": "Get in touch",
+    "cta_blog": "Read blog",
+    "available": "Open to opportunities"
+  },
+  "stats": [
+    { "value": "8+", "label": "years of exp." },
+    { "value": "50+", "label": "projects" },
+    { "value": "100+", "label": "students" },
+    { "value": "11", "label": "team members" }
+  ],
+  "about": {
+    "title": "About",
+    "bio": "Specialized in Angular SPA architecture and development. Led teams of up to 11 engineers, built processes for enterprise-scale projects. Teaching at HSE, BMSTU, and Quantorium. Co-founder of SDAL digital studio. Interested in philosophy, linguistics, and ballroom dancing.",
+    "location": "Moscow, Russia",
+    "languages": "Russian (native) · English (B2)",
+    "edu_short": "BMSTU · Applied Informatics"
+  },
+  "experience": {
+    "title": "Experience",
+    "items": [
+      {
+        "company": "T-Bank",
+        "role": "Lead Developer (Angular)",
+        "period": "Sept 2022 — Present",
+        "current": true,
+        "bullets": [
+          "SPA development with Angular 12+, RxJS, TaigaUI",
+          "Code review and architectural design decisions",
+          "Test automation: Cypress, Playwright",
+          "Monitoring: Grafana, Prometheus",
+          "CI/CD: GitLab, Docker"
+        ]
+      },
+      {
+        "company": "SDAL Web Studio",
+        "role": "Co-founder, CEO",
+        "period": "Sept 2019 — Present",
+        "current": true,
+        "bullets": [
+          "Team management and hiring",
+          "Full-stack TypeScript development",
+          "Ride-sharing platform: NestJS backend + Angular admin"
+        ]
+      },
+      {
+        "company": "Qoollo",
+        "role": "Frontend Department Head",
+        "period": "July 2017 — Aug 2022",
+        "current": false,
+        "bullets": [
+          "Led a team of up to 11 developers",
+          "Angular architecture design",
+          "Enterprise projects: healthcare, security, transport"
+        ]
+      },
+      {
+        "company": "BMSTU",
+        "role": "Data Analyst",
+        "period": "Sept 2020 — Aug 2021",
+        "current": false,
+        "bullets": [
+          "Social media data collection tools",
+          "University analytics and reporting"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "title": "Skills",
+    "groups": [
+      {
+        "name": "Frontend",
+        "items": ["Angular", "TypeScript", "RxJS", "TaigaUI", "HTML5", "CSS3", "Vue.js"]
+      },
+      {
+        "name": "Testing",
+        "items": ["Cypress", "Playwright", "Jest", "Unit Testing"]
+      },
+      {
+        "name": "Infrastructure",
+        "items": ["Docker", "GitLab CI/CD", "Grafana", "Prometheus", "NestJS", "REST API"]
+      },
+      {
+        "name": "Leadership",
+        "items": ["Team Lead", "Architecture Design", "Code Review", "Agile/Scrum", "Mentoring"]
+      }
+    ]
+  },
+  "education": {
+    "title": "Education",
+    "items": [
+      {
+        "degree": "MSc (in progress, 2026)",
+        "field": "Philosophy of Science & Technology",
+        "school": "BMSTU"
+      },
+      {
+        "degree": "MSc (2022)",
+        "field": "Applied Informatics",
+        "school": "BMSTU"
+      },
+      {
+        "degree": "BSc (2020)",
+        "field": "Applied Informatics",
+        "school": "BMSTU"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Get in touch",
+    "subtitle": "Open to new projects, mentoring, and collaborations.",
+    "telegram": "Telegram",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "hh": "Resume (HH)"
   },
   "blog": {
     "title": "Blog",

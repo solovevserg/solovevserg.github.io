@@ -8,15 +8,15 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 .layout {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .layout__main {
   flex: 1;
-  padding: 3rem 0;
+  padding-top: var(--header-h);
 }
 </style>

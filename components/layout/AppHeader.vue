@@ -1,82 +1,373 @@
 <script setup lang="ts">
 const { t, locale, locales, setLocale } = useI18n()
 const localePath = useLocalePath()
+const { isDark, toggle } = useTheme()
+const { progress, activeLabelKey } = useScrollSpy()
 
-const otherLocale = computed(() =>
-  locales.value.find(l => l.code !== locale.value)
+const menuOpen = ref(false)
+const toggleMenu = () => { menuOpen.value = !menuOpen.value }
+const closeMenu = () => { menuOpen.value = false }
+
+const route = useRoute()
+watch(() => route.fullPath, closeMenu)
+
+watch(menuOpen, (val) => {
+  if (import.meta.client) {
+    document.body.style.overflow = val ? 'hidden' : ''
+  }
+})
+
+const otherLocale = computed(() => locales.value.find(l => l.code !== locale.value))
+
+const navLinks = computed(() => [
+  { label: t('nav.home'), path: '/' },
+  { label: t('nav.blog'), path: '/blog' },
+  { label: t('nav.portfolio'), path: '/portfolio' },
+])
+
+const activeLabel = computed(() =>
+  activeLabelKey.value ? t(activeLabelKey.value) : ''
 )
+
+const isHome = computed(() => route.name?.toString().startsWith('index'))
 </script>
 
 <template>
   <header class="header">
-    <div class="container header__inner">
-      <NuxtLink :to="localePath('/')" class="header__logo">
-        Sergei Solovev
+    <div class="header__bar">
+      <NuxtLink :to="localePath('/')" class="header__logo" @click="closeMenu">
+        <span class="logo-bracket">{</span>SS<span class="logo-bracket">}</span>
       </NuxtLink>
 
+      <!-- Current section label (desktop, landing only) -->
+      <Transition name="fade-slide">
+        <span
+          v-if="isHome && activeLabel"
+          class="header__section-label"
+          :key="activeLabel"
+        >
+          <span class="header__section-sep">/</span>
+          {{ activeLabel }}
+        </span>
+      </Transition>
+
       <nav class="header__nav">
-        <NuxtLink :to="localePath('/')">{{ t('nav.home') }}</NuxtLink>
-        <NuxtLink :to="localePath('/blog')">{{ t('nav.blog') }}</NuxtLink>
-        <NuxtLink :to="localePath('/portfolio')">{{ t('nav.portfolio') }}</NuxtLink>
+        <NuxtLink
+          v-for="link in navLinks"
+          :key="link.path"
+          :to="localePath(link.path)"
+          class="header__nav-link"
+        >
+          {{ link.label }}
+        </NuxtLink>
       </nav>
 
-      <button
-        v-if="otherLocale"
-        class="header__lang"
-        @click="setLocale(otherLocale.code)"
-      >
-        {{ otherLocale.code.toUpperCase() }}
-      </button>
+      <div class="header__controls">
+        <button
+          v-if="otherLocale"
+          class="ctrl-btn lang-btn"
+          @click="setLocale(otherLocale.code)"
+        >
+          {{ otherLocale.code.toUpperCase() }}
+        </button>
+
+        <button class="ctrl-btn theme-btn" @click="toggle" :aria-label="isDark ? 'Light mode' : 'Dark mode'">
+          <svg v-if="isDark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+            <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+          </svg>
+          <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+
+        <button
+          class="burger"
+          :class="{ 'burger--open': menuOpen }"
+          @click="toggleMenu"
+          aria-label="Menu"
+        >
+          <span class="burger__line" />
+          <span class="burger__line" />
+        </button>
+      </div>
     </div>
+
+    <!-- Scroll progress bar -->
+    <div v-if="isHome" class="progress-bar" aria-hidden="true">
+      <div
+        class="progress-bar__fill"
+        :style="{ width: `${progress}%` }"
+      />
+    </div>
+
+    <!-- Mobile fullscreen menu -->
+    <Transition name="curtain">
+      <div v-if="menuOpen" class="mobile-menu">
+        <nav class="mobile-nav">
+          <NuxtLink
+            v-for="(link, i) in navLinks"
+            :key="link.path"
+            :to="localePath(link.path)"
+            class="mobile-nav__link"
+            @click="closeMenu"
+          >
+            <span class="mobile-nav__num">0{{ i + 1 }}</span>
+            <span class="mobile-nav__label">{{ link.label }}</span>
+          </NuxtLink>
+        </nav>
+
+        <div class="mobile-menu__footer">
+          <button
+            v-if="otherLocale"
+            class="ctrl-btn lang-btn"
+            @click="setLocale(otherLocale.code); closeMenu()"
+          >
+            {{ otherLocale.code.toUpperCase() }}
+          </button>
+          <button class="ctrl-btn theme-btn" @click="toggle">
+            <svg v-if="isDark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </Transition>
   </header>
 </template>
 
 <style scoped>
+/* ─ Header ────────────────────────────────────────────────── */
 .header {
-  border-bottom: 1px solid var(--color-border);
-  padding: 1rem 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 100;
+  background: var(--header-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
 }
 
-.header__inner {
+.header__bar {
+  flex: 1;
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
 }
 
+/* ─ Logo ─────────────────────────────────────────────────── */
 .header__logo {
-  font-weight: 600;
-  color: var(--color-text);
-  margin-right: auto;
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
 
+.logo-bracket { color: var(--accent); }
+
+/* ─ Section label ────────────────────────────────────────── */
+.header__section-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.header__section-sep {
+  color: var(--text-xmuted);
+  font-weight: 300;
+}
+
+/* ─ Desktop nav ──────────────────────────────────────────── */
 .header__nav {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
+  margin-left: auto;
 }
 
-.header__nav a {
-  color: var(--color-muted);
-  font-size: 0.95rem;
+.header__nav-link {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  position: relative;
 }
 
-.header__nav a:hover,
-.header__nav a.router-link-active {
-  color: var(--color-accent);
-  text-decoration: none;
+.header__nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.25s ease;
 }
 
-.header__lang {
-  background: none;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-  font-size: 0.85rem;
-  color: var(--color-muted);
+.header__nav-link:hover,
+.header__nav-link.router-link-active { color: var(--text); }
+
+.header__nav-link:hover::after,
+.header__nav-link.router-link-active::after { width: 100%; }
+
+/* ─ Controls ─────────────────────────────────────────────── */
+.header__controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
-.header__lang:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+.ctrl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.ctrl-btn:hover {
+  color: var(--text);
+  border-color: var(--border-md);
+  background: var(--bg-subtle);
+}
+
+/* ─ Progress bar ─────────────────────────────────────────── */
+.progress-bar {
+  height: 2px;
+  width: 100%;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.progress-bar__fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.08s linear;
+  border-radius: 0 2px 2px 0;
+  will-change: width;
+}
+
+/* ─ Burger ───────────────────────────────────────────────── */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 0 9px;
+}
+
+.burger__line {
+  display: block;
+  width: 100%; height: 1.5px;
+  background: var(--text-muted);
+  border-radius: 2px;
+  transform-origin: center;
+  transition: transform 0.3s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.2s;
+}
+
+.burger--open .burger__line:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+.burger--open .burger__line:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+
+/* ─ Mobile fullscreen curtain ────────────────────────────── */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  top: var(--header-h);
+  background: var(--bg);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 2.5rem;
+  overflow-y: auto;
+}
+
+.mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.mobile-nav__link {
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.mobile-nav__link:hover,
+.mobile-nav__link.router-link-active { color: var(--text); }
+
+.mobile-nav__num {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.mobile-nav__label {
+  font-size: clamp(2rem, 8vw, 3rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+
+.mobile-menu__footer {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2.5rem;
+}
+
+/* ─ Transitions ──────────────────────────────────────────── */
+.curtain-enter-active,
+.curtain-leave-active {
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.curtain-enter-from,
+.curtain-leave-to { transform: translateY(-100%); }
+
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+/* ─ Responsive ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .header__nav { display: none; }
+  .header__section-label { display: none; }
+  .burger { display: flex; }
 }
 </style>

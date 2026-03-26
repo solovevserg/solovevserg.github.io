@@ -4,16 +4,124 @@
     "blog": "Блог",
     "portfolio": "Портфолио"
   },
-  "home": {
-    "hero": {
-      "greeting": "Привет, я",
-      "role": "Разработчик",
-      "cta_blog": "Читать блог",
-      "cta_portfolio": "Мои проекты"
-    },
-    "about": {
-      "title": "Обо мне"
-    }
+  "hero": {
+    "role": "Lead Frontend Developer",
+    "tagline": ["Строю интерфейсы.", "Управляю командами.", "Преподаю."],
+    "cta_contact": "Написать",
+    "cta_blog": "Читать блог",
+    "available": "Открыт к предложениям"
+  },
+  "stats": [
+    { "value": "8+", "label": "лет опыта" },
+    { "value": "50+", "label": "проектов" },
+    { "value": "100+", "label": "студентов" },
+    { "value": "11", "label": "чел. в команде" }
+  ],
+  "about": {
+    "title": "Обо мне",
+    "bio": "Специализируюсь на архитектуре и разработке SPA на Angular. Руководил командами до 11 человек, выстраивал процессы в enterprise-проектах. Преподаю во ВШЭ, МГТУ Баумана и Кванториуме. Сооснователь digital-студии SDAL. Интересуюсь философией, лингвистикой и бальными танцами.",
+    "location": "Москва",
+    "languages": "Русский (native) · English (B2)",
+    "edu_short": "МГТУ Баумана · Прикладная информатика"
+  },
+  "experience": {
+    "title": "Опыт",
+    "items": [
+      {
+        "company": "Т-Банк",
+        "role": "Lead Developer (Angular)",
+        "period": "сент. 2022 — наст. время",
+        "current": true,
+        "bullets": [
+          "SPA-разработка на Angular 12+, RxJS, TaigaUI",
+          "Code review и архитектурные решения",
+          "Автоматизация тестирования: Cypress, Playwright",
+          "Мониторинг: Grafana, Prometheus",
+          "CI/CD: GitLab, Docker"
+        ]
+      },
+      {
+        "company": "SDAL Web Studio",
+        "role": "Сооснователь, CEO",
+        "period": "сент. 2019 — наст. время",
+        "current": true,
+        "bullets": [
+          "Управление командой, найм разработчиков",
+          "Full-stack разработка на TypeScript",
+          "Ride-sharing платформа: NestJS backend + Angular admin"
+        ]
+      },
+      {
+        "company": "Qoollo",
+        "role": "Руководитель фронтенд-направления",
+        "period": "июль 2017 — авг. 2022",
+        "current": false,
+        "bullets": [
+          "Управление командой до 11 разработчиков",
+          "Проектирование Angular-архитектуры",
+          "Enterprise-проекты: медицина, безопасность, транспорт"
+        ]
+      },
+      {
+        "company": "МГТУ Баумана",
+        "role": "Аналитик данных",
+        "period": "сент. 2020 — авг. 2021",
+        "current": false,
+        "bullets": [
+          "Инструменты сбора данных из соцсетей",
+          "Университетская аналитика и отчётность"
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "title": "Технологии",
+    "groups": [
+      {
+        "name": "Frontend",
+        "items": ["Angular", "TypeScript", "RxJS", "TaigaUI", "HTML5", "CSS3", "Vue.js"]
+      },
+      {
+        "name": "Тестирование",
+        "items": ["Cypress", "Playwright", "Jest", "Unit Testing"]
+      },
+      {
+        "name": "Инфраструктура",
+        "items": ["Docker", "GitLab CI/CD", "Grafana", "Prometheus", "NestJS", "REST API"]
+      },
+      {
+        "name": "Управление",
+        "items": ["Team Lead", "Architecture Design", "Code Review", "Agile/Scrum", "Mentoring"]
+      }
+    ]
+  },
+  "education": {
+    "title": "Образование",
+    "items": [
+      {
+        "degree": "Магистратура (в процессе, 2026)",
+        "field": "Философия науки и техники",
+        "school": "МГТУ Баумана"
+      },
+      {
+        "degree": "Магистратура (2022)",
+        "field": "Прикладная информатика",
+        "school": "МГТУ Баумана"
+      },
+      {
+        "degree": "Бакалавриат (2020)",
+        "field": "Прикладная информатика",
+        "school": "МГТУ Баумана"
+      }
+    ]
+  },
+  "contact": {
+    "title": "Связаться",
+    "subtitle": "Открыт к новым проектам, менторству и коллаборациям.",
+    "telegram": "Telegram",
+    "linkedin": "LinkedIn",
+    "github": "GitHub",
+    "hh": "Резюме на HH"
   },
   "blog": {
     "title": "Блог",

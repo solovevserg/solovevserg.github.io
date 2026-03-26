@@ -1,7 +1,12 @@
 {
   "permissions": {
     "allow": [
-      "Bash(npm i:*)"
+      "Bash(npm i:*)",
+      "WebFetch(domain:sergsol.dev)",
+      "WebFetch(domain:hh.ru)",
+      "WebFetch(domain:www.linkedin.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm run:*)"
     ]
   }
 }
