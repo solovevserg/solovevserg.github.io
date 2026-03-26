@@ -22,7 +22,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Sergei Solovev | I am a lead frontend developer, teacher and entrepreneur. Feel free to contact
+  Sergei Solovev | Lead Frontend Developer · Entrepreneur · Teacher
 </title>
 
 <meta charset="UTF-8">
@@ -31,7 +31,7 @@
 
 <!-- OGP -->
 <meta property="og:title" content="Sergei Solovev">
-<meta property="og:description" content="I am a lead frontend developer, teacher and entrepreneur. Feel free to contact">
+<meta property="og:description" content="Lead Frontend Developer · Entrepreneur · Teacher">
 <meta property="og:url" content="https://sergsol.dev/">
 <meta property="og:site_name" content="Sergei Solovev">
 <meta property="og:locale" content="us_US">
@@ -47,45 +47,451 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 
-<body class="welcome">
-  <img class="welcome__avatar" draggable="false" src="/img/avatar-full.jpg" alt="Sergei Solovev">
-  <main>
-    <p class="welcome__text">
-      👋 Hi, everyone! My name is
-    </p>
-    <h1 class="welcome__name">
-      Sergei Solovev<br>
-    </h1>
-    <p class="welcome__text">
-      I am a lead frontend developer, teacher and entrepreneur. Feel free to contact
-    </p>
+<body>
 
-    <div class="welcome__contacts">
-      <a class="welcome__contacts-link" target="_blank" href="https://hh.ru/resume/78b19b1dff097442f70039ed1f666643556a49">
-        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/headhunter.svg" alt="HeadHunter">
-      </a>
-      <a class="welcome__contacts-link" target="_blank" href="https://www.linkedin.com/in/solovevserg/">
-        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/linkedin.svg" alt="LinkedIn">
-      </a>
-      <a class="welcome__contacts-link" target="_blank" href="https://t.me/sergsol">
-        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/telegram.svg" alt="Telegram">
-      </a>
-      <a class="welcome__contacts-link" target="_blank" href="https://github.com/solovevserg">
-        <img class="welcome__contacts-link-img" draggable="false" src="/img/media/github.svg" alt="GitHub">
-      </a>
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
+  <!-- ═══ NAVIGATION ═══════════════════════════════════════════ -->
+  <nav class="nav" id="nav">
+    <div class="nav__inner">
+      <a class="nav__logo" href="#hero">SS</a>
+      <ul class="nav__links" id="nav-links">
+        <li><a class="nav__link" href="#about">About</a></li>
+        <li><a class="nav__link" href="#skills">Skills</a></li>
+        <li><a class="nav__link" href="#experience">Experience</a></li>
+        <li><a class="nav__link" href="#teaching">Teaching</a></li>
+        <li><a class="nav__link" href="#projects">Projects</a></li>
+        <li><a class="nav__link" href="#education">Education</a></li>
+        <li><a class="nav__link" href="#facts">Fun Facts</a></li>
+        <li><a class="nav__link" href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav__right">
+        <span class="nav__lang"><a href="/">En</a> / <a href="/ru">Ру</a></span>
+        <button class="nav__burger" id="nav-burger" aria-label="Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ══════════════════════════════════════════════════ -->
+  <section class="hero" id="hero">
+    <div class="hero__blobs" aria-hidden="true">
+      <div class="hero__blob hero__blob--1"></div>
+      <div class="hero__blob hero__blob--2"></div>
+      <div class="hero__blob hero__blob--3"></div>
     </div>
 
-    <footer class="footer">
-      <p class="footer__copyright">
-        &copy; Sergei
-        Solovev, <span id="this-year">2023</span>
-      </p>
-      <p class="footer__language">
-        <a href="/">En</a> /
-        <a href="/ru">Ру</a>
-      </p>
-    </footer>
-  </main>
+    <div class="hero__content">
+      <div class="hero__text">
+        <p class="hero__greeting">Hi, I'm</p>
+        <h1 class="hero__name">Sergei Solovev</h1>
+        <p class="hero__role">
+          <span class="hero__typewriter" id="typewriter">&nbsp;</span><span class="hero__cursor" aria-hidden="true">|</span>
+        </p>
+        <p class="hero__tagline">8+ years building scalable Angular apps, leading engineering teams and sharing knowledge.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--primary" href="https://hh.ru/resume/78b19b1dff097442f70039ed1f666643556a49" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CV
+          </a>
+          <a class="btn btn--outline" href="https://t.me/solovevserg" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Get in touch
+          </a>
+        </div>
+        <div class="hero__social">
+          <a class="hero__social-link" href="https://github.com/solovevserg" target="_blank" rel="noopener" aria-label="GitHub">
+            <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </a>
+          <a class="hero__social-link" href="https://www.linkedin.com/in/solovevserg/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+          <a class="hero__social-link" href="https://t.me/sergsol" target="_blank" rel="noopener" aria-label="Telegram">
+            <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          </a>
+          <a class="hero__social-link" href="https://hh.ru/resume/78b19b1dff097442f70039ed1f666643556a49" target="_blank" rel="noopener" aria-label="HeadHunter">
+            <svg width="20" height="20" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v3h4V8h2v8h-2v-3h-4v3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero__photo-wrap">
+        <img class="hero__photo" src="/img/avatar-full.jpg" alt="Sergei Solovev" draggable="false">
+      </div>
+    </div>
+
+    <a class="hero__scroll-hint" href="#about" aria-label="Scroll to About">
+      <div class="hero__scroll-arrow"></div>
+    </a>
+  </section>
+
+  <!-- ═══ ABOUT ═════════════════════════════════════════════════ -->
+  <section class="section about" id="about">
+    <div class="section__inner">
+      <h2 class="section__title animate-on-scroll">About Me</h2>
+      <div class="about__layout">
+
+        <div class="about__stats animate-on-scroll">
+          <div class="about__stat">
+            <span class="about__stat-num" data-count="8" data-suffix="+">0</span>
+            <span class="about__stat-label">Years of experience</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num" data-count="3" data-suffix>0</span>
+            <span class="about__stat-label">Major employers</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num" data-count="4" data-suffix>0</span>
+            <span class="about__stat-label">Teaching institutions</span>
+          </div>
+          <div class="about__stat">
+            <span class="about__stat-num" data-count="15" data-suffix="+">0</span>
+            <span class="about__stat-label">Courses & workshops</span>
+          </div>
+        </div>
+
+        <div class="about__right">
+          <p class="about__bio animate-on-scroll">I'm a lead frontend developer with 8+ years of commercial experience. I specialize in Angular & TypeScript, design complex SPA architectures, lead engineering teams and co-own a web studio. I believe great software comes from deep technical craft, clear thinking and relentless focus on user value.</p>
+          <div class="about__langs animate-on-scroll">
+            <p class="about__langs-title">Languages</p>
+            <div class="about__lang">
+              <span class="about__lang-flag">🇷🇺</span>
+              <span>Russian — Native</span>
+            </div>
+            <div class="about__lang">
+              <span class="about__lang-flag">🇬🇧</span>
+              <span>English — B2 Upper-Intermediate</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SKILLS ════════════════════════════════════════════════ -->
+  <section class="section skills" id="skills">
+    <div class="section__inner">
+      <h2 class="section__title animate-on-scroll">Tech Stack</h2>
+
+      <div class="skills__block animate-on-scroll">
+        <h3 class="skills__group-label">Expert</h3>
+        <div class="skills__tags">
+          <span class="skill-tag skill-tag--expert">TypeScript</span>
+          <span class="skill-tag skill-tag--expert">Angular 12+</span>
+          <span class="skill-tag skill-tag--expert">RxJS</span>
+          <span class="skill-tag skill-tag--expert">HTML5</span>
+          <span class="skill-tag skill-tag--expert">CSS3</span>
+          <span class="skill-tag skill-tag--expert">REST API</span>
+          <span class="skill-tag skill-tag--expert">Software Architecture</span>
+          <span class="skill-tag skill-tag--expert">E2E Testing</span>
+          <span class="skill-tag skill-tag--expert">Docker</span>
+        </div>
+      </div>
+
+      <div class="skills__block animate-on-scroll">
+        <h3 class="skills__group-label">Proficient</h3>
+        <div class="skills__tags">
+          <span class="skill-tag skill-tag--mid">JavaScript</span>
+          <span class="skill-tag skill-tag--mid">NestJS</span>
+          <span class="skill-tag skill-tag--mid">Cypress</span>
+          <span class="skill-tag skill-tag--mid">Playwright</span>
+          <span class="skill-tag skill-tag--mid">Git</span>
+          <span class="skill-tag skill-tag--mid">Unit Testing</span>
+          <span class="skill-tag skill-tag--mid">BEM</span>
+          <span class="skill-tag skill-tag--mid">Responsive Design</span>
+          <span class="skill-tag skill-tag--mid">CI/CD</span>
+          <span class="skill-tag skill-tag--mid">Grafana</span>
+          <span class="skill-tag skill-tag--mid">Prometheus</span>
+          <span class="skill-tag skill-tag--mid">Project Management</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ EXPERIENCE ════════════════════════════════════════════ -->
+  <section class="section experience" id="experience">
+    <div class="section__inner">
+      <h2 class="section__title animate-on-scroll">Experience</h2>
+
+      <div class="timeline">
+
+        <article class="timeline__item animate-on-scroll">
+          <div class="timeline__dot timeline__dot--active" aria-hidden="true"></div>
+          <div class="timeline__card">
+            <div class="timeline__header">
+              <div>
+                <p class="timeline__period">Sep 2022 — present</p>
+                <h3 class="timeline__company">T-Bank</h3>
+                <p class="timeline__role">Lead Frontend Developer</p>
+              </div>
+              <span class="badge badge--active">Current</span>
+            </div>
+            <p class="timeline__desc">Designing and developing complex SPA applications on Angular. Code review, test automation with Cypress & Playwright, monitoring with Grafana & Prometheus, CI/CD configuration, participation in REST API design, team leadership during manager absences.</p>
+            <div class="timeline__chips">
+              <span class="chip">Angular</span><span class="chip">TypeScript</span><span class="chip">Cypress</span><span class="chip">Playwright</span><span class="chip">Grafana</span><span class="chip">CI/CD</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="timeline__item animate-on-scroll">
+          <div class="timeline__dot timeline__dot--active" aria-hidden="true"></div>
+          <div class="timeline__card">
+            <div class="timeline__header">
+              <div>
+                <p class="timeline__period">Sep 2019 — present</p>
+                <h3 class="timeline__company">SDAL Web Studio</h3>
+                <p class="timeline__role">Co-founder & CEO</p>
+              </div>
+              <span class="badge badge--active">Current</span>
+            </div>
+            <p class="timeline__desc">Co-founded and run a web development studio. Full-stack TypeScript development (NestJS + Angular), UX/UI design, team building and recruitment, strategic planning, client relations and business development.</p>
+            <div class="timeline__chips">
+              <span class="chip">NestJS</span><span class="chip">Angular</span><span class="chip">TypeScript</span><span class="chip">UX/UI</span><span class="chip">Team Lead</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="timeline__item animate-on-scroll">
+          <div class="timeline__dot" aria-hidden="true"></div>
+          <div class="timeline__card">
+            <div class="timeline__header">
+              <div>
+                <p class="timeline__period">Jul 2017 — Aug 2022</p>
+                <h3 class="timeline__company">Qoollo</h3>
+                <p class="timeline__role">Head of Frontend Department</p>
+              </div>
+            </div>
+            <p class="timeline__desc">Grew from junior developer to department head over 5 years. Led a team of up to 11 engineers, designed web application and API architectures, established TypeScript & testing standards, delivered government and commercial information systems.</p>
+            <div class="timeline__chips">
+              <span class="chip">Angular</span><span class="chip">TypeScript</span><span class="chip">Architecture</span><span class="chip">Team Lead</span><span class="chip">11 engineers</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="timeline__item animate-on-scroll">
+          <div class="timeline__dot" aria-hidden="true"></div>
+          <div class="timeline__card">
+            <div class="timeline__header">
+              <div>
+                <p class="timeline__period">Sep 2020 — Aug 2021</p>
+                <h3 class="timeline__company">MSTU (Bauman University)</h3>
+                <p class="timeline__role">Data Analyst</p>
+              </div>
+            </div>
+            <p class="timeline__desc">Developed data collection and visualization scripts, performed social network analysis, evaluated academic performance metrics and conducted competitive analysis research.</p>
+            <div class="timeline__chips">
+              <span class="chip">Data Analysis</span><span class="chip">Visualization</span><span class="chip">Research</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TEACHING ══════════════════════════════════════════════ -->
+
+  <section class="section teaching" id="teaching">
+    <div class="section__inner">
+      <h2 class="section__title animate-on-scroll">Teaching</h2>
+      <p class="section__subtitle animate-on-scroll">Teaching web development and data analysis since 2018 — at universities, schools and tech companies.</p>
+
+      <div class="cards-grid">
+        <div class="info-card animate-on-scroll">
+          <div class="info-card__icon" aria-hidden="true">🎓</div>
+          <h3 class="info-card__title">MSTU (Bauman University)</h3>
+          <p class="info-card__desc">HTML & CSS, JavaScript, Angular, Data Analysis. Faculties: СГН3, ИУ7, ИБМ, ИСОТ.</p>
+        </div>
+        <div class="info-card animate-on-scroll">
+          <div class="info-card__icon" aria-hidden="true">📐</div>
+          <h3 class="info-card__title">Higher School of Economics</h3>
+          <p class="info-card__desc">HTML & CSS, JavaScript, Web Design — HSE Kids programme.</p>
+        </div>
+        <div class="info-card animate-on-scroll">
+          <div class="info-card__icon" aria-hidden="true">💻</div>
+          <h3 class="info-card__title">Qoollo</h3>
+          <p class="info-card__desc">Internship programme, open RxJS & Angular webinars, frontend fundamentals.</p>
+        </div>
+        <div class="info-card animate-on-scroll">
+          <div class="info-card__icon" aria-hidden="true">🚀</div>
+          <h3 class="info-card__title">Quantorium / IT-Cube</h3>
+          <p class="info-card__desc">Online sessions on modern web development for educators.</p>
+        </div>
+      </div>
+
+      <div class="section__cta animate-on-scroll">
+        <a class="btn btn--outline" href="https://github.com/solovevserg/studies" target="_blank" rel="noopener">
+          <svg width="17" height="17" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          View all course materials on GitHub
+        </a>
+      </div>
+    </div>
+    <div class="talks animate-on-scroll">
+      <h3 class="talks__title">Conference Talks</h3>
+      <div class="talks__layout">
+
+        <div class="talks__list" id="talks-list">
+          <button class="talk-item talk-item--active" data-id="PT_sS6uWEMQ">
+            <span class="talk-item__num">01</span>
+            <div class="talk-item__info">
+              <span class="talk-item__conf">HolyJS</span>
+              <span class="talk-item__title">Typing eval and new Function: a JS interpreter on TypeScript types</span>
+            </div>
+            <svg class="talk-item__arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="talk-item" data-id="zl7GngwGcaM">
+            <span class="talk-item__num">02</span>
+            <div class="talk-item__info">
+              <span class="talk-item__conf">HolyJS</span>
+              <span class="talk-item__title">From Roman emperors to Temporal API: mastering dates and time in JS</span>
+            </div>
+            <svg class="talk-item__arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+          <button class="talk-item" data-id="FSj_rL6IuY8">
+            <span class="talk-item__num">03</span>
+            <div class="talk-item__info">
+              <span class="talk-item__conf">HolyJS</span>
+              <span class="talk-item__title">From Latin to async/await: archaeological excavations of JavaScript</span>
+            </div>
+            <svg class="talk-item__arrow" width="16" height="16" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
+        <div class="talks__player">
+          <div class="talks__frame-wrap">
+            <iframe id="talks-iframe" src="https://www.youtube.com/embed/PT_sS6uWEMQ" title="Talk video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+
+  <!-- ═══ PROJECTS ══════════════════════════════════════════════ -->
+  <section class="section projects" id="projects">
+    <div class="section__inner">
+      <h2 class="section__title animate-on-scroll">Projects</h2>
+
+      <div class="projects__grid">
+
+        <div class="project-card project-card--featured animate-on-scroll">
+          <div class="project-card__label">Case Study</div>
+          <h3 class="project-card__name">RideNow Taxi</h3>
+          <p class="project-card__company">SDAL Web Studio</p>
+          <p class="project-card__desc">A full-featured taxi aggregator platform built from scratch. Covers passenger app flow, driver matching, real-time tracking and a full backoffice panel for fleet operators and administrators.</p>
+          <p class="project-card__stack">NestJS · Angular · TypeScript · PostgreSQL · WebSocket</p>
+          <div class="project-card__chips">
+            <span class="chip">Full-stack</span><span class="chip">TypeScript</span><span class="chip">Real-time</span><span class="chip">Admin Panel</span>
+          </div>
+        </div>
+
+        <div class="project-card animate-on-scroll">
+          <div class="project-card__label">Open Source</div>
+          <h3 class="project-card__name">GitHub Projects</h3>
+          <p class="project-card__desc">TypeScript utilities, Telegram bots, RxJS experiments and frontend lecture demos. Explored Observable runtimes, shared workers and memoization patterns.</p>
+          <div class="project-card__chips">
+            <span class="chip">TypeScript</span><span class="chip">RxJS</span><span class="chip">Telegram Bot</span>
+          </div>
+          <a class="btn btn--ghost" href="https://github.com/solovevserg" target="_blank" rel="noopener">
+            View on GitHub
+            <svg width="14" height="14" viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ EDUCATION ═════════════════════════════════════════════ -->
+  <section class="section education" id="education">
+    <div class="section__inner">
+      <h2 class="section__title animate-on-scroll">Education</h2>
+      <div class="cards-grid">
+        <div class="edu-card animate-on-scroll">
+          <p class="edu-card__degree">Master of Science</p>
+          <h3 class="edu-card__field">Applied Informatics</h3>
+          <p class="edu-card__school">MSTU (Bauman University)</p>
+        </div>
+        <div class="edu-card animate-on-scroll">
+          <p class="edu-card__degree">Master of Science</p>
+          <h3 class="edu-card__field">Philosophy of Science & Technology</h3>
+          <p class="edu-card__school">MSTU (Bauman University)</p>
+        </div>
+        <div class="edu-card animate-on-scroll">
+          <p class="edu-card__degree">Bachelor of Science</p>
+          <h3 class="edu-card__field">Applied Informatics</h3>
+          <p class="edu-card__school">MSTU (Bauman University)</p>
+        </div>
+        <div class="edu-card animate-on-scroll">
+          <p class="edu-card__degree">Business Accelerator</p>
+          <h3 class="edu-card__field">Business Weekend Programme</h3>
+          <p class="edu-card__school">2020</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FUN FACTS ════════════════════════════════════════════ -->
+  <section class="section facts" id="facts">
+    <div class="section__inner">
+      <h2 class="section__title animate-on-scroll">Fun Facts</h2>
+      <div class="facts__grid">
+
+        <div class="fact-card animate-on-scroll">
+          <div class="fact-card__emoji" aria-hidden="true">🏸</div>
+          <h3 class="fact-card__title">Badminton player</h3>
+          <p class="fact-card__desc">Regular badminton games are my go-to way to recharge and stay sharp.</p>
+        </div>
+
+        <div class="fact-card animate-on-scroll">
+          <div class="fact-card__emoji" aria-hidden="true">🕺</div>
+          <h3 class="fact-card__title">2× Dance champion</h3>
+          <p class="fact-card__desc">Won dance competitions twice. Trained in 5 styles — from Russian folk dancing to bachata.</p>
+        </div>
+
+        <div class="fact-card animate-on-scroll">
+          <div class="fact-card__emoji" aria-hidden="true">🧱</div>
+          <h3 class="fact-card__title">Redstone engineer</h3>
+          <p class="fact-card__desc">Built a fully functional computer inside Minecraft using only redstone logic gates.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT ═══════════════════════════════════════════════ -->
+  <section class="section contact" id="contact">
+    <div class="contact__glow" aria-hidden="true"></div>
+    <div class="section__inner contact__inner">
+      <h2 class="contact__title animate-on-scroll">Let's Work Together</h2>
+      <p class="contact__subtitle animate-on-scroll">Open to senior & lead frontend roles, consulting and collaboration.</p>
+      <div class="contact__cta animate-on-scroll">
+        <a class="btn btn--primary btn--lg" href="https://t.me/solovevserg" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewbox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+          Message on Telegram
+        </a>
+      </div>
+      <div class="contact__links animate-on-scroll">
+        <a class="contact__link" href="https://www.linkedin.com/in/solovevserg/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="contact__link" href="https://hh.ru/resume/78b19b1dff097442f70039ed1f666643556a49" target="_blank" rel="noopener">HeadHunter</a>
+        <a class="contact__link" href="https://github.com/solovevserg" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__copy">&copy; Sergei Solovev, <span id="this-year">2024</span>. All rights reserved.</p>
+      <span class="footer__lang"><a href="/">En</a> / <a href="/ru">Ру</a></span>
+    </div>
+  </footer>
 
   <script>
   // Подставляет текущий год в конец страницы
@@ -103,6 +509,111 @@
 
   gtag("config", "G-J5R1RP57ZZ");
 </script>
+
+
+  <script>
+  /* ── TYPEWRITER ──────────────────────────────────────────── */
+  (function () {
+    var roles = {
+      en: ['Lead Frontend Developer', 'Angular Expert', 'Entrepreneur', 'Teacher'],
+      ru: ['Ведущий разработчик', 'Эксперт по Angular', 'Предприниматель', 'Преподаватель']
+    };
+    var lang = document.documentElement.lang || 'en';
+    var titles = roles[lang] || roles.en;
+    var el = document.getElementById('typewriter');
+    var idx = 0, char = 0, deleting = false;
+    function tick() {
+      var current = titles[idx];
+      if (deleting) {
+        el.textContent = current.slice(0, --char);
+        if (char <= 0) { deleting = false; idx = (idx + 1) % titles.length; setTimeout(tick, 500); return; }
+      } else {
+        el.textContent = current.slice(0, ++char);
+        if (char >= current.length) { deleting = true; setTimeout(tick, 2200); return; }
+      }
+      setTimeout(tick, deleting ? 45 : 80);
+    }
+    setTimeout(tick, 900);
+  })();
+
+  /* ── NAV SCROLL + PROGRESS ───────────────────────────────── */
+  var nav = document.getElementById('nav');
+  var prog = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', function () {
+    nav.classList.toggle('nav--scrolled', window.scrollY > 50);
+    var pct = (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100;
+    prog.style.width = Math.min(pct, 100) + '%';
+  }, { passive: true });
+
+  /* ── MOBILE BURGER ───────────────────────────────────────── */
+  var burger = document.getElementById('nav-burger');
+  var navLinks = document.getElementById('nav-links');
+  burger.addEventListener('click', function () {
+    navLinks.classList.toggle('nav__links--open');
+    burger.classList.toggle('nav__burger--active');
+  });
+  navLinks.querySelectorAll('.nav__link').forEach(function (link) {
+    link.addEventListener('click', function () {
+      navLinks.classList.remove('nav__links--open');
+      burger.classList.remove('nav__burger--active');
+    });
+  });
+
+  /* ── SCROLL-IN ANIMATIONS ────────────────────────────────── */
+  var animObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); animObserver.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.animate-on-scroll').forEach(function (el) { animObserver.observe(el); });
+
+  /* ── COUNT-UP ────────────────────────────────────────────── */
+  function runCount(el) {
+    var target = parseInt(el.dataset.count, 10);
+    var suffix = el.dataset.suffix || '';
+    var duration = 1400;
+    var start = performance.now();
+    function frame(now) {
+      var t = Math.min((now - start) / duration, 1);
+      var ease = 1 - Math.pow(1 - t, 3);
+      el.textContent = Math.round(ease * target) + suffix;
+      if (t < 1) requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  }
+  var countObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('[data-count]').forEach(runCount);
+        countObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('.about__stats').forEach(function (el) { countObserver.observe(el); });
+
+  /* ── TALKS PLAYER ────────────────────────────────────────── */
+  document.getElementById('talks-list').addEventListener('click', function (e) {
+    var btn = e.target.closest('.talk-item');
+    if (!btn) return;
+    document.querySelectorAll('.talk-item').forEach(function (el) { el.classList.remove('talk-item--active'); });
+    btn.classList.add('talk-item--active');
+    document.getElementById('talks-iframe').src = 'https://www.youtube.com/embed/' + btn.dataset.id;
+  });
+
+  /* ── ACTIVE NAV LINK ON SCROLL ───────────────────────────── */
+  var sections = document.querySelectorAll('section[id]');
+  var navLinkEls = document.querySelectorAll('.nav__link');
+  var sectionObserver = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        navLinkEls.forEach(function (l) { l.classList.remove('nav__link--active'); });
+        var active = document.querySelector('.nav__link[href="#' + e.target.id + '"]');
+        if (active) active.classList.add('nav__link--active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -55% 0px' });
+  sections.forEach(function (s) { sectionObserver.observe(s); });
+  </script>
 
   <script>
   // Loading Animation
