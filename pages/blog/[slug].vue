@@ -91,23 +91,27 @@ useHead({ title: `${post.value.title} — Sergei Solovev` })
 .post__body :deep(h2:hover a)::before,
 .post__body :deep(h3:hover a)::before { opacity: 1; }
 .post__body :deep(p) { margin-bottom: 1rem; }
-.post__body :deep(pre) {
-  background: var(--bg-card);
+/* ── Shiki syntax highlighted blocks ── */
+.post__body :deep(pre.shiki) {
   border: 1px solid var(--border);
-  padding: 1.25rem 1.5rem;
   border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
   overflow-x: auto;
   margin: 1.5rem 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
 }
 
-.post__body :deep(pre code) {
+/* shiki sets background via inline style — keep font */
+.post__body :deep(pre.shiki code) {
+  font-family: var(--font-mono);
   background: none;
   padding: 0;
-  font-size: 0.875rem;
-  color: var(--text);
+  color: inherit;
 }
 
-.post__body :deep(code) {
+/* inline code (not inside pre) */
+.post__body :deep(code:not(pre code)) {
   font-family: var(--font-mono);
   font-size: 0.875em;
   background: var(--bg-subtle);

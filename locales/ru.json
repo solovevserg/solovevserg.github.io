@@ -89,35 +89,67 @@
     "side_subtitle": "Преподавание · Собственные проекты · Исследования"
   },
   "skills": {
-    "title": "Технологии",
+    "title": "Навыки",
+    "levels": {
+      "expert": "Эксперт",
+      "advanced": "Уверенно",
+      "intermediate": "Базово"
+    },
     "groups": [
       {
         "name": "Frontend",
-        "items": ["Angular", "TypeScript", "RxJS", "TaigaUI", "HTML5", "CSS3", "Vue.js"]
+        "keys": [
+          { "name": "Angular",     "level": "expert" },
+          { "name": "TypeScript",  "level": "expert" },
+          { "name": "RxJS",        "level": "advanced" }
+        ],
+        "items": ["TaigaUI", "HTML5", "CSS3", "Vue.js"]
       },
       {
         "name": "Тестирование",
-        "items": ["Cypress", "Playwright", "Jest", "Unit Testing"]
+        "keys": [
+          { "name": "Cypress",     "level": "advanced" },
+          { "name": "Playwright",  "level": "advanced" }
+        ],
+        "items": ["Jest", "Unit Testing"]
       },
       {
-        "name": "Инфраструктура",
-        "items": ["Docker", "GitLab CI/CD", "Grafana", "Prometheus", "NestJS", "REST API"]
+        "name": "Архитектура",
+        "keys": [
+          { "name": "Angular SPA", "level": "expert" },
+          { "name": "NestJS",      "level": "advanced" }
+        ],
+        "items": ["REST API", "Docker", "GitLab CI/CD"]
+      },
+      {
+        "name": "Мониторинг",
+        "keys": [
+          { "name": "Grafana",     "level": "advanced" },
+          { "name": "Prometheus",  "level": "intermediate" }
+        ],
+        "items": []
       },
       {
         "name": "Управление",
-        "items": ["Team Lead", "Architecture Design", "Code Review", "Agile/Scrum", "Mentoring"]
+        "keys": [
+          { "name": "Team Lead",   "level": "expert" },
+          { "name": "Mentoring",   "level": "advanced" }
+        ],
+        "items": ["Code Review", "Agile/Scrum", "Architecture Design"]
       }
     ]
   },
   "education": {
     "title": "Образование",
+    "thesis_label": "Тема выпускной работы:",
     "items": [
       {
         "tag": "PhD",
         "school": "МГТУ им. Баумана",
         "field": "Философия науки и техники",
         "degree": "Аспирантура (к.ф.н., в процессе)",
-        "period": "Сен 2023 — Авг 2026",
+        "period": "2023 — 2026",
+        "current": true,
         "thesis": "Философско-методологические аспекты представления знаний в структуре искусственных языков"
       },
       {
@@ -145,15 +177,56 @@
         "school": "Школа №1360",
         "field": "Математика (углублённое изучение)",
         "degree": "Аттестат о среднем образовании",
-        "period": "Сен 2005 — Июн 2016",
+        "period": "2005 — 2016",
         "grade": "4,8",
         "activities": "3 золотых кубка ИК · Дипломы по математике, информатике и астрономии · Баскетбол"
       }
     ]
   },
-  "talks": {
-    "title": "Доклады",
-    "items": [
+  "teaching": {
+    "title": "Knowledge Sharing",
+    "talks_title": "Доклады",
+    "courses_title": "Курсы и лекции",
+    "github_cta": "Материалы курсов на GitHub",
+    "courses": [
+      {
+        "org": "МГТУ им. Баумана",
+        "badge": "МГТУ",
+        "period": "2018 — 2022",
+        "items": [
+          "Веб-технологии для направления ИУ7 (фронтенд, Angular, RxJS)",
+          "Курс по веб-технологиям для направления СГН3",
+          "Веб-дизайн и вёрстка для ИСОТ",
+          "Сооснователь Data Crash Course — основы анализа данных"
+        ]
+      },
+      {
+        "org": "ВШЭ",
+        "badge": "ВШЭ",
+        "period": "2020 — 2021",
+        "items": [
+          "Соавтор курса веб-дизайна для школьников (HSE Kids)"
+        ]
+      },
+      {
+        "org": "Qoollo",
+        "badge": "Qoollo",
+        "period": "2019 — 2021",
+        "items": [
+          "Qoollo.Edu — внутренние курсы по Angular, TypeScript, RxJS",
+          "Qoollo.Summer — лекции и менторинг студентов-стажёров"
+        ]
+      },
+      {
+        "org": "Quantorium / IT-Куб",
+        "badge": "Quant",
+        "period": "2020",
+        "items": [
+          "Вебинары по основам анализа данных для педагогов по всей России"
+        ]
+      }
+    ],
+    "talks": [
       {
         "id": "PT_sS6uWEMQ",
         "conf": "HolyJS",
@@ -168,6 +241,26 @@
         "id": "FSj_rL6IuY8",
         "conf": "HolyJS",
         "title": "От латыни до async/await: археологические раскопки JavaScript"
+      }
+    ]
+  },
+  "facts": {
+    "title": "Факты обо мне",
+    "items": [
+      {
+        "emoji": "🏸",
+        "title": "Бадминтонист",
+        "desc": "Регулярные игры в бадминтон — лучший способ перезарядиться и держать голову свежей."
+      },
+      {
+        "emoji": "🕺",
+        "title": "2× победитель танцевальных конкурсов",
+        "desc": "Дважды побеждал на конкурсах по танцам. Занимался пятью стилями — от народных до бачаты."
+      },
+      {
+        "emoji": "🧱",
+        "title": "Redstone-инженер",
+        "desc": "Построил полноценный компьютер внутри Minecraft исключительно из redstone-логических элементов."
       }
     ]
   },

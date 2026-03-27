@@ -28,13 +28,21 @@ export default defineNuxtConfig({
       { code: 'ru', language: 'ru-RU', name: 'Русский', file: 'ru.json' },
       { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
     ],
-    defaultLocale: 'ru',
+    defaultLocale: 'en',
     strategy: 'prefix_except_default',
     langDir: 'locales/',
     lazy: true,
   },
 
-  content: {},
+  content: {
+    highlight: {
+      theme: {
+        default: 'github-dark',
+        light: 'github-light',
+      },
+      langs: ['typescript', 'javascript', 'html', 'css', 'json', 'bash', 'vue'],
+    },
+  },
 
   nitro: {
     prerender: {

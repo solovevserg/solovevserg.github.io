@@ -90,27 +90,58 @@
   },
   "skills": {
     "title": "Skills",
+    "levels": {
+      "expert": "Expert",
+      "advanced": "Advanced",
+      "intermediate": "Intermediate"
+    },
     "groups": [
       {
         "name": "Frontend",
-        "items": ["Angular", "TypeScript", "RxJS", "TaigaUI", "HTML5", "CSS3", "Vue.js"]
+        "keys": [
+          { "name": "Angular",     "level": "expert" },
+          { "name": "TypeScript",  "level": "expert" },
+          { "name": "RxJS",        "level": "advanced" }
+        ],
+        "items": ["TaigaUI", "HTML5", "CSS3", "Vue.js"]
       },
       {
         "name": "Testing",
-        "items": ["Cypress", "Playwright", "Jest", "Unit Testing"]
+        "keys": [
+          { "name": "Cypress",     "level": "advanced" },
+          { "name": "Playwright",  "level": "advanced" }
+        ],
+        "items": ["Jest", "Unit Testing"]
       },
       {
-        "name": "Infrastructure",
-        "items": ["Docker", "GitLab CI/CD", "Grafana", "Prometheus", "NestJS", "REST API"]
+        "name": "Architecture",
+        "keys": [
+          { "name": "Angular SPA", "level": "expert" },
+          { "name": "NestJS",      "level": "advanced" }
+        ],
+        "items": ["REST API", "Docker", "GitLab CI/CD"]
+      },
+      {
+        "name": "Monitoring",
+        "keys": [
+          { "name": "Grafana",     "level": "advanced" },
+          { "name": "Prometheus",  "level": "intermediate" }
+        ],
+        "items": []
       },
       {
         "name": "Leadership",
-        "items": ["Team Lead", "Architecture Design", "Code Review", "Agile/Scrum", "Mentoring"]
+        "keys": [
+          { "name": "Team Lead",   "level": "expert" },
+          { "name": "Mentoring",   "level": "advanced" }
+        ],
+        "items": ["Code Review", "Agile/Scrum", "Architecture Design"]
       }
     ]
   },
   "education": {
     "title": "Education",
+    "thesis_label": "Thesis topic:",
     "items": [
       {
         "tag": "PhD",
@@ -118,6 +149,7 @@
         "field": "Philosophy of Science & Technology",
         "degree": "PhD candidate (in progress)",
         "period": "Sep 2023 — Aug 2026",
+        "current": true,
         "thesis": "Philosophical and methodological aspects of knowledge representation in the structure of artificial languages"
       },
       {
@@ -151,9 +183,50 @@
       }
     ]
   },
-  "talks": {
-    "title": "Talks",
-    "items": [
+  "teaching": {
+    "title": "Knowledge Sharing",
+    "talks_title": "Conference Talks",
+    "courses_title": "Courses & Lectures",
+    "github_cta": "Course materials on GitHub",
+    "courses": [
+      {
+        "org": "Bauman Moscow State Technical University",
+        "badge": "BMSTU",
+        "period": "2018 — 2022",
+        "items": [
+          "Web Technologies for IU7 program (Frontend, Angular, RxJS)",
+          "Web Technologies course for SGN3 program",
+          "Web Design & Markup for ISOT",
+          "Co-founder of Data Crash Course — data analysis fundamentals"
+        ]
+      },
+      {
+        "org": "Higher School of Economics",
+        "badge": "HSE",
+        "period": "2020 — 2021",
+        "items": [
+          "Co-authored web design course for secondary school students (HSE Kids)"
+        ]
+      },
+      {
+        "org": "Qoollo",
+        "badge": "Qoollo",
+        "period": "2019 — 2021",
+        "items": [
+          "Qoollo.Edu — internal courses on Angular, TypeScript, RxJS",
+          "Qoollo.Summer — lectures and mentoring for student interns"
+        ]
+      },
+      {
+        "org": "Quantorium / IT-Cube",
+        "badge": "Quant",
+        "period": "2020",
+        "items": [
+          "Webinars on data analysis fundamentals for educators across Russia"
+        ]
+      }
+    ],
+    "talks": [
       {
         "id": "PT_sS6uWEMQ",
         "conf": "HolyJS",
@@ -168,6 +241,26 @@
         "id": "FSj_rL6IuY8",
         "conf": "HolyJS",
         "title": "From Latin to async/await: archaeological excavations of JavaScript"
+      }
+    ]
+  },
+  "facts": {
+    "title": "Fun Facts",
+    "items": [
+      {
+        "emoji": "🏸",
+        "title": "Badminton player",
+        "desc": "Regular badminton games are my go-to way to recharge and stay sharp."
+      },
+      {
+        "emoji": "🕺",
+        "title": "2× Dance champion",
+        "desc": "Won dance competitions twice. Trained in 5 styles — from Russian folk dancing to bachata."
+      },
+      {
+        "emoji": "🧱",
+        "title": "Redstone engineer",
+        "desc": "Built a fully functional computer inside Minecraft using only redstone logic gates."
       }
     ]
   },

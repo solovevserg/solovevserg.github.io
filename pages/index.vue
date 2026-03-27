@@ -12,9 +12,10 @@ type StatItem = { value: string; label: string }
 type ExpItem = { company: string; role: string; period: string; current: boolean; side: boolean; bullets: string[] }
 type EduItem = {
   degree: string; field: string; school: string; tag: string
-  period: string; grade?: string; thesis?: string; activities?: string
+  period: string; current?: boolean; grade?: string; thesis?: string; activities?: string
 }
-type SkillGroup = { name: string; items: string[] }
+type SkillKey = { name: string; level: 'expert' | 'advanced' | 'intermediate' }
+type SkillGroup = { name: string; keys: SkillKey[]; items: string[] }
 type TalkItem = { id: string; conf: string; title: string }
 
 const stats = computed<StatItem[]>(() =>
@@ -37,6 +38,7 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
 const skillGroups = computed<SkillGroup[]>(() =>
   (tm('skills.groups') as any[]).map(g => ({
     name: rt(g.name),
+    keys: (g.keys as any[]).map(k => ({ name: rt(k.name), level: rt(k.level) as SkillKey['level'] })),
     items: (g.items as any[]).map(i => rt(i)),
   }))
 )
@@ -48,14 +50,18 @@ const eduItems = computed<EduItem[]>(() =>
     school: rt(e.school),
     tag: rt(e.tag),
     period: rt(e.period),
+    current: !!e.current,
     grade: e.grade ? rt(e.grade) : undefined,
     thesis: e.thesis ? rt(e.thesis) : undefined,
     activities: e.activities ? rt(e.activities) : undefined,
   }))
 )
 
+type CourseItem = { org: string; badge: string; period: string; items: string[] }
+type FactItem = { emoji: string; title: string; desc: string }
+
 const talkItems = computed<TalkItem[]>(() =>
-  (tm('talks.items') as any[]).map(i => ({
+  (tm('teaching.talks') as any[]).map(i => ({
     id: rt(i.id),
     conf: rt(i.conf),
     title: rt(i.title),
@@ -64,6 +70,23 @@ const talkItems = computed<TalkItem[]>(() =>
 const activeTalkId = ref('')
 const currentTalkId = computed(() => activeTalkId.value || talkItems.value[0]?.id || '')
 const embedUrl = computed(() => `https://www.youtube.com/embed/${currentTalkId.value}?rel=0`)
+
+const courseItems = computed<CourseItem[]>(() =>
+  (tm('teaching.courses') as any[]).map(c => ({
+    org: rt(c.org),
+    badge: rt(c.badge),
+    period: rt(c.period),
+    items: (c.items as any[]).map(i => rt(i)),
+  }))
+)
+
+const factItems = computed<FactItem[]>(() =>
+  (tm('facts.items') as any[]).map(f => ({
+    emoji: rt(f.emoji),
+    title: rt(f.title),
+    desc: rt(f.desc),
+  }))
+)
 
 // ─── Typewriter ───────────────────────────────────────────────
 const typewriterPhrases = computed(() => (tm('hero.typewriter') as any[]).map(l => rt(l)))
@@ -96,55 +119,13 @@ const runTypewriter = () => {
   }
 }
 
-// ─── Mouse parallax ───────────────────────────────────────────
-const heroRef = ref<HTMLElement | null>(null)
-const mouseX = ref(0)
-const mouseY = ref(0)
-
-const onMouseMove = (e: MouseEvent) => {
-  const el = heroRef.value
-  if (!el) return
-  const r = el.getBoundingClientRect()
-  mouseX.value = (e.clientX - r.left) / r.width - 0.5
-  mouseY.value = (e.clientY - r.top) / r.height - 0.5
-}
-
-const dotStyle = computed(() => ({
-  backgroundPosition: `calc(50% + ${mouseX.value * 24}px) calc(50% + ${mouseY.value * 24}px)`,
-}))
-
-// ─── Scroll photo effect ───────────────────────────────────────
-const scrollRatio = ref(0)
-
-const onScroll = () => {
-  const el = heroRef.value
-  if (!el) return
-  const h = el.offsetHeight
-  const scrolled = -el.getBoundingClientRect().top
-  scrollRatio.value = Math.max(0, Math.min(1, scrolled / (h * 0.65)))
-}
-
-const photoStyle = computed(() => {
-  const r = scrollRatio.value
-  const mx = mouseX.value
-  const my = mouseY.value
-  return {
-    transform: `translate(${-mx * 28}px, ${-my * 16 + r * 120}px) scale(${1.55 - r * 0.04})`,
-    opacity: 1 - r * 0.95,
-    filter: `grayscale(${10 + r * 50}%) hue-rotate(${r * 30}deg) saturate(${1.1 - r * 0.4})`,
-    willChange: 'transform, filter, opacity',
-  }
-})
 
 onMounted(() => {
   runTypewriter()
-  window.addEventListener('scroll', onScroll, { passive: true })
-  onScroll()
 })
 
 onUnmounted(() => {
   if (typeTimer) clearTimeout(typeTimer)
-  window.removeEventListener('scroll', onScroll)
 })
 </script>
 
@@ -153,19 +134,10 @@ onUnmounted(() => {
     <!-- ═══════════════════════════════════════════ HERO (full-width) -->
     <section
       class="hero dot-bg"
-      ref="heroRef"
-      @mousemove="onMouseMove"
-      :style="dotStyle"
     >
       <!-- Left panel -->
       <div class="hero__left">
         <div class="hero__left-inner">
-          <div class="hero__eyebrow">
-            <span class="hero__available">
-              <span class="hero__dot" />
-              {{ t('hero.available') }}
-            </span>
-          </div>
 
           <h1 class="hero__name">
             <span class="hero__name-line">{{ t('hero.name_first') }}</span>
@@ -217,7 +189,6 @@ onUnmounted(() => {
           src="/img/avatar.jpg"
           alt=""
           class="hero__photo"
-          :style="photoStyle"
         />
         <div class="hero__photo-grad" />
       </div>
@@ -264,7 +235,7 @@ onUnmounted(() => {
             </div>
             <div class="meta-row">
               <dt>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8l6 6 6-6"/><path d="M3 4h18M3 12h18M3 20h18" opacity="0"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
               </dt>
               <dd>{{ t('about.languages') }}</dd>
             </div>
@@ -329,61 +300,16 @@ onUnmounted(() => {
       </div>
     </section>
 
-    <!-- ═══════════════════════════════════════════ SKILLS -->
-    <section id="skills" class="section">
+    <!-- ═══════════════════════════════════════════ TEACHING -->
+    <section id="teaching" class="section">
       <div class="container">
         <header class="section-header">
           <span class="section-num">/ 03</span>
-          <h2 class="section-heading">{{ t('skills.title') }}</h2>
+          <h2 class="section-heading">{{ t('teaching.title') }}</h2>
         </header>
-        <div class="skills-grid">
-          <div v-for="group in skillGroups" :key="group.name" class="skill-group">
-            <h3 class="skill-group__name">{{ group.name }}</h3>
-            <div class="skill-tags">
-              <span v-for="item in group.items" :key="item" class="skill-tag">
-                {{ item }}
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ═══════════════════════════════════════════ EDUCATION -->
-    <section id="education" class="section section--alt">
-      <div class="container">
-        <header class="section-header">
-          <span class="section-num">/ 04</span>
-          <h2 class="section-heading">{{ t('education.title') }}</h2>
-        </header>
-        <div class="edu-list">
-          <div v-for="item in eduItems" :key="item.degree" class="edu-card">
-            <div class="edu-card__header">
-              <div class="edu-card__tag">{{ item.tag }}</div>
-              <span class="edu-card__period">{{ item.period }}</span>
-            </div>
-            <div class="edu-card__content">
-              <p class="edu-card__school">{{ item.school }}</p>
-              <p class="edu-card__field">{{ item.field }}</p>
-              <p class="edu-card__degree">{{ item.degree }}</p>
-              <p v-if="item.grade" class="edu-card__grade">
-                <span class="edu-card__grade-label">GPA</span> {{ item.grade }}
-              </p>
-              <p v-if="item.thesis" class="edu-card__thesis">{{ item.thesis }}</p>
-              <p v-if="item.activities" class="edu-card__activities">{{ item.activities }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ═══════════════════════════════════════════ TALKS -->
-    <section id="talks" class="section">
-      <div class="container">
-        <header class="section-header">
-          <span class="section-num">/ 05</span>
-          <h2 class="section-heading">{{ t('talks.title') }}</h2>
-        </header>
+        <!-- Talks -->
+        <p class="teaching-sub">{{ t('teaching.talks_title') }}</p>
         <div class="talks">
           <div class="talks__list">
             <button
@@ -413,6 +339,115 @@ onUnmounted(() => {
             </div>
           </div>
         </div>
+
+        <!-- Courses grid -->
+        <p class="teaching-sub teaching-sub--spaced">{{ t('teaching.courses_title') }}</p>
+        <div class="courses-grid">
+          <div v-for="course in courseItems" :key="course.org" class="course-card">
+            <div class="course-card__head">
+              <span class="course-card__badge">{{ course.org }}</span>
+              <span class="course-card__period">{{ course.period }}</span>
+            </div>
+            <ul class="course-card__list">
+              <li v-for="item in course.items" :key="item">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- GitHub CTA -->
+        <div class="teaching-cta">
+          <a href="https://github.com/solovevserg/studies" target="_blank" rel="noopener" class="repo-link">
+            <div class="repo-link__body">
+              <span class="repo-link__label">{{ t('teaching.github_cta') }}</span>
+              <span class="repo-link__url">github.com/solovevserg/studies</span>
+            </div>
+            <svg class="repo-link__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ EDUCATION -->
+    <section id="education" class="section section--alt">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-num">/ 04</span>
+          <h2 class="section-heading">{{ t('education.title') }}</h2>
+        </header>
+        <div class="edu-list">
+          <div v-for="item in eduItems" :key="item.degree" class="edu-card">
+            <div class="edu-card__header">
+              <div class="edu-card__tag">{{ item.tag }}</div>
+              <div class="edu-card__meta">
+                <span class="exp-card__period">{{ item.period }}</span>
+                <span v-if="item.current" class="exp-card__badge">
+                  <span class="badge-dot" />current
+                </span>
+              </div>
+            </div>
+            <div class="edu-card__content">
+              <p class="edu-card__school">{{ item.school }}</p>
+              <p class="edu-card__field">
+                {{ item.field }}
+                <span v-if="item.thesis" class="thesis-hint">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  <span class="thesis-hint__tooltip"><em class="thesis-hint__label">{{ t('education.thesis_label') }}</em> {{ item.thesis }}</span>
+                </span>
+              </p>
+              <p class="edu-card__degree">{{ item.degree }}</p>
+              <p v-if="item.grade" class="edu-card__grade">
+                <span class="edu-card__grade-label">GPA</span> {{ item.grade }}/5
+              </p>
+              <p v-if="item.activities" class="edu-card__activities">{{ item.activities }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ SKILLS -->
+    <section id="skills" class="section">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-num">/ 05</span>
+          <h2 class="section-heading">{{ t('skills.title') }}</h2>
+        </header>
+        <div class="skills-grid">
+          <div v-for="group in skillGroups" :key="group.name" class="skill-group">
+            <h3 class="skill-group__name">{{ group.name }}</h3>
+            <div class="skill-keys">
+              <div v-for="key in group.keys" :key="key.name" class="skill-key">
+                <span class="skill-key__name">{{ key.name }}</span>
+                <span class="skill-key__dots" aria-hidden="true">
+                  <span class="skill-key__dot" :class="{ 'skill-key__dot--filled': true }" />
+                  <span class="skill-key__dot" :class="{ 'skill-key__dot--filled': key.level === 'advanced' || key.level === 'expert' }" />
+                  <span class="skill-key__dot" :class="{ 'skill-key__dot--filled': key.level === 'expert' }" />
+                </span>
+                <span class="skill-key__level">{{ t(`skills.levels.${key.level}`) }}</span>
+              </div>
+            </div>
+            <div v-if="group.items.length" class="skill-tags">
+              <span v-for="item in group.items" :key="item" class="skill-tag">{{ item }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ FUN FACTS -->
+    <section id="facts" class="section section--alt">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-num">/ 06</span>
+          <h2 class="section-heading">{{ t('facts.title') }}</h2>
+        </header>
+        <div class="facts-grid">
+          <div v-for="fact in factItems" :key="fact.title" class="fact-card">
+            <span class="fact-card__emoji" aria-hidden="true">{{ fact.emoji }}</span>
+            <h3 class="fact-card__title">{{ fact.title }}</h3>
+            <p class="fact-card__desc">{{ fact.desc }}</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -420,7 +455,7 @@ onUnmounted(() => {
     <section id="contact" class="contact">
       <div class="container">
         <header class="section-header">
-          <span class="section-num">/ 06</span>
+          <span class="section-num">/ 07</span>
           <h2 class="section-heading">{{ t('contact.title') }}</h2>
         </header>
         <h2 class="contact__heading">{{ t('contact.subtitle') }}</h2>
@@ -503,6 +538,7 @@ onUnmounted(() => {
   object-fit: cover;
   object-position: center 80%;
   display: block;
+  transform: scale(1.55);
   transform-origin: center 80%;
 }
 
@@ -516,36 +552,6 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* ─── Eyebrow / available badge ──────────────────────────────── */
-.hero__eyebrow {
-  margin-bottom: 1.75rem;
-}
-
-.hero__available {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  padding: 0.3rem 0.9rem;
-}
-
-.hero__dot {
-  display: inline-block;
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--current-dot);
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.2);
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 3px rgba(34,197,94,0.2); }
-  50%       { box-shadow: 0 0 0 6px rgba(34,197,94,0.05); }
-}
 
 /* ─── Name ───────────────────────────────────────────────────── */
 .hero__name {
@@ -794,6 +800,10 @@ onUnmounted(() => {
   border-top: 1px solid var(--border);
 }
 
+.exp-card:last-child {
+  border-bottom: none;
+}
+
 .exp-card__top {
   display: flex;
   align-items: center;
@@ -969,41 +979,91 @@ onUnmounted(() => {
 /* ─── Skills ────────────────────────────────────────────────── */
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.skill-group {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem 1.5rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .skill-group__name {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.7rem;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  color: var(--accent);
+  margin: 0;
+}
+
+.skill-keys {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.skill-key {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.skill-key__name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+  min-width: 0;
+}
+
+.skill-key__dots {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.skill-key__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border-md);
+}
+
+.skill-key__dot--filled {
+  background: var(--accent);
+}
+
+.skill-key__level {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
   color: var(--text-muted);
-  margin-bottom: 0.875rem;
+  flex-shrink: 0;
+  width: 6.5rem;
+  text-align: right;
 }
 
 .skill-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.4rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
 }
 
 .skill-tag {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  color: var(--text);
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 0.3rem 0.75rem;
+  color: var(--text-muted);
+  background: var(--bg-subtle);
+  border-radius: 4px;
+  padding: 0.2rem 0.6rem;
   cursor: default;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.skill-tag:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-dim);
 }
 
 /* ─── Education ─────────────────────────────────────────────── */
@@ -1036,6 +1096,12 @@ onUnmounted(() => {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.edu-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
 }
 
 .edu-card__tag {
@@ -1125,6 +1191,108 @@ onUnmounted(() => {
   font-size: 0.75rem;
   color: var(--text-xmuted);
   line-height: 1.5;
+}
+
+/* ─── Thesis tooltip ─────────────────────────────────────────── */
+.thesis-hint {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.3em;
+  vertical-align: middle;
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.thesis-hint svg {
+  display: block;
+  flex-shrink: 0;
+}
+
+.thesis-hint__tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-md);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-muted);
+  line-height: 1.55;
+  box-shadow: var(--shadow-sm);
+  white-space: normal;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.thesis-hint__label {
+  display: block;
+  font-size: 0.7rem;
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.thesis-hint__tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--border-md);
+}
+
+.thesis-hint:hover .thesis-hint__tooltip,
+.thesis-hint:focus-within .thesis-hint__tooltip {
+  display: block;
+}
+
+/* ─── Fun Facts ─────────────────────────────────────────────── */
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.fact-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.fact-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-dim);
+}
+
+.fact-card__emoji {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.fact-card__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.fact-card__desc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.65;
 }
 
 /* ─── Contact ───────────────────────────────────────────────── */
@@ -1221,13 +1389,14 @@ onUnmounted(() => {
   .hero__typewriter { font-size: 0.85rem; }
 
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .skills-grid { grid-template-columns: 1fr; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
   .exp-card { padding: 2rem 0; }
   .exp-card__body { grid-template-columns: 1fr; gap: 1.25rem; }
   .exp-card__title-row { position: static; }
   .section-heading { font-size: clamp(2rem, 10vw, 2.8rem); }
   .side-list { grid-template-columns: 1fr; }
   .edu-list { grid-template-columns: 1fr; }
+  .facts-grid { grid-template-columns: 1fr; }
   .edu-card__activities { display: none; }
   .about-stats { grid-template-columns: repeat(2, 1fr); }
   .about-stat:nth-child(2) { border-right: none; }
@@ -1235,9 +1404,148 @@ onUnmounted(() => {
 }
 
 @media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; }
   .hero__name { font-size: clamp(2.8rem, 16vw, 4.5rem); }
   .hero__left { padding-left: 1.25rem; padding-right: 1.25rem; }
   .hero__photo-wrap { object-position: center 60%; }
+}
+
+/* ─ Teaching ────────────────────────────────────────────────── */
+.teaching-sub {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 1.25rem;
+}
+
+.teaching-sub--spaced {
+  margin-top: 3.5rem;
+}
+
+.teaching-cta {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.repo-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+}
+
+.repo-link:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-dim);
+  transform: translateY(-2px);
+}
+
+.repo-link:hover .repo-link__arrow {
+  transform: translate(2px, -2px);
+}
+
+.repo-link__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.repo-link__label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.repo-link__url {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.repo-link__arrow {
+  flex-shrink: 0;
+  color: var(--accent);
+  transition: transform 0.2s;
+}
+
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.course-card {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: border-color 0.2s, transform 0.2s;
+}
+
+.course-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.course-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.course-card__badge {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+.course-card__period {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.course-card__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.course-card__list li {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  padding-left: 1rem;
+  position: relative;
+}
+
+.course-card__list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--text-xmuted);
+}
+
+@media (max-width: 768px) {
+  .courses-grid { grid-template-columns: 1fr; }
 }
 
 /* ─ Talks ─────────────────────────────────────────────────── */

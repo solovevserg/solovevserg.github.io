@@ -51,23 +51,19 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
         >{{ link.label }}</a>
       </nav>
 
-      <!-- Blog link (right, always) -->
-      <nav class="header__nav header__nav--right">
+      <!-- Right side: blog link + controls -->
+      <div class="header__right">
         <NuxtLink :to="localePath(blogLink.path)" class="header__nav-link">
           {{ blogLink.label }}
         </NuxtLink>
-      </nav>
 
-      <div class="header__controls">
         <button
           v-if="otherLocale"
-          class="ctrl-btn lang-btn"
+          class="ctrl-btn"
           @click="setLocale(otherLocale.code)"
-        >
-          {{ otherLocale.code.toUpperCase() }}
-        </button>
+        >{{ otherLocale.code.toUpperCase() }}</button>
 
-        <button class="ctrl-btn theme-btn" @click="toggle" :aria-label="isDark ? 'Light mode' : 'Dark mode'">
+        <button class="ctrl-btn" @click="toggle" :aria-label="isDark ? 'Light mode' : 'Dark mode'">
           <svg v-if="isDark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
             <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
@@ -128,26 +124,6 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
           </NuxtLink>
         </nav>
 
-        <div class="mobile-menu__footer">
-          <button
-            v-if="otherLocale"
-            class="ctrl-btn lang-btn"
-            @click="setLocale(otherLocale.code); closeMenu()"
-          >
-            {{ otherLocale.code.toUpperCase() }}
-          </button>
-          <button class="ctrl-btn theme-btn" @click="toggle">
-            <svg v-if="isDark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
-              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-              <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
-              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-            </svg>
-            <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-            </svg>
-          </button>
-        </div>
       </div>
     </Transition>
   </Teleport>
@@ -197,7 +173,17 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   gap: 2rem;
 }
 
-.header__nav--right { margin-left: auto; }
+.header__right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.header__right > .header__nav-link {
+  margin-right: 0.75rem;
+}
 
 .header__nav-link {
   font-size: 0.875rem;
@@ -224,17 +210,13 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
 .header__nav-link--active::after { width: 100%; }
 
 /* ─ Controls ─────────────────────────────────────────────── */
-.header__controls {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 .ctrl-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px; height: 36px;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
   border-radius: 8px;
   color: var(--text-muted);
   background: transparent;
@@ -242,6 +224,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.04em;
+  cursor: pointer;
 }
 
 .ctrl-btn:hover {
@@ -335,12 +318,6 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
-}
-
-:global(.mobile-menu__footer) {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 2.5rem;
 }
 
 /* ─ Transitions ──────────────────────────────────────────── */

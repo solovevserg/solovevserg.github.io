@@ -1,9 +1,10 @@
 export const SCROLL_SECTIONS = [
   { id: 'about',      labelKey: 'about.title' },
   { id: 'experience', labelKey: 'experience.title' },
-  { id: 'skills',     labelKey: 'skills.title' },
+  { id: 'teaching',   labelKey: 'teaching.title' },
   { id: 'education',  labelKey: 'education.title' },
-  { id: 'talks',      labelKey: 'talks.title' },
+  { id: 'skills',     labelKey: 'skills.title' },
+  { id: 'facts',      labelKey: 'facts.title' },
   { id: 'contact',    labelKey: 'contact.title' },
 ] as const
 

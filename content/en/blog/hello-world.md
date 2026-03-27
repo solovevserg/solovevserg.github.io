@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     prerender: { crawlLinks: true },
   },
   i18n: {
-    defaultLocale: 'ru',
+    defaultLocale: 'en',
     strategy: 'prefix_except_default',
   },
 })
