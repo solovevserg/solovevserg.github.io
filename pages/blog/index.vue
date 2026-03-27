@@ -31,7 +31,7 @@ const formatDate = (raw: string) => {
       <li v-for="post in posts" :key="post._path">
         <NuxtLink
           :to="localePath(`/blog/${post._file?.split('/').pop()?.replace('.md', '')}`)"
-          class="post-card"
+          class="post-card card-hover"
         >
           <div class="post-card__meta">
             <time class="post-card__date">{{ formatDate(post.date) }}</time>
@@ -89,13 +89,6 @@ const formatDate = (raw: string) => {
   border-radius: var(--radius);
   color: inherit;
   text-decoration: none;
-  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-}
-
-.post-card:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent), var(--accent-glow);
-  transform: translateY(-2px);
 }
 
 .post-card__meta {
