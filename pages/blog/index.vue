@@ -9,20 +9,39 @@ const { data: posts } = await useAsyncData('blog', () =>
     .sort({ date: -1 })
     .find()
 )
+
+const formatDate = (raw: string) => {
+  if (!raw) return ''
+  const d = new Date(raw)
+  return d.toLocaleDateString(locale.value === 'ru' ? 'ru-RU' : 'en-US', {
+    year: 'numeric', month: 'long', day: 'numeric',
+  })
+}
 </script>
 
 <template>
-  <div class="container">
-    <h1 class="page-title">{{ t('blog.title') }}</h1>
+  <div class="container page-wrap">
+    <header class="page-header">
+      <h1 class="page-title">{{ t('blog.title') }}</h1>
+    </header>
 
     <p v-if="!posts?.length" class="empty">{{ t('blog.empty') }}</p>
 
     <ul v-else class="post-list">
-      <li v-for="post in posts" :key="post._path" class="post-item">
-        <NuxtLink :to="localePath(`/blog/${post._file?.split('/').pop()?.replace('.md', '')}`)" class="post-link">
-          <time class="post-date">{{ post.date }}</time>
-          <h2 class="post-title">{{ post.title }}</h2>
-          <p v-if="post.description" class="post-desc">{{ post.description }}</p>
+      <li v-for="post in posts" :key="post._path">
+        <NuxtLink
+          :to="localePath(`/blog/${post._file?.split('/').pop()?.replace('.md', '')}`)"
+          class="post-card"
+        >
+          <div class="post-card__meta">
+            <time class="post-card__date">{{ formatDate(post.date) }}</time>
+            <span v-if="post.tags?.length" class="post-card__tags">
+              <span v-for="tag in post.tags" :key="tag" class="post-card__tag">{{ tag }}</span>
+            </span>
+          </div>
+          <h2 class="post-card__title">{{ post.title }}</h2>
+          <p v-if="post.description" class="post-card__desc">{{ post.description }}</p>
+          <span class="post-card__read">{{ locale === 'ru' ? 'Читать →' : 'Read →' }}</span>
         </NuxtLink>
       </li>
     </ul>
@@ -30,44 +49,114 @@ const { data: posts } = await useAsyncData('blog', () =>
 </template>
 
 <style scoped>
+.page-wrap {
+  padding-top: 4rem;
+  padding-bottom: 6rem;
+  max-width: 780px;
+}
+
+.page-header {
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
 .page-title {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
 }
 
 .empty {
-  color: var(--color-muted);
+  color: var(--text-muted);
 }
 
 .post-list {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
 }
 
-.post-link {
-  display: block;
+.post-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.75rem 2rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   color: inherit;
   text-decoration: none;
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
-.post-link:hover .post-title {
-  color: var(--color-accent);
+.post-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent), var(--accent-glow);
+  transform: translateY(-2px);
 }
 
-.post-date {
-  font-size: 0.85rem;
-  color: var(--color-muted);
+.post-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
-.post-title {
-  font-size: 1.3rem;
-  margin: 0.25rem 0;
+.post-card__date {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
 }
 
-.post-desc {
-  color: var(--color-muted);
-  font-size: 0.95rem;
+.post-card__tags {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.post-card__tag {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-dim);
+  padding: 0.2em 0.6em;
+  border-radius: 4px;
+}
+
+.post-card__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  transition: color 0.2s;
+}
+
+.post-card:hover .post-card__title {
+  color: var(--accent);
+}
+
+.post-card__desc {
+  font-size: 0.925rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.post-card__read {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--accent);
+  margin-top: 0.25rem;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.post-card:hover .post-card__read {
+  opacity: 1;
+  transform: translateX(0);
 }
 </style>

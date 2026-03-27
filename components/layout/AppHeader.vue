@@ -2,7 +2,7 @@
 const { t, locale, locales, setLocale } = useI18n()
 const localePath = useLocalePath()
 const { isDark, toggle } = useTheme()
-const { progress, activeLabelKey } = useScrollSpy()
+const { progress, activeLabelKey, sections } = useScrollSpy()
 
 const menuOpen = ref(false)
 const toggleMenu = () => { menuOpen.value = !menuOpen.value }
@@ -18,18 +18,19 @@ watch(menuOpen, (val) => {
 })
 
 const otherLocale = computed(() => locales.value.find(l => l.code !== locale.value))
+const isHome = computed(() => route.name?.toString().startsWith('index'))
 
-const navLinks = computed(() => [
-  { label: t('nav.home'), path: '/' },
-  { label: t('nav.blog'), path: '/blog' },
-  { label: t('nav.portfolio'), path: '/portfolio' },
-])
-
-const activeLabel = computed(() =>
-  activeLabelKey.value ? t(activeLabelKey.value) : ''
+// Section anchor links for landing page
+const sectionLinks = computed(() =>
+  sections.map(s => ({
+    id: s.id,
+    labelKey: s.labelKey,
+    label: t(s.labelKey),
+    href: `#${s.id}`,
+  }))
 )
 
-const isHome = computed(() => route.name?.toString().startsWith('index'))
+const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
 </script>
 
 <template>
@@ -39,26 +40,21 @@ const isHome = computed(() => route.name?.toString().startsWith('index'))
         <span class="logo-bracket">{</span>SS<span class="logo-bracket">}</span>
       </NuxtLink>
 
-      <!-- Current section label (desktop, landing only) -->
-      <Transition name="fade-slide">
-        <span
-          v-if="isHome && activeLabel"
-          class="header__section-label"
-          :key="activeLabel"
-        >
-          <span class="header__section-sep">/</span>
-          {{ activeLabel }}
-        </span>
-      </Transition>
-
-      <nav class="header__nav">
-        <NuxtLink
-          v-for="link in navLinks"
-          :key="link.path"
-          :to="localePath(link.path)"
+      <!-- Landing: section anchor nav (left) -->
+      <nav v-if="isHome" class="header__nav header__nav--left">
+        <a
+          v-for="link in sectionLinks"
+          :key="link.id"
+          :href="link.href"
           class="header__nav-link"
-        >
-          {{ link.label }}
+          :class="{ 'header__nav-link--active': activeLabelKey === link.labelKey }"
+        >{{ link.label }}</a>
+      </nav>
+
+      <!-- Blog link (right, always) -->
+      <nav class="header__nav header__nav--right">
+        <NuxtLink :to="localePath(blogLink.path)" class="header__nav-link">
+          {{ blogLink.label }}
         </NuxtLink>
       </nav>
 
@@ -103,19 +99,32 @@ const isHome = computed(() => route.name?.toString().startsWith('index'))
       />
     </div>
 
-    <!-- Mobile fullscreen menu -->
+  </header>
+
+  <!-- Mobile fullscreen menu — teleported to body to escape backdrop-filter stacking context -->
+  <Teleport to="body">
     <Transition name="curtain">
       <div v-if="menuOpen" class="mobile-menu">
         <nav class="mobile-nav">
+          <template v-if="isHome">
+            <a
+              v-for="(link, i) in sectionLinks"
+              :key="link.id"
+              :href="link.href"
+              class="mobile-nav__link"
+              @click="closeMenu"
+            >
+              <span class="mobile-nav__num">0{{ i + 1 }}</span>
+              <span class="mobile-nav__label">{{ link.label }}</span>
+            </a>
+          </template>
           <NuxtLink
-            v-for="(link, i) in navLinks"
-            :key="link.path"
-            :to="localePath(link.path)"
+            :to="localePath(blogLink.path)"
             class="mobile-nav__link"
             @click="closeMenu"
           >
-            <span class="mobile-nav__num">0{{ i + 1 }}</span>
-            <span class="mobile-nav__label">{{ link.label }}</span>
+            <span class="mobile-nav__num">0{{ isHome ? sectionLinks.length + 1 : 1 }}</span>
+            <span class="mobile-nav__label">{{ blogLink.label }}</span>
           </NuxtLink>
         </nav>
 
@@ -141,7 +150,7 @@ const isHome = computed(() => route.name?.toString().startsWith('index'))
         </div>
       </div>
     </Transition>
-  </header>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -182,28 +191,13 @@ const isHome = computed(() => route.name?.toString().startsWith('index'))
 
 .logo-bracket { color: var(--accent); }
 
-/* ─ Section label ────────────────────────────────────────── */
-.header__section-label {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.header__section-sep {
-  color: var(--text-xmuted);
-  font-weight: 300;
-}
-
 /* ─ Desktop nav ──────────────────────────────────────────── */
 .header__nav {
   display: flex;
   gap: 2rem;
-  margin-left: auto;
 }
+
+.header__nav--right { margin-left: auto; }
 
 .header__nav-link {
   font-size: 0.875rem;
@@ -222,10 +216,12 @@ const isHome = computed(() => route.name?.toString().startsWith('index'))
 }
 
 .header__nav-link:hover,
-.header__nav-link.router-link-active { color: var(--text); }
+.header__nav-link.router-link-active,
+.header__nav-link--active { color: var(--text); }
 
 .header__nav-link:hover::after,
-.header__nav-link.router-link-active::after { width: 100%; }
+.header__nav-link.router-link-active::after,
+.header__nav-link--active::after { width: 100%; }
 
 /* ─ Controls ─────────────────────────────────────────────── */
 .header__controls {
@@ -295,7 +291,7 @@ const isHome = computed(() => route.name?.toString().startsWith('index'))
 .burger--open .burger__line:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
 
 /* ─ Mobile fullscreen curtain ────────────────────────────── */
-.mobile-menu {
+:global(.mobile-menu) {
   position: fixed;
   inset: 0;
   top: var(--header-h);
@@ -308,51 +304,52 @@ const isHome = computed(() => route.name?.toString().startsWith('index'))
   overflow-y: auto;
 }
 
-.mobile-nav {
+:global(.mobile-nav) {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
 }
 
-.mobile-nav__link {
+:global(.mobile-nav__link) {
   display: flex;
   align-items: baseline;
   gap: 1.25rem;
   padding: 1rem 0;
   border-bottom: 1px solid var(--border);
   color: var(--text-muted);
+  text-decoration: none;
 }
 
-.mobile-nav__link:hover,
-.mobile-nav__link.router-link-active { color: var(--text); }
+:global(.mobile-nav__link:hover),
+:global(.mobile-nav__link.router-link-active) { color: var(--text); }
 
-.mobile-nav__num {
+:global(.mobile-nav__num) {
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--accent);
   flex-shrink: 0;
 }
 
-.mobile-nav__label {
+:global(.mobile-nav__label) {
   font-size: clamp(2rem, 8vw, 3rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
 }
 
-.mobile-menu__footer {
+:global(.mobile-menu__footer) {
   display: flex;
   gap: 0.75rem;
   margin-top: 2.5rem;
 }
 
 /* ─ Transitions ──────────────────────────────────────────── */
-.curtain-enter-active,
-.curtain-leave-active {
+:global(.curtain-enter-active),
+:global(.curtain-leave-active) {
   transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
 }
-.curtain-enter-from,
-.curtain-leave-to { transform: translateY(-100%); }
+:global(.curtain-enter-from),
+:global(.curtain-leave-to) { transform: translateY(-100%); }
 
 .fade-slide-enter-active,
 .fade-slide-leave-active {
@@ -367,7 +364,6 @@ const isHome = computed(() => route.name?.toString().startsWith('index'))
 /* ─ Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
   .header__nav { display: none; }
-  .header__section-label { display: none; }
   .burger { display: flex; }
 }
 </style>

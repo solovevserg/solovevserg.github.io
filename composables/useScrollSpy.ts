@@ -3,6 +3,7 @@ export const SCROLL_SECTIONS = [
   { id: 'experience', labelKey: 'experience.title' },
   { id: 'skills',     labelKey: 'skills.title' },
   { id: 'education',  labelKey: 'education.title' },
+  { id: 'talks',      labelKey: 'talks.title' },
   { id: 'contact',    labelKey: 'contact.title' },
 ] as const
 
@@ -35,5 +36,5 @@ export const useScrollSpy = () => {
     window.removeEventListener('scroll', update)
   })
 
-  return { progress, activeLabelKey }
+  return { progress, activeLabelKey, sections: SCROLL_SECTIONS }
 }

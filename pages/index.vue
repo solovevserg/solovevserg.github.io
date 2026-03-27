@@ -9,23 +9,27 @@ useHead({
 })
 
 type StatItem = { value: string; label: string }
-type ExpItem = { company: string; role: string; period: string; current: boolean; bullets: string[] }
+type ExpItem = { company: string; role: string; period: string; current: boolean; side: boolean; bullets: string[] }
+type EduItem = { degree: string; field: string; school: string; tag: string }
 type SkillGroup = { name: string; items: string[] }
-type EduItem = { degree: string; field: string; school: string }
+type TalkItem = { id: string; conf: string; title: string }
 
 const stats = computed<StatItem[]>(() =>
   (tm('stats') as any[]).map(s => ({ value: rt(s.value), label: rt(s.label) }))
 )
 
-const expItems = computed<ExpItem[]>(() =>
+const allExpItems = computed<ExpItem[]>(() =>
   (tm('experience.items') as any[]).map(item => ({
     company: rt(item.company),
     role: rt(item.role),
     period: rt(item.period),
     current: item.current as boolean,
+    side: !!item.side,
     bullets: (item.bullets as any[]).map(b => rt(b)),
   }))
 )
+const expItems = computed(() => allExpItems.value.filter(i => !i.side))
+const sideItems = computed(() => allExpItems.value.filter(i => i.side))
 
 const skillGroups = computed<SkillGroup[]>(() =>
   (tm('skills.groups') as any[]).map(g => ({
@@ -39,10 +43,22 @@ const eduItems = computed<EduItem[]>(() =>
     degree: rt(e.degree),
     field: rt(e.field),
     school: rt(e.school),
+    tag: rt(e.tag),
   }))
 )
 
 const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
+
+const talkItems = computed<TalkItem[]>(() =>
+  (tm('talks.items') as any[]).map(i => ({
+    id: rt(i.id),
+    conf: rt(i.conf),
+    title: rt(i.title),
+  }))
+)
+const activeTalkId = ref('')
+const currentTalkId = computed(() => activeTalkId.value || talkItems.value[0]?.id || '')
+const embedUrl = computed(() => `https://www.youtube.com/embed/${currentTalkId.value}?rel=0`)
 </script>
 
 <template>
@@ -60,8 +76,8 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
         </div>
 
         <h1 class="hero__name">
-          <span class="hero__name-line">Sergei</span>
-          <span class="hero__name-line hero__name-line--accent">Solovev</span>
+          <span class="hero__name-line">{{ t('hero.name_first') }}</span>
+          <span class="hero__name-line hero__name-line--accent">{{ t('hero.name_last') }}</span>
         </h1>
 
         <p class="hero__tagline">
@@ -109,19 +125,29 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
         </div>
       </div>
 
-      <!-- Stats strip -->
-      <div class="hero__stats">
-        <div v-for="stat in stats" :key="stat.label" class="stat">
-          <span class="stat__value">{{ stat.value }}</span>
-          <span class="stat__label">{{ stat.label }}</span>
-        </div>
-      </div>
+      <!-- Scroll hint -->
+      <a href="#about" class="scroll-hint" aria-label="Scroll down">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </a>
     </section>
 
     <!-- ═══════════════════════════════════════════ ABOUT -->
     <section id="about" class="section">
       <div class="container">
-        <p class="section-title">{{ t('about.title') }}</p>
+        <header class="section-header">
+          <span class="section-num">/ 01</span>
+          <h2 class="section-heading">{{ t('about.title') }}</h2>
+        </header>
+        <!-- Stats row -->
+        <div class="about-stats">
+          <div v-for="stat in stats" :key="stat.label" class="about-stat">
+            <span class="about-stat__value">{{ stat.value }}</span>
+            <span class="about-stat__label">{{ stat.label }}</span>
+          </div>
+        </div>
+
         <div class="about-grid">
           <p class="about-bio">{{ t('about.bio') }}</p>
           <dl class="about-meta">
@@ -159,25 +185,49 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
     <!-- ═══════════════════════════════════════════ EXPERIENCE -->
     <section id="experience" class="section section--alt">
       <div class="container">
-        <p class="section-title">{{ t('experience.title') }}</p>
+        <header class="section-header">
+          <span class="section-num">/ 02</span>
+          <h2 class="section-heading">{{ t('experience.title') }}</h2>
+        </header>
         <div class="exp-list">
           <article v-for="item in expItems" :key="item.company" class="exp-card">
-            <div class="exp-card__header">
-              <div>
+            <div class="exp-card__top">
+              <span class="exp-card__period">{{ item.period }}</span>
+              <span v-if="item.current" class="exp-card__badge">
+                <span class="badge-dot" />current
+              </span>
+            </div>
+            <div class="exp-card__body">
+              <div class="exp-card__title-row">
                 <h3 class="exp-card__company">{{ item.company }}</h3>
                 <p class="exp-card__role">{{ item.role }}</p>
               </div>
-              <div class="exp-card__right">
-                <span class="exp-card__period">{{ item.period }}</span>
+              <ul class="exp-card__bullets">
+                <li v-for="bullet in item.bullets" :key="bullet">{{ bullet }}</li>
+              </ul>
+            </div>
+          </article>
+        </div>
+
+        <!-- Side projects -->
+        <div class="side-block">
+          <p class="side-block__label">{{ t('experience.side_title') }}</p>
+          <p class="side-block__sub">{{ t('experience.side_subtitle') }}</p>
+          <div class="side-list">
+            <article v-for="item in sideItems" :key="item.company" class="side-card">
+              <div class="side-card__meta">
+                <span class="side-card__period">{{ item.period }}</span>
                 <span v-if="item.current" class="exp-card__badge">
                   <span class="badge-dot" />current
                 </span>
               </div>
-            </div>
-            <ul class="exp-card__bullets">
-              <li v-for="bullet in item.bullets" :key="bullet">{{ bullet }}</li>
-            </ul>
-          </article>
+              <h4 class="side-card__company">{{ item.company }}</h4>
+              <p class="side-card__role">{{ item.role }}</p>
+              <ul class="side-card__bullets">
+                <li v-for="bullet in item.bullets" :key="bullet">{{ bullet }}</li>
+              </ul>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -185,7 +235,10 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
     <!-- ═══════════════════════════════════════════ SKILLS -->
     <section id="skills" class="section">
       <div class="container">
-        <p class="section-title">{{ t('skills.title') }}</p>
+        <header class="section-header">
+          <span class="section-num">/ 03</span>
+          <h2 class="section-heading">{{ t('skills.title') }}</h2>
+        </header>
         <div class="skills-grid">
           <div v-for="group in skillGroups" :key="group.name" class="skill-group">
             <h3 class="skill-group__name">{{ group.name }}</h3>
@@ -202,12 +255,57 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
     <!-- ═══════════════════════════════════════════ EDUCATION -->
     <section id="education" class="section section--alt">
       <div class="container">
-        <p class="section-title">{{ t('education.title') }}</p>
+        <header class="section-header">
+          <span class="section-num">/ 04</span>
+          <h2 class="section-heading">{{ t('education.title') }}</h2>
+        </header>
         <div class="edu-list">
-          <div v-for="item in eduItems" :key="item.degree" class="edu-item">
-            <div class="edu-item__degree">{{ item.degree }}</div>
-            <div class="edu-item__field">{{ item.field }}</div>
-            <div class="edu-item__school">{{ item.school }}</div>
+          <div v-for="item in eduItems" :key="item.degree" class="edu-card">
+            <div class="edu-card__tag">{{ item.tag }}</div>
+            <div class="edu-card__content">
+              <p class="edu-card__field">{{ item.field }}</p>
+              <p class="edu-card__school">{{ item.school }}</p>
+              <p class="edu-card__degree">{{ item.degree }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ TALKS -->
+    <section id="talks" class="section">
+      <div class="container">
+        <header class="section-header">
+          <span class="section-num">/ 05</span>
+          <h2 class="section-heading">{{ t('talks.title') }}</h2>
+        </header>
+        <div class="talks">
+          <div class="talks__list">
+            <button
+              v-for="(talk, i) in talkItems"
+              :key="talk.id"
+              class="talk-item"
+              :class="{ 'talk-item--active': currentTalkId === talk.id }"
+              @click="activeTalkId = talk.id"
+            >
+              <span class="talk-item__num">0{{ i + 1 }}</span>
+              <div class="talk-item__info">
+                <span class="talk-item__conf">{{ talk.conf }}</span>
+                <span class="talk-item__title">{{ talk.title }}</span>
+              </div>
+              <svg class="talk-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </div>
+          <div class="talks__player">
+            <div class="talks__frame-wrap">
+              <iframe
+                :src="embedUrl"
+                title="Talk video"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -215,8 +313,11 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
 
     <!-- ═══════════════════════════════════════════ CONTACT (full-width) -->
     <section id="contact" class="contact">
-      <div class="contact__inner">
-        <p class="section-title">{{ t('contact.title') }}</p>
+      <div class="container">
+        <header class="section-header">
+          <span class="section-num">/ 06</span>
+          <h2 class="section-heading">{{ t('contact.title') }}</h2>
+        </header>
         <h2 class="contact__heading">{{ t('contact.subtitle') }}</h2>
         <div class="contact__links">
           <a href="https://t.me/sergsol" target="_blank" rel="noopener" class="contact-link">
@@ -437,25 +538,50 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
 }
 .social-link:hover { color: var(--text); }
 
-/* ─── Stats strip ───────────────────────────────────────────── */
-.hero__stats {
-  position: relative;
+/* ─── Scroll hint ────────────────────────────────────────────── */
+.scroll-hint {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--text-muted);
+  animation: bounce 2.5s ease-in-out infinite;
+}
+
+.scroll-hint:hover { color: var(--accent); border-color: var(--accent); }
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ─── About stats ────────────────────────────────────────────── */
+.about-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid var(--border);
-  margin-top: auto;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: 3rem;
 }
 
-.stat {
+.about-stat {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 2rem;
+  padding: 1.25rem 1.5rem;
   border-right: 1px solid var(--border);
 }
-.stat:last-child { border-right: none; }
+.about-stat:last-child { border-right: none; }
 
-.stat__value {
+.about-stat__value {
   font-size: 1.75rem;
   font-weight: 800;
   letter-spacing: -0.04em;
@@ -463,10 +589,10 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
   line-height: 1;
 }
 
-.stat__label {
-  font-size: 0.75rem;
+.about-stat__label {
+  font-size: 0.72rem;
   color: var(--text-muted);
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
 }
 
 /* ─── About ─────────────────────────────────────────────────── */
@@ -510,6 +636,29 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
 .link { color: var(--accent); }
 .link:hover { text-decoration: underline; }
 
+/* ─── Section header typography ──────────────────────────────── */
+.section-header {
+  margin-bottom: 4rem;
+}
+
+.section-num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.6rem;
+}
+
+.section-heading {
+  font-size: clamp(2.4rem, 5.5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
+  color: var(--text);
+}
+
 /* ─── Alt section background ────────────────────────────────── */
 .section--alt {
   background: var(--bg-card);
@@ -521,50 +670,24 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
 .exp-list {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 0;
 }
 
 .exp-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.5rem;
-  transition: border-color 0.2s;
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border);
+  transition: none;
 }
 
-.section--alt .exp-card {
-  background: var(--bg-subtle);
+.exp-card:first-child {
+  border-top: 1px solid var(--border);
 }
 
-.exp-card:hover { border-color: var(--border-md); }
-
-.exp-card__header {
+.exp-card__top {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  flex-wrap: wrap;
-}
-
-.exp-card__company {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text);
-  letter-spacing: -0.02em;
-}
-
-.exp-card__role {
-  font-size: 0.85rem;
-  color: var(--accent);
-  margin-top: 0.2rem;
-}
-
-.exp-card__right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.4rem;
+  align-items: center;
+  gap: 0.875rem;
+  margin-bottom: 1.25rem;
 }
 
 .exp-card__period {
@@ -578,12 +701,12 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 500;
   color: var(--current-dot);
   background: rgba(34,197,94,0.1);
   border-radius: 100px;
-  padding: 0.15rem 0.6rem;
+  padding: 0.15rem 0.65rem;
 }
 
 .badge-dot {
@@ -592,25 +715,144 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
   background: var(--current-dot);
 }
 
+.exp-card__body {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.exp-card__title-row {
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+
+.exp-card__company {
+  font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin-bottom: 0.4rem;
+}
+
+.exp-card__role {
+  font-size: 0.85rem;
+  color: var(--accent);
+  line-height: 1.4;
+}
+
 .exp-card__bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.exp-card__bullets li {
+  font-size: 0.925rem;
+  color: var(--text-muted);
+  padding-left: 1.25rem;
+  position: relative;
+  line-height: 1.55;
+}
+
+.exp-card__bullets li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 0.75rem;
+  top: 0.18em;
+}
+
+/* ─── Side projects block ───────────────────────────────────── */
+.side-block {
+  margin-top: 3.5rem;
+  padding-top: 3rem;
+  border-top: 1px dashed var(--border-md);
+}
+
+.side-block__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+
+.side-block__sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1.75rem;
+}
+
+.side-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.side-card {
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  transition: border-color 0.2s;
+}
+
+.side-card:hover { border-color: var(--border-md); }
+
+.side-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.side-card__period {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.side-card__company {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.2rem;
+}
+
+.side-card__role {
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 0.875rem;
+}
+
+.side-card__bullets {
   list-style: none;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
 }
 
-.exp-card__bullets li {
-  font-size: 0.875rem;
+.side-card__bullets li {
+  font-size: 0.825rem;
   color: var(--text-muted);
   padding-left: 1rem;
   position: relative;
+  line-height: 1.45;
 }
 
-.exp-card__bullets li::before {
-  content: '—';
+.side-card__bullets li::before {
+  content: '→';
   position: absolute;
   left: 0;
   color: var(--text-xmuted);
+  font-size: 0.7rem;
+  top: 0.2em;
 }
 
 /* ─── Skills ────────────────────────────────────────────────── */
@@ -655,51 +897,75 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
 
 /* ─── Education ─────────────────────────────────────────────── */
 .edu-list {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
 }
 
-.edu-item {
-  padding: 1.25rem 1.5rem;
-  background: var(--bg-subtle);
+.edu-card {
+  padding: 1.75rem;
   border: 1px solid var(--border);
-  border-left: 3px solid var(--accent);
-  border-radius: 0 var(--radius) var(--radius) 0;
+  border-radius: var(--radius);
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: border-color 0.2s, transform 0.2s;
+  cursor: default;
 }
 
-.edu-item__degree {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 0.25rem;
+.edu-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
 }
 
-.edu-item__field {
-  font-size: 1rem;
-  font-weight: 600;
+.edu-card__tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; height: 44px;
+  border-radius: 10px;
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  flex-shrink: 0;
+}
+
+.edu-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.edu-card__field {
+  font-size: 0.975rem;
+  font-weight: 700;
   color: var(--text);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
 }
 
-.edu-item__school {
-  font-size: 0.85rem;
+.edu-card__school {
+  font-size: 0.8rem;
   color: var(--text-muted);
-  margin-top: 0.2rem;
+}
+
+.edu-card__degree {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+  font-family: var(--font-mono);
 }
 
 /* ─── Contact ───────────────────────────────────────────────── */
 .contact {
   background: var(--bg-card);
   border-top: 1px solid var(--border);
-  padding: 5rem 0;
-}
-
-.contact__inner {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  padding: 7rem 0;
 }
 
 .contact__heading {
@@ -750,14 +1016,143 @@ const tagline = computed(() => (tm('hero.tagline') as any[]).map(l => rt(l)))
   .stat:nth-child(3) { border-right: 1px solid var(--border); }
   .about-grid { grid-template-columns: 1fr; gap: 2rem; }
   .skills-grid { grid-template-columns: 1fr; }
-  .exp-card__header { flex-direction: column; }
-  .exp-card__right { align-items: flex-start; }
   .hero__content { padding: 3rem 1.5rem 2rem; }
   .stat { padding: 1.25rem 1.5rem; }
+  .exp-card { padding: 2rem 0; }
+  .exp-card__body { grid-template-columns: 1fr; gap: 1.25rem; }
+  .exp-card__title-row { position: static; }
+  .section-heading { font-size: clamp(2rem, 10vw, 2.8rem); }
+  .side-list { grid-template-columns: 1fr; }
+  .edu-list { grid-template-columns: 1fr; }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+  .about-stat:nth-child(2) { border-right: none; }
+  .about-stat:nth-child(3) { border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
 }
 
 @media (max-width: 480px) {
   .hero__stats { grid-template-columns: repeat(2, 1fr); }
   .hero__name { font-size: clamp(3rem, 16vw, 5rem); }
+}
+
+/* ─ Talks ─────────────────────────────────────────────────── */
+.talks {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.talks__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.talk-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  text-align: left;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  cursor: pointer;
+  color: inherit;
+  font-family: inherit;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.talk-item:hover {
+  border-color: var(--border-md);
+  background: var(--bg-subtle);
+  transform: translateX(3px);
+}
+
+.talk-item--active {
+  border-color: var(--accent);
+  background: var(--accent-dim);
+}
+
+.talk-item__num {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  width: 1.6rem;
+}
+
+.talk-item--active .talk-item__num { color: var(--accent); }
+
+.talk-item__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.talk-item__conf {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.talk-item__title {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.talk-item--active .talk-item__title { color: var(--text); }
+
+.talk-item__arrow {
+  flex-shrink: 0;
+  color: var(--text-xmuted);
+  transition: color 0.2s;
+}
+
+.talk-item--active .talk-item__arrow,
+.talk-item:hover .talk-item__arrow { color: var(--accent); }
+
+.talks__player {
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+}
+
+.talks__frame-wrap {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--border);
+}
+
+.talks__frame-wrap iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (max-width: 860px) {
+  .talks {
+    grid-template-columns: 1fr;
+  }
+  .talks__player {
+    position: static;
+    order: -1;
+  }
 }
 </style>

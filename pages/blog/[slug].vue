@@ -28,6 +28,8 @@ useHead({ title: `${post.value.title} — Sergei Solovev` })
 <style scoped>
 .post {
   max-width: 680px;
+  padding-top: 4rem;
+  padding-bottom: 6rem;
 }
 
 .post__header {
@@ -52,11 +54,67 @@ useHead({ title: `${post.value.title} — Sergei Solovev` })
   font-size: 1.05rem;
 }
 
-.post__body :deep(h2) { font-size: 1.4rem; margin: 2rem 0 0.75rem; }
-.post__body :deep(h3) { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; }
+.post__body :deep(h2),
+.post__body :deep(h3) { position: relative; }
+
+.post__body :deep(h2) {
+  font-size: 1.4rem;
+  margin: 2.5rem 0 0.75rem;
+  color: var(--accent);
+}
+
+.post__body :deep(h3) {
+  font-size: 1.15rem;
+  margin: 1.75rem 0 0.5rem;
+  color: var(--text);
+  border-left: 2px solid var(--accent);
+  padding-left: 0.75rem;
+}
+
+.post__body :deep(h2 a),
+.post__body :deep(h3 a) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.post__body :deep(h2 a)::before,
+.post__body :deep(h3 a)::before {
+  content: '#';
+  position: absolute;
+  left: -1.4em;
+  color: var(--accent);
+  font-weight: 400;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.post__body :deep(h2:hover a)::before,
+.post__body :deep(h3:hover a)::before { opacity: 1; }
 .post__body :deep(p) { margin-bottom: 1rem; }
-.post__body :deep(pre) { background: #f4f4f4; padding: 1rem; border-radius: 6px; overflow-x: auto; margin-bottom: 1rem; }
-.post__body :deep(code) { font-family: var(--font-mono); font-size: 0.9em; }
+.post__body :deep(pre) {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.post__body :deep(pre code) {
+  background: none;
+  padding: 0;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+
+.post__body :deep(code) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--bg-subtle);
+  color: var(--accent);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
 .post__body :deep(ul), .post__body :deep(ol) { padding-left: 1.5rem; margin-bottom: 1rem; }
 .post__body :deep(li) { margin-bottom: 0.25rem; }
 </style>

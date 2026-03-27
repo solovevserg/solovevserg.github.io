@@ -5,6 +5,8 @@
     "portfolio": "Portfolio"
   },
   "hero": {
+    "name_first": "Sergei",
+    "name_last": "Solovev",
     "role": "Lead Frontend Developer",
     "tagline": ["Building interfaces.", "Leading teams.", "Teaching."],
     "cta_contact": "Get in touch",
@@ -45,6 +47,7 @@
         "role": "Co-founder, CEO",
         "period": "Sept 2019 — Present",
         "current": true,
+        "side": true,
         "bullets": [
           "Team management and hiring",
           "Full-stack TypeScript development",
@@ -67,12 +70,15 @@
         "role": "Data Analyst",
         "period": "Sept 2020 — Aug 2021",
         "current": false,
+        "side": true,
         "bullets": [
           "Social media data collection tools",
           "University analytics and reporting"
         ]
       }
-    ]
+    ],
+    "side_title": "Side projects",
+    "side_subtitle": "Teaching · Own projects · Research"
   },
   "skills": {
     "title": "Skills",
@@ -99,19 +105,42 @@
     "title": "Education",
     "items": [
       {
-        "degree": "MSc (in progress, 2026)",
+        "degree": "PhD candidate (exp. 2026)",
         "field": "Philosophy of Science & Technology",
-        "school": "BMSTU"
+        "school": "BMSTU",
+        "tag": "PhD"
       },
       {
         "degree": "MSc (2022)",
         "field": "Applied Informatics",
-        "school": "BMSTU"
+        "school": "BMSTU",
+        "tag": "MSc"
       },
       {
         "degree": "BSc (2020)",
         "field": "Applied Informatics",
-        "school": "BMSTU"
+        "school": "BMSTU",
+        "tag": "BSc"
+      }
+    ]
+  },
+  "talks": {
+    "title": "Talks",
+    "items": [
+      {
+        "id": "PT_sS6uWEMQ",
+        "conf": "HolyJS",
+        "title": "Typing eval and new Function: a JS interpreter on TypeScript types"
+      },
+      {
+        "id": "zl7GngwGcaM",
+        "conf": "HolyJS",
+        "title": "From Roman emperors to Temporal API: mastering dates and time in JS"
+      },
+      {
+        "id": "FSj_rL6IuY8",
+        "conf": "HolyJS",
+        "title": "From Latin to async/await: archaeological excavations of JavaScript"
       }
     ]
   },
