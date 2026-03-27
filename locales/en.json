@@ -9,6 +9,14 @@
     "name_last": "Solovev",
     "role": "Lead Frontend Developer",
     "tagline": ["Building interfaces.", "Leading teams.", "Teaching."],
+    "typewriter": [
+      "Lead Frontend Developer",
+      "Angular SPA Architect",
+      "Team Lead · 11 engineers",
+      "Lecturer at BMSTU & HSE",
+      "SDAL Studio Co-founder",
+      "HolyJS Speaker"
+    ],
     "cta_contact": "Get in touch",
     "cta_blog": "Read blog",
     "available": "Open to opportunities"
@@ -105,22 +113,41 @@
     "title": "Education",
     "items": [
       {
-        "degree": "PhD candidate (exp. 2026)",
+        "tag": "PhD",
+        "school": "Bauman Moscow State Technical University",
         "field": "Philosophy of Science & Technology",
-        "school": "BMSTU",
-        "tag": "PhD"
+        "degree": "PhD candidate (in progress)",
+        "period": "Sep 2023 — Aug 2026",
+        "thesis": "Philosophical and methodological aspects of knowledge representation in the structure of artificial languages"
       },
       {
-        "degree": "MSc (2022)",
-        "field": "Applied Informatics",
-        "school": "BMSTU",
-        "tag": "MSc"
+        "tag": "MSc",
+        "school": "Bauman Moscow State Technical University",
+        "field": "Computer Science",
+        "degree": "Master's degree",
+        "period": "2020 — 2022",
+        "grade": "4.7",
+        "thesis": "Analytical tools for the study of social graphs (using the example of the analysis of BMSTU students' social connections on VK)",
+        "activities": "Laboratory of Informatization of Social Analysis · Cycling club"
       },
       {
-        "degree": "BSc (2020)",
-        "field": "Applied Informatics",
-        "school": "BMSTU",
-        "tag": "BSc"
+        "tag": "BSc",
+        "school": "Bauman Moscow State Technical University",
+        "field": "Computer Science",
+        "degree": "Bachelor's degree",
+        "period": "2016 — 2020",
+        "grade": "4.97",
+        "thesis": "Methods and technologies for interactive visualization of social network data",
+        "activities": "Data Crash Course"
+      },
+      {
+        "tag": "11th",
+        "school": "School №1360",
+        "field": "Mathematics (advanced)",
+        "degree": "High School Diploma",
+        "period": "Sep 2005 — Jun 2016",
+        "grade": "4.8",
+        "activities": "3 golden cups in Intellectual Club · Olympiad diplomas in math, CS & astronomy · Basketball team"
       }
     ]
   },
