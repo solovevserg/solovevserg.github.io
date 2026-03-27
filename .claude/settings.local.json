@@ -6,7 +6,12 @@
       "WebFetch(domain:hh.ru)",
       "WebFetch(domain:www.linkedin.com)",
       "WebFetch(domain:github.com)",
-      "Bash(npm run:*)"
+      "Bash(npm run:*)",
+      "WebFetch(domain:unsplash.com)",
+      "WebFetch(domain:source.unsplash.com)",
+      "WebSearch",
+      "WebFetch(domain:allgriovernmentjobs.vercel.app)",
+      "WebFetch(domain:images.unsplash.com)"
     ]
   }
 }

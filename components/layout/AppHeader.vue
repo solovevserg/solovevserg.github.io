@@ -37,7 +37,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   <header class="header">
     <div class="header__bar">
       <NuxtLink :to="localePath('/')" class="header__logo" @click="closeMenu">
-        <span class="logo-bracket">{</span>SS<span class="logo-bracket">}</span>
+        <span class="logo-bracket">{</span>sergsol<span class="logo-bracket">}</span>
       </NuxtLink>
 
       <!-- Landing: section anchor nav (left) -->

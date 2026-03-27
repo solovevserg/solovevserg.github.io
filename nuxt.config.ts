@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/content',
     '@nuxtjs/i18n',
+    '@nuxtjs/sitemap',
   ],
 
   css: ['~/assets/css/global.css'],
@@ -48,6 +49,10 @@ export default defineNuxtConfig({
     prerender: {
       crawlLinks: true,
     },
+  },
+
+  site: {
+    url: 'https://sergsol.dev',
   },
 
   compatibilityDate: '2024-11-01',
