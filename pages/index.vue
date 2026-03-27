@@ -208,11 +208,6 @@ onUnmounted(() => {
             </a>
           </div><!-- /.hero__socials -->
 
-          <a href="#about" class="scroll-hint" aria-label="Scroll down">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 5v14M5 12l7 7 7-7"/>
-            </svg>
-          </a>
         </div><!-- /.hero__left-inner -->
       </div><!-- /.hero__left -->
 
@@ -226,6 +221,13 @@ onUnmounted(() => {
         />
         <div class="hero__photo-grad" />
       </div>
+
+      <!-- Scroll hint -->
+      <a href="#about" class="scroll-hint" aria-label="Scroll down">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+      </a>
     </section>
 
     <!-- ═══════════════════════════════════════════ ABOUT -->
@@ -450,7 +452,7 @@ onUnmounted(() => {
 /* ─── Hero ───────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  height: 100dvh;
+  height: calc(100dvh - var(--header-h));
   display: flex;
   align-items: stretch;
   overflow: hidden;
@@ -477,10 +479,8 @@ onUnmounted(() => {
   align-items: center;
   padding-left: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
   padding-right: 4rem;
-  padding-top: var(--header-h);
+  padding-top: 2rem;
   padding-bottom: 2.5rem;
-  /* opaque bg so photo never bleeds through */
-  background: var(--bg);
 }
 
 .hero__left-inner {
@@ -506,13 +506,13 @@ onUnmounted(() => {
   transform-origin: center 80%;
 }
 
-/* gradient: fades photo into bg on the left and bottom */
+/* oval mask: фото проявляется в центре, тает по краям */
 .hero__photo-grad {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to right, var(--bg) 0%, transparent 55%),
-    linear-gradient(to bottom, transparent 65%, var(--bg) 100%);
+    radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, var(--bg) 72%),
+    linear-gradient(to right, var(--bg) 0%, transparent 28%);
   pointer-events: none;
 }
 
@@ -650,23 +650,27 @@ onUnmounted(() => {
 
 /* ─── Scroll hint ────────────────────────────────────────────── */
 .scroll-hint {
-  display: inline-flex;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 40px; height: 40px;
-  margin-top: 2.5rem;
   border: 1px solid var(--border);
   border-radius: 50%;
   color: var(--text-muted);
+  background: var(--bg-card);
   animation: bounce 2.5s ease-in-out infinite;
-  flex-shrink: 0;
 }
 
 .scroll-hint:hover { color: var(--accent); border-color: var(--accent); }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(6px); }
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(6px); }
 }
 
 /* ─── About stats ────────────────────────────────────────────── */
@@ -1169,10 +1173,22 @@ onUnmounted(() => {
 /* ─── Tablet: photo shrinks, text takes ~65% ─────────────────── */
 @media (max-width: 1024px) {
   .hero__left {
-    width: min(65%, 640px);
+    width: min(60%, 580px);
     padding-right: 2rem;
   }
-  .hero__photo-wrap { width: 48%; }
+  /* враппер шире — объект центрирован, есть запас для градиента */
+  .hero__photo-wrap {
+    width: 75%;
+    left: auto;
+  }
+  .hero__photo {
+    object-position: center 75%;
+  }
+  .hero__photo-grad {
+    background:
+      radial-gradient(ellipse 72% 88% at 55% 48%, transparent 30%, var(--bg) 70%),
+      linear-gradient(to right, var(--bg) 0%, transparent 30%);
+  }
   .hero__name { font-size: clamp(3.2rem, 9vw, 6rem); }
 }
 
@@ -1184,19 +1200,21 @@ onUnmounted(() => {
     padding-right: 1.5rem;
     align-items: flex-end;
     padding-bottom: 5rem;
+    background: transparent; /* фото просвечивает сквозь панель */
   }
-  .hero__left::after { display: none; }
   .hero__left-inner { max-width: 100%; }
 
+  /* фото на весь экран как фон */
   .hero__photo-wrap {
     width: 100%;
-    opacity: 0.35;
+    opacity: 1;
   }
-  /* darken photo when it's the background */
+
+  /* тёмный градиент снизу для читаемости текста */
   .hero__photo-grad {
     background:
-      linear-gradient(to bottom, transparent 30%, var(--bg) 90%),
-      linear-gradient(to right, var(--bg) 0%, transparent 60%);
+      linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, var(--bg) 85%),
+      linear-gradient(to bottom, var(--bg) 0%, transparent 20%);
   }
 
   .hero__name { font-size: clamp(3rem, 14vw, 5.5rem); }
@@ -1219,6 +1237,7 @@ onUnmounted(() => {
 @media (max-width: 480px) {
   .hero__name { font-size: clamp(2.8rem, 16vw, 4.5rem); }
   .hero__left { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .hero__photo-wrap { object-position: center 60%; }
 }
 
 /* ─ Talks ─────────────────────────────────────────────────── */
