@@ -24,6 +24,15 @@ function splitLastWord(text: string): [string, string] {
   return i === -1 ? ['', text] : [text.slice(0, i), text.slice(i + 1)]
 }
 
+// Mobile bottom sheet for thesis (tooltip goes off-screen on mobile)
+const activeThesis = ref<string | null>(null)
+function toggleThesis(item: EduItem) {
+  activeThesis.value = activeThesis.value === item.thesis ? null : (item.thesis ?? null)
+}
+watch(activeThesis, (val) => {
+  if (import.meta.client) document.body.style.overflow = val ? 'hidden' : ''
+})
+
 const eduGroups = computed(() => {
   const map = new Map<string, EduItem[]>()
   for (const item of eduItems.value) {
@@ -59,7 +68,7 @@ const eduGroups = computed(() => {
               </div>
 
               <p class="edu-item__field">
-                <template v-if="item.thesis">{{ splitLastWord(item.field)[0] }} <span class="thesis-tail">{{ splitLastWord(item.field)[1] }}&nbsp;<span class="thesis-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="thesis-hint__tooltip"><em class="thesis-hint__label">{{ t('education.thesis_label') }}</em>{{ item.thesis }}</span></span></span></template>
+                <template v-if="item.thesis">{{ splitLastWord(item.field)[0] }} <span class="thesis-tail">{{ splitLastWord(item.field)[1] }}&nbsp;<span class="thesis-hint" @click.stop="toggleThesis(item)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="thesis-hint__tooltip"><em class="thesis-hint__label">{{ t('education.thesis_label') }}</em>{{ item.thesis }}</span></span></span></template>
                 <template v-else>{{ item.field }}</template>
               </p>
 
@@ -78,6 +87,18 @@ const eduGroups = computed(() => {
       </div>
     </div>
   </section>
+
+  <!-- Mobile thesis bottom sheet -->
+  <Teleport to="body">
+    <Transition name="sheet">
+      <div v-if="activeThesis" class="thesis-sheet" @click="activeThesis = null">
+        <div class="thesis-sheet__panel" @click.stop>
+          <p class="thesis-sheet__label">{{ t('education.thesis_label') }}</p>
+          <p class="thesis-sheet__text">{{ activeThesis }}</p>
+        </div>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped lang="less">
@@ -277,22 +298,57 @@ const eduGroups = computed(() => {
     margin-bottom: 0.25rem;
   }
 
-  &:hover .thesis-hint__tooltip,
-  &:focus-within .thesis-hint__tooltip { display: block; }
-
-  @media (max-width: 768px) {
-    &__tooltip {
-      left: auto;
-      right: 0;
-      transform: none;
-      width: min(260px, 80vw);
-
-      &::after {
-        left: auto;
-        right: 1rem;
-        transform: none;
-      }
-    }
+  @media (hover: hover) {
+    &:hover .thesis-hint__tooltip,
+    &:focus-within .thesis-hint__tooltip { display: block; }
   }
 }
+</style>
+
+<style>
+/* ─── Thesis bottom sheet (mobile) ───────────────────────── */
+.thesis-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: flex-end;
+  padding: 0 0.75rem 0.75rem;
+}
+.thesis-sheet__panel {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-md);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem 1.75rem;
+  box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+.thesis-sheet__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+.thesis-sheet__text {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.sheet-enter-active { transition: opacity 0.25s ease; }
+.sheet-leave-active  { transition: opacity 0.25s ease; }
+.sheet-enter-active .thesis-sheet__panel,
+.sheet-leave-active  .thesis-sheet__panel {
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+.sheet-enter-from,
+.sheet-leave-to { opacity: 0; }
+.sheet-enter-from .thesis-sheet__panel,
+.sheet-leave-to  .thesis-sheet__panel { transform: translateY(100%); }
 </style>
