@@ -1,5 +1,9 @@
+<script setup lang="ts">
+const { t } = useI18n()
+</script>
+
 <template>
-  <span class="badge"><span class="badge__dot" />current</span>
+  <span class="badge"><span class="badge__dot" />{{ t('common.current') }}</span>
 </template>
 
 <style scoped lang="less">

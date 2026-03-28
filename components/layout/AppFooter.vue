@@ -7,7 +7,7 @@ const year = new Date().getFullYear()
   <footer class="footer">
     <div class="container footer__inner">
       <span class="footer__copy">
-        © {{ year }} Sergei Solovev — {{ t('footer.rights') }}
+        © {{ year }} {{ t('footer.name') }} — {{ t('footer.rights') }}
       </span>
       <div class="footer__links">
         <a href="https://github.com/solovevserg" target="_blank" rel="noopener">GitHub</a>

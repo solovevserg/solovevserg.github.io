@@ -159,6 +159,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
     font-size: 1.05rem;
     font-weight: 500;
     color: var(--text);
+    margin-right: 1.5rem;
     letter-spacing: -0.02em;
     flex-shrink: 0;
   }
