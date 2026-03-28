@@ -100,6 +100,7 @@ onUnmounted(() => {
         sizes="sm:100vw md:75vw lg:60vw"
         format="avif,webp"
         preload
+        placeholder
         :img-attrs="{
           class: 'hero__photo',
           alt: '',
@@ -127,7 +128,6 @@ onUnmounted(() => {
   height: calc(100svh - var(--header-h));
   display: flex;
   align-items: stretch;
-  overflow: hidden;
 
   &::after {
     content: '';
@@ -182,7 +182,9 @@ onUnmounted(() => {
 
   &__photo-wrap {
     position: absolute;
-    right: 0; top: 0; bottom: 0;
+    right: 0;
+    top: calc(-1 * var(--header-h));
+    bottom: 0;
     width: 60%;
     overflow: hidden;
 
