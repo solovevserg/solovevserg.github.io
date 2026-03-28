@@ -36,7 +36,7 @@ defineProps<{ num: string; title: string }>()
   color: var(--text);
 
   @media (max-width: 768px) {
-    font-size: clamp(2rem, 10vw, 2.8rem);
+    font-size: clamp(1.8rem, 9vw, 2.8rem);
   }
 }
 </style>

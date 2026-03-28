@@ -5,16 +5,12 @@ import {
   ellipses,
   hyphenatedWords,
   numberUnits,
-  orphans,
   shortWords,
 } from 'richtypo/rules/common';
 
 function applyTypo(text: string, locale: string): string {
-  // const rules = locale === 'ru' ? ruRules : enRules;
-
   return richtypo([
     shortWords,
-    orphans,
     numberUnits,
     degreeSigns,
     ellipses,

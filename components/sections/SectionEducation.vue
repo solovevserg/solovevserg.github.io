@@ -157,6 +157,8 @@ const eduGroups = computed(() => {
       padding-left: 1rem;
       border-left: 2px solid var(--accent);
     }
+
+    &__city { padding-left: 1rem; }
   }
 }
 
