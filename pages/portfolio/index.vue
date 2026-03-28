@@ -29,7 +29,7 @@ const { data: projects } = await useAsyncData('portfolio', () =>
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .page-title {
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -54,11 +54,8 @@ const { data: projects } = await useAsyncData('portfolio', () =>
   color: inherit;
   text-decoration: none;
   transition: border-color 0.2s;
-}
 
-.project-link:hover {
-  border-color: var(--color-accent);
-  text-decoration: none;
+  &:hover { border-color: var(--color-accent); }
 }
 
 .project-title {

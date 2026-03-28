@@ -20,6 +20,7 @@
   "devDependencies": {
     "@nuxt/devtools": "latest",
     "http-server": "^14.1.1",
+    "less": "^4.6.4",
     "typescript": "^5.7.3"
   }
 }

@@ -9,7 +9,7 @@ defineProps<{ num: string; title: string }>()
   </header>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .section-header {
   margin-bottom: 4rem;
 }
@@ -30,9 +30,9 @@ defineProps<{ num: string; title: string }>()
   letter-spacing: -0.04em;
   line-height: 0.92;
   color: var(--text);
-}
 
-@media (max-width: 768px) {
-  .section-heading { font-size: clamp(2rem, 10vw, 2.8rem); }
+  @media (max-width: 768px) {
+    font-size: clamp(2rem, 10vw, 2.8rem);
+  }
 }
 </style>

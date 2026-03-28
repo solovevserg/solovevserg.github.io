@@ -2,7 +2,7 @@
   <span class="badge"><span class="badge__dot" />current</span>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .badge {
   display: flex;
   align-items: center;
@@ -13,11 +13,12 @@
   background: rgba(34,197,94,0.1);
   border-radius: 100px;
   padding: 0.15rem 0.65rem;
-}
 
-.badge__dot {
-  width: 5px; height: 5px;
-  border-radius: 50%;
-  background: var(--current-dot);
+  &__dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--current-dot);
+  }
 }
 </style>

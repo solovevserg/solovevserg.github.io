@@ -39,12 +39,15 @@ const skillGroups = computed<SkillGroup[]>(() =>
   </section>
 </template>
 
-<style scoped>
-/* ─── Skills ────────────────────────────────────────────────── */
+<style scoped lang="less">
+// ─── Skills ───────────────────────────────────────────────────
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
+
+  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 768px)  { grid-template-columns: 1fr; }
 }
 
 .skill-group {
@@ -55,10 +58,8 @@ const skillGroups = computed<SkillGroup[]>(() =>
   display: flex;
   flex-direction: column;
   gap: 1rem;
-}
 
-.skill-group__name {
-  margin: 0;
+  &__name { margin: 0; }
 }
 
 .skill-keys {
@@ -71,40 +72,38 @@ const skillGroups = computed<SkillGroup[]>(() =>
   display: flex;
   align-items: center;
   gap: 0.5rem;
-}
 
-.skill-key__name {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--text);
-  flex: 1;
-  min-width: 0;
-}
+  &__name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+    min-width: 0;
+  }
 
-.skill-key__dots {
-  display: flex;
-  gap: 3px;
-  flex-shrink: 0;
-}
+  &__dots {
+    display: flex;
+    gap: 3px;
+    flex-shrink: 0;
+  }
 
-.skill-key__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--border-md);
-}
+  &__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--border-md);
 
-.skill-key__dot--filled {
-  background: var(--accent);
-}
+    &--filled { background: var(--accent); }
+  }
 
-.skill-key__level {
-  font-family: var(--font-mono);
-  font-size: 0.65rem;
-  color: var(--text-muted);
-  flex-shrink: 0;
-  width: 6.5rem;
-  text-align: right;
+  &__level {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+    width: 6.5rem;
+    text-align: right;
+  }
 }
 
 .skill-tags {
@@ -124,7 +123,4 @@ const skillGroups = computed<SkillGroup[]>(() =>
   padding: 0.2rem 0.6rem;
   cursor: default;
 }
-
-@media (max-width: 1024px) { .skills-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 768px) { .skills-grid { grid-template-columns: 1fr; } }
 </style>

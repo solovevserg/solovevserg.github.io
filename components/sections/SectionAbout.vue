@@ -51,8 +51,8 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
   </section>
 </template>
 
-<style scoped>
-/* ─── About stats ────────────────────────────────────────────── */
+<style scoped lang="less">
+// ─── About stats ──────────────────────────────────────────────
 .about-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -61,6 +61,10 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
   border-radius: var(--radius);
   overflow: hidden;
   margin-bottom: 3rem;
+
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 .about-stat {
@@ -68,29 +72,40 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
   flex-direction: column;
   padding: 1.25rem 1.5rem;
   border-right: 1px solid var(--border);
-}
-.about-stat:last-child { border-right: none; }
 
-.about-stat__value {
-  font-size: 1.75rem;
-  font-weight: 800;
-  letter-spacing: -0.04em;
-  color: var(--text);
-  line-height: 1;
+  &:last-child { border-right: none; }
+
+  &__value {
+    font-size: 1.75rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    margin-top: 0.3rem;
+  }
+
+  @media (max-width: 768px) {
+    &:nth-child(2) { border-right: none; }
+    &:nth-child(3) { border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
+  }
 }
 
-.about-stat__label {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  margin-top: 0.3rem;
-}
-
-/* ─── About ─────────────────────────────────────────────────── */
+// ─── About grid ───────────────────────────────────────────────
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 280px;
   gap: 4rem;
   align-items: start;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
 }
 
 .about-bio {
@@ -109,27 +124,22 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
   display: flex;
   align-items: flex-start;
   gap: 0.75rem;
+
+  dt {
+    color: var(--text-muted);
+    padding-top: 2px;
+    flex-shrink: 0;
+  }
+
+  dd {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
 }
 
-.meta-row dt {
-  color: var(--text-muted);
-  padding-top: 2px;
-  flex-shrink: 0;
-}
-
-.meta-row dd {
-  font-size: 0.875rem;
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-.link { color: var(--accent); }
-.link:hover { text-decoration: underline; }
-
-@media (max-width: 768px) {
-  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .about-stats { grid-template-columns: repeat(2, 1fr); }
-  .about-stat:nth-child(2) { border-right: none; }
-  .about-stat:nth-child(3) { border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
+.link {
+  color: var(--accent);
+  &:hover { text-decoration: underline; }
 }
 </style>

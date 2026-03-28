@@ -25,100 +25,104 @@ useHead({ title: `${post.value.title} — Sergei Solovev` })
   </article>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .post {
   max-width: 680px;
   padding-top: 4rem;
   padding-bottom: 6rem;
-}
 
-.post__header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--color-border);
-}
+  &__header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
 
-.post__date {
-  font-size: 0.85rem;
-  color: var(--color-muted);
-}
+  &__date {
+    font-size: 0.85rem;
+    color: var(--color-muted);
+  }
 
-.post__title {
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
-  line-height: 1.2;
-  margin: 0.5rem 0;
-}
+  &__title {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    line-height: 1.2;
+    margin: 0.5rem 0;
+  }
 
-.post__desc {
-  color: var(--color-muted);
-  font-size: 1.05rem;
-}
+  &__desc {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
 
-.post__body :deep(h2),
-.post__body :deep(h3) { position: relative; }
+  &__body {
+    :deep(h2),
+    :deep(h3) { position: relative; }
 
-.post__body :deep(h2) {
-  font-size: 1.4rem;
-  margin: 2.5rem 0 0.75rem;
-  color: var(--accent);
-}
+    :deep(h2) {
+      font-size: 1.4rem;
+      margin: 2.5rem 0 0.75rem;
+      color: var(--accent);
+    }
 
-.post__body :deep(h3) {
-  font-size: 1.15rem;
-  margin: 1.75rem 0 0.5rem;
-  color: var(--text);
-  border-left: 2px solid var(--accent);
-  padding-left: 0.75rem;
-}
+    :deep(h3) {
+      font-size: 1.15rem;
+      margin: 1.75rem 0 0.5rem;
+      color: var(--text);
+      border-left: 2px solid var(--accent);
+      padding-left: 0.75rem;
+    }
 
-.post__body :deep(h2 a),
-.post__body :deep(h3 a) {
-  color: inherit;
-  text-decoration: none;
-}
+    :deep(h2 a),
+    :deep(h3 a) {
+      color: inherit;
+      text-decoration: none;
+    }
 
-.post__body :deep(h2 a)::before,
-.post__body :deep(h3 a)::before {
-  content: '#';
-  position: absolute;
-  left: -1.4em;
-  color: var(--accent);
-  font-weight: 400;
-  opacity: 0;
-  transition: opacity 0.15s;
-}
+    :deep(h2 a)::before,
+    :deep(h3 a)::before {
+      content: '#';
+      position: absolute;
+      left: -1.4em;
+      color: var(--accent);
+      font-weight: 400;
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
 
-.post__body :deep(h2:hover a)::before,
-.post__body :deep(h3:hover a)::before { opacity: 1; }
-.post__body :deep(p) { margin-bottom: 1rem; }
-/* ── Shiki syntax highlighted blocks ── */
-.post__body :deep(pre.shiki) {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.5rem;
-  overflow-x: auto;
-  margin: 1.5rem 0;
-  font-size: 0.875rem;
-  line-height: 1.65;
-}
+    :deep(h2:hover a)::before,
+    :deep(h3:hover a)::before { opacity: 1; }
 
-/* shiki sets background via inline style — keep font */
-.post__body :deep(pre.shiki code) {
-  font-family: var(--font-mono);
-  background: none;
-  padding: 0;
-  color: inherit;
-}
+    :deep(p) { margin-bottom: 1rem; }
 
-/* inline code (not inside pre) */
-.post__body :deep(code:not(pre code)) {
-  font-family: var(--font-mono);
-  font-size: 0.875em;
-  background: var(--bg-subtle);
-  color: var(--accent);
-  padding: 0.15em 0.4em;
-  border-radius: 4px;
+    :deep(pre.shiki) {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-size: 0.875rem;
+      line-height: 1.65;
+    }
+
+    :deep(pre.shiki code) {
+      font-family: var(--font-mono);
+      background: none;
+      padding: 0;
+      color: inherit;
+    }
+
+    :deep(code:not(pre code)) {
+      font-family: var(--font-mono);
+      font-size: 0.875em;
+      background: var(--bg-subtle);
+      color: var(--accent);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
+
+    :deep(ul),
+    :deep(ol) { padding-left: 1.5rem; margin-bottom: 1rem; }
+
+    :deep(li) { margin-bottom: 0.25rem; }
+  }
 }
-.post__body :deep(ul), .post__body :deep(ol) { padding-left: 1.5rem; margin-bottom: 1rem; }
-.post__body :deep(li) { margin-bottom: 0.25rem; }
 </style>

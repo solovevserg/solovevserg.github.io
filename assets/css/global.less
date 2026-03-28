@@ -1,15 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 
-/* ─── Reset ─────────────────────────────────────────────────── */
+// ─── Reset ───────────────────────────────────────────────────
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 img, svg { display: block; max-width: 100%; }
 button { font: inherit; cursor: pointer; border: none; background: none; }
 a { color: inherit; text-decoration: none; }
 
-/* ─── Design Tokens ──────────────────────────────────────────── */
+// ─── Design Tokens ───────────────────────────────────────────
 :root {
-  /* Dark (default) */
   --bg:          #0c0c0e;
   --bg-card:     #141417;
   --bg-subtle:   #1c1c20;
@@ -57,7 +56,7 @@ a { color: inherit; text-decoration: none; }
   --current-dot: #16a34a;
 }
 
-/* ─── Base ───────────────────────────────────────────────────── */
+// ─── Base ─────────────────────────────────────────────────────
 html {
   font-family: var(--font-sans);
   font-size: 16px;
@@ -73,13 +72,16 @@ body {
   flex-direction: column;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────── */
+// ─── Scrollbar ────────────────────────────────────────────────
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--bg-subtle); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+::-webkit-scrollbar-thumb {
+  background: var(--bg-subtle);
+  border-radius: 3px;
+  &:hover { background: var(--text-muted); }
+}
 
-/* ─── Layout helpers ─────────────────────────────────────────── */
+// ─── Layout helpers ───────────────────────────────────────────
 .container {
   max-width: var(--max-w);
   margin: 0 auto;
@@ -87,34 +89,34 @@ body {
   width: 100%;
 }
 
-/* ─── Section ────────────────────────────────────────────────── */
+// ─── Section ──────────────────────────────────────────────────
 .section {
   padding: 7rem 0;
 }
 
-/* ─── Dot-grid background ────────────────────────────────────── */
+// ─── Dot-grid background ──────────────────────────────────────
 .dot-bg {
   background-color: var(--bg);
   background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
   background-size: 28px 28px;
 }
 
-/* ─── Transitions ────────────────────────────────────────────── */
+// ─── Transitions ──────────────────────────────────────────────
 *, *::before, *::after {
   transition: border-color 0.2s, color 0.2s, background-color 0.25s, opacity 0.2s;
 }
 
-/* ─── Card hover (lift + accent ring + glow) ─────────────────── */
+// ─── Card hover (lift + accent ring + glow) ───────────────────
 .card-hover {
   transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
-}
-.card-hover:hover {
-  border-color: var(--accent);
-  box-shadow: var(--glow-sm);
-  transform: translateY(-2px);
+  &:hover {
+    border-color: var(--accent);
+    box-shadow: var(--glow-sm);
+    transform: translateY(-2px);
+  }
 }
 
-/* ─── Uppercase accent label ─────────────────────────────────── */
+// ─── Uppercase accent label ───────────────────────────────────
 .label-caps {
   font-size: 0.7rem;
   font-weight: 700;
@@ -123,7 +125,7 @@ body {
   color: var(--accent);
 }
 
-/* ─── Monospace meta period ──────────────────────────────────── */
+// ─── Monospace meta period ────────────────────────────────────
 .mono-period {
   font-family: var(--font-mono);
   font-size: 0.72rem;
@@ -131,7 +133,7 @@ body {
   white-space: nowrap;
 }
 
-/* ─── Section alt background ─────────────────────────────────── */
+// ─── Section alt background ───────────────────────────────────
 .section--alt {
   background: var(--bg-card);
   border-top: 1px solid var(--border);

@@ -129,8 +129,8 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   </Teleport>
 </template>
 
-<style scoped>
-/* ─ Header ────────────────────────────────────────────────── */
+<style scoped lang="less">
+// ─ Header ─────────────────────────────────────────────────────
 .header {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -142,74 +142,75 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-}
 
-.header__bar {
-  flex: 1;
-  max-width: 1280px;
-  width: 100%;
-  margin: 0 auto;
-  padding: 0 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
+  &__bar {
+    flex: 1;
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
 
-/* ─ Logo ─────────────────────────────────────────────────── */
-.header__logo {
-  font-family: var(--font-mono);
-  font-size: 1.05rem;
-  font-weight: 500;
-  color: var(--text);
-  letter-spacing: -0.02em;
-  flex-shrink: 0;
+  &__logo {
+    font-family: var(--font-mono);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text);
+    letter-spacing: -0.02em;
+    flex-shrink: 0;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+
+    > .header__nav-link {
+      margin-right: 0.75rem;
+    }
+  }
+
+  &__nav-link {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    &:hover,
+    &.router-link-active,
+    &--active {
+      color: var(--text);
+      &::after { width: 100%; }
+    }
+  }
 }
 
 .logo-bracket { color: var(--accent); }
 
-/* ─ Desktop nav ──────────────────────────────────────────── */
-.header__nav {
-  display: flex;
-  gap: 2rem;
-}
-
-.header__right {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.header__right > .header__nav-link {
-  margin-right: 0.75rem;
-}
-
-.header__nav-link {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-muted);
-  position: relative;
-}
-
-.header__nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px; left: 0;
-  width: 0; height: 1px;
-  background: var(--accent);
-  transition: width 0.25s ease;
-}
-
-.header__nav-link:hover,
-.header__nav-link.router-link-active,
-.header__nav-link--active { color: var(--text); }
-
-.header__nav-link:hover::after,
-.header__nav-link.router-link-active::after,
-.header__nav-link--active::after { width: 100%; }
-
-/* ─ Controls ─────────────────────────────────────────────── */
+// ─ Controls ───────────────────────────────────────────────────
 .ctrl-btn {
   display: flex;
   align-items: center;
@@ -225,31 +226,31 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   font-weight: 600;
   letter-spacing: 0.04em;
   cursor: pointer;
+
+  &:hover {
+    color: var(--text);
+    border-color: var(--border-md);
+    background: var(--bg-subtle);
+  }
 }
 
-.ctrl-btn:hover {
-  color: var(--text);
-  border-color: var(--border-md);
-  background: var(--bg-subtle);
-}
-
-/* ─ Progress bar ─────────────────────────────────────────── */
+// ─ Progress bar ───────────────────────────────────────────────
 .progress-bar {
   height: 2px;
   width: 100%;
   background: transparent;
   flex-shrink: 0;
+
+  &__fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.08s linear;
+    border-radius: 0 2px 2px 0;
+    will-change: width;
+  }
 }
 
-.progress-bar__fill {
-  height: 100%;
-  background: var(--accent);
-  transition: width 0.08s linear;
-  border-radius: 0 2px 2px 0;
-  will-change: width;
-}
-
-/* ─ Burger ───────────────────────────────────────────────── */
+// ─ Burger ─────────────────────────────────────────────────────
 .burger {
   display: none;
   flex-direction: column;
@@ -259,21 +260,25 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   border-radius: 8px;
   border: 1px solid var(--border);
   padding: 0 9px;
+
+  &__line {
+    display: block;
+    width: 100%; height: 1.5px;
+    background: var(--text-muted);
+    border-radius: 2px;
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.2s;
+  }
+
+  &--open .burger__line:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
+  &--open .burger__line:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
 }
 
-.burger__line {
-  display: block;
-  width: 100%; height: 1.5px;
-  background: var(--text-muted);
-  border-radius: 2px;
-  transform-origin: center;
-  transition: transform 0.3s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.2s;
-}
-
-.burger--open .burger__line:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
-.burger--open .burger__line:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
-
-/* ─ Mobile fullscreen curtain ────────────────────────────── */
+// ─ Mobile fullscreen curtain ──────────────────────────────────
 :global(.mobile-menu) {
   position: fixed;
   inset: 0;
@@ -320,7 +325,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   letter-spacing: -0.03em;
 }
 
-/* ─ Transitions ──────────────────────────────────────────── */
+// ─ Transitions ────────────────────────────────────────────────
 :global(.curtain-enter-active),
 :global(.curtain-leave-active) {
   transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
@@ -336,11 +341,5 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateY(-4px);
-}
-
-/* ─ Responsive ───────────────────────────────────────────── */
-@media (max-width: 768px) {
-  .header__nav { display: none; }
-  .burger { display: flex; }
 }
 </style>

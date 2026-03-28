@@ -48,7 +48,7 @@ const formatDate = (raw: string) => {
   </div>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .page-wrap {
   padding-top: 4rem;
   padding-bottom: 6rem;
@@ -89,67 +89,61 @@ const formatDate = (raw: string) => {
   border-radius: var(--radius);
   color: inherit;
   text-decoration: none;
-}
 
-.post-card__meta {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
+  &:hover .post-card__title { color: var(--accent); }
+  &:hover .post-card__read  { opacity: 1; transform: translateX(0); }
 
-.post-card__date {
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-}
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
-.post-card__tags {
-  display: flex;
-  gap: 0.4rem;
-}
+  &__date {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
 
-.post-card__tag {
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--accent);
-  background: var(--accent-dim);
-  padding: 0.2em 0.6em;
-  border-radius: 4px;
-}
+  &__tags {
+    display: flex;
+    gap: 0.4rem;
+  }
 
-.post-card__title {
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text);
-  transition: color 0.2s;
-}
+  &__tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-dim);
+    padding: 0.2em 0.6em;
+    border-radius: 4px;
+  }
 
-.post-card:hover .post-card__title {
-  color: var(--accent);
-}
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    transition: color 0.2s;
+  }
 
-.post-card__desc {
-  font-size: 0.925rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-}
+  &__desc {
+    font-size: 0.925rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
 
-.post-card__read {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--accent);
-  margin-top: 0.25rem;
-  opacity: 0;
-  transform: translateX(-4px);
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-.post-card:hover .post-card__read {
-  opacity: 1;
-  transform: translateX(0);
+  &__read {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: 0.25rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
 }
 </style>

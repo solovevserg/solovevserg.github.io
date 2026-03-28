@@ -110,118 +110,184 @@ onUnmounted(() => {
   </section>
 </template>
 
-<style scoped>
-/* ─── Hero ───────────────────────────────────────────────────── */
+<style scoped lang="less">
+// ─── Hero ─────────────────────────────────────────────────────
 .hero {
   position: relative;
   height: calc(100dvh - var(--header-h));
   display: flex;
   align-items: stretch;
   overflow: hidden;
-}
 
-/* bottom fade into next section */
-.hero::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 80px;
-  background: linear-gradient(to bottom, transparent, var(--bg));
-  pointer-events: none;
-  z-index: 3;
-}
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 80px;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    pointer-events: none;
+    z-index: 3;
+  }
 
-/* ─── Left panel ─────────────────────────────────────────────── */
-.hero__left {
-  position: relative;
-  z-index: 2;
-  width: min(56%, 700px);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  padding-left: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
-  padding-right: 4rem;
-  padding-top: 2rem;
-  padding-bottom: 2.5rem;
-}
+  &__left {
+    position: relative;
+    z-index: 2;
+    width: min(56%, 700px);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    padding-left: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
+    padding-right: 4rem;
+    padding-top: 2rem;
+    padding-bottom: 2.5rem;
 
-.hero__left-inner {
-  width: 100%;
-  max-width: 520px;
-}
+    @media (max-width: 1024px) {
+      width: min(60%, 580px);
+      padding-right: 2rem;
+    }
 
-/* ─── Photo ──────────────────────────────────────────────────── */
-.hero__photo-wrap {
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  width: 60%;
-  overflow: hidden;
-}
+    @media (max-width: 768px) {
+      width: 100%;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+      align-items: flex-end;
+      padding-bottom: 5rem;
+      background: transparent;
+    }
 
-.hero__photo {
-  width: 100%;
-  height: 110%;
-  object-fit: cover;
-  object-position: center 80%;
-  display: block;
-  transform: scale(1.55);
-  transform-origin: center 80%;
-}
+    @media (max-width: 480px) {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+  }
 
-/* oval mask */
-.hero__photo-grad {
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, var(--bg) 72%),
-    linear-gradient(to right, var(--bg) 0%, transparent 28%);
-  pointer-events: none;
-}
+  &__left-inner {
+    width: 100%;
+    max-width: 520px;
 
-/* ─── Name ───────────────────────────────────────────────────── */
-.hero__name {
-  display: flex;
-  flex-direction: column;
-  font-size: clamp(3.8rem, 8vw, 7.5rem);
-  font-weight: 900;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
-  margin-bottom: 1.5rem;
-}
+    @media (max-width: 768px) {
+      max-width: 100%;
+    }
+  }
 
-.hero__name-line--accent {
-  color: transparent;
-  -webkit-text-stroke: 1.5px var(--text);
-}
+  &__photo-wrap {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 60%;
+    overflow: hidden;
 
-/* ─── Typewriter ─────────────────────────────────────────────── */
-.hero__typewriter {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  min-height: 2.2rem;
-  margin-bottom: 2.5rem;
-  font-family: var(--font-mono);
-  font-size: clamp(0.85rem, 1.6vw, 1.05rem);
-  color: var(--text-muted);
-}
+    @media (max-width: 1024px) {
+      width: 75%;
+      left: auto;
+    }
 
-.hero__type-prefix {
-  color: var(--accent);
-  margin-right: 0.5em;
-  font-weight: 600;
-}
+    @media (max-width: 768px) {
+      width: 100%;
+      opacity: 1;
+    }
 
-.hero__type-text {
-  color: var(--text);
-  font-weight: 400;
-}
+    @media (max-width: 480px) {
+      object-position: center 60%;
+    }
+  }
 
-.hero__type-cursor {
-  color: var(--accent);
-  margin-left: 1px;
-  animation: blink 1s step-end infinite;
-  font-weight: 300;
+  &__photo {
+    width: 100%;
+    height: 110%;
+    object-fit: cover;
+    object-position: center 80%;
+    display: block;
+    transform: scale(1.55);
+    transform-origin: center 80%;
+
+    @media (max-width: 1024px) {
+      object-position: center 75%;
+    }
+  }
+
+  &__photo-grad {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, var(--bg) 72%),
+      linear-gradient(to right, var(--bg) 0%, transparent 28%);
+    pointer-events: none;
+
+    @media (max-width: 1024px) {
+      background:
+        radial-gradient(ellipse 72% 88% at 55% 48%, transparent 30%, var(--bg) 70%),
+        linear-gradient(to right, var(--bg) 0%, transparent 30%);
+    }
+
+    @media (max-width: 768px) {
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, var(--bg) 85%),
+        linear-gradient(to bottom, var(--bg) 0%, transparent 20%);
+    }
+  }
+
+  &__name {
+    display: flex;
+    flex-direction: column;
+    font-size: clamp(3.8rem, 8vw, 7.5rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    margin-bottom: 1.5rem;
+
+    @media (max-width: 1024px) { font-size: clamp(3.2rem, 9vw, 6rem); }
+    @media (max-width: 768px)  { font-size: clamp(3rem, 14vw, 5.5rem); }
+    @media (max-width: 480px)  { font-size: clamp(2.8rem, 16vw, 4.5rem); }
+  }
+
+  &__name-line--accent {
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--text);
+  }
+
+  &__typewriter {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    min-height: 2.2rem;
+    margin-bottom: 2.5rem;
+    font-family: var(--font-mono);
+    font-size: clamp(0.85rem, 1.6vw, 1.05rem);
+    color: var(--text-muted);
+
+    @media (max-width: 768px) { font-size: 0.85rem; }
+  }
+
+  &__type-prefix {
+    color: var(--accent);
+    margin-right: 0.5em;
+    font-weight: 600;
+  }
+
+  &__type-text {
+    color: var(--text);
+    font-weight: 400;
+  }
+
+  &__type-cursor {
+    color: var(--accent);
+    margin-left: 1px;
+    animation: blink 1s step-end infinite;
+    font-weight: 300;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+
+  &__socials {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+  }
 }
 
 @keyframes blink {
@@ -229,14 +295,7 @@ onUnmounted(() => {
   50%       { opacity: 0; }
 }
 
-/* ─── Actions ────────────────────────────────────────────────── */
-.hero__actions {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  margin-bottom: 2.5rem;
-}
-
+// ─── Buttons ──────────────────────────────────────────────────
 .btn {
   display: inline-flex;
   align-items: center;
@@ -246,40 +305,34 @@ onUnmounted(() => {
   font-size: 0.9rem;
   font-weight: 500;
   transition: transform 0.15s, box-shadow 0.15s;
+
+  &:active { transform: scale(0.98); }
+
+  &--primary {
+    background: var(--accent);
+    color: #fff;
+    &:hover { box-shadow: var(--accent-glow); }
+  }
+
+  &--ghost {
+    background: var(--bg-subtle);
+    color: var(--text);
+    border: 1px solid var(--border);
+    &:hover { border-color: var(--border-md); }
+  }
 }
 
-.btn:active { transform: scale(0.98); }
-
-.btn--primary {
-  background: var(--accent);
-  color: #fff;
-}
-.btn--primary:hover { box-shadow: var(--accent-glow); }
-
-.btn--ghost {
-  background: var(--bg-subtle);
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-.btn--ghost:hover { border-color: var(--border-md); }
-
-/* ─── Socials ────────────────────────────────────────────────── */
-.hero__socials {
-  display: flex;
-  gap: 1.25rem;
-  flex-wrap: wrap;
-}
-
+// ─── Socials ──────────────────────────────────────────────────
 .social-link {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   font-size: 0.8rem;
   color: var(--text-muted);
+  &:hover { color: var(--text); }
 }
-.social-link:hover { color: var(--text); }
 
-/* ─── Scroll hint ────────────────────────────────────────────── */
+// ─── Scroll hint ──────────────────────────────────────────────
 .scroll-hint {
   position: absolute;
   bottom: 2rem;
@@ -295,65 +348,12 @@ onUnmounted(() => {
   color: var(--text-muted);
   background: var(--bg-card);
   animation: bounce 2.5s ease-in-out infinite;
-}
 
-.scroll-hint:hover { color: var(--accent); border-color: var(--accent); }
+  &:hover { color: var(--accent); border-color: var(--accent); }
+}
 
 @keyframes bounce {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50%       { transform: translateX(-50%) translateY(6px); }
-}
-
-/* ─── Responsive ─────────────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .hero__left {
-    width: min(60%, 580px);
-    padding-right: 2rem;
-  }
-  .hero__photo-wrap {
-    width: 75%;
-    left: auto;
-  }
-  .hero__photo {
-    object-position: center 75%;
-  }
-  .hero__photo-grad {
-    background:
-      radial-gradient(ellipse 72% 88% at 55% 48%, transparent 30%, var(--bg) 70%),
-      linear-gradient(to right, var(--bg) 0%, transparent 30%);
-  }
-  .hero__name { font-size: clamp(3.2rem, 9vw, 6rem); }
-}
-
-@media (max-width: 768px) {
-  .hero__left {
-    width: 100%;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    align-items: flex-end;
-    padding-bottom: 5rem;
-    background: transparent;
-  }
-  .hero__left-inner { max-width: 100%; }
-
-  .hero__photo-wrap {
-    width: 100%;
-    opacity: 1;
-  }
-
-  .hero__photo-grad {
-    background:
-      linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, var(--bg) 85%),
-      linear-gradient(to bottom, var(--bg) 0%, transparent 20%);
-  }
-
-  .hero__name { font-size: clamp(3rem, 14vw, 5.5rem); }
-  .hero__typewriter { font-size: 0.85rem; }
-}
-
-@media (max-width: 480px) {
-  .hero__name { font-size: clamp(2.8rem, 16vw, 4.5rem); }
-  .hero__left { padding-left: 1.25rem; padding-right: 1.25rem; }
-  .hero__photo-wrap { object-position: center 60%; }
 }
 </style>

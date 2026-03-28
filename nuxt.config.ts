@@ -9,7 +9,7 @@ export default defineNuxtConfig({
     '@nuxtjs/sitemap',
   ],
 
-  css: ['~/assets/css/global.css'],
+  css: ['~/assets/css/global.less'],
 
   app: {
     head: {

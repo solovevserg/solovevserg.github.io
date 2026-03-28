@@ -24,29 +24,31 @@ useHead({ title: `${project.value.title} — Sergei Solovev` })
   </article>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .project {
   max-width: 680px;
-}
 
-.project__header {
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
-  border-bottom: 1px solid var(--color-border);
-}
+  &__header {
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
 
-.project__title {
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
-  line-height: 1.2;
-  margin-bottom: 0.5rem;
-}
+  &__title {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
 
-.project__desc {
-  color: var(--color-muted);
-  font-size: 1.05rem;
-}
+  &__desc {
+    color: var(--color-muted);
+    font-size: 1.05rem;
+  }
 
-.project__body :deep(h2) { font-size: 1.4rem; margin: 2rem 0 0.75rem; }
-.project__body :deep(p) { margin-bottom: 1rem; }
-.project__body :deep(ul) { padding-left: 1.5rem; margin-bottom: 1rem; }
+  &__body {
+    :deep(h2) { font-size: 1.4rem; margin: 2rem 0 0.75rem; }
+    :deep(p)  { margin-bottom: 1rem; }
+    :deep(ul) { padding-left: 1.5rem; margin-bottom: 1rem; }
+  }
+}
 </style>

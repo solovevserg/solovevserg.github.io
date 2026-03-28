@@ -18,34 +18,33 @@ const year = new Date().getFullYear()
   </footer>
 </template>
 
-<style scoped>
+<style scoped lang="less">
 .footer {
   border-top: 1px solid var(--border);
   padding: 2rem 0;
-}
 
-.footer__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
-.footer__copy {
-  font-size: 0.8rem;
-  color: var(--text-muted);
-}
+  &__copy {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+  }
 
-.footer__links {
-  display: flex;
-  gap: 1.5rem;
-}
+  &__links {
+    display: flex;
+    gap: 1.5rem;
 
-.footer__links a {
-  font-size: 0.8rem;
-  color: var(--text-muted);
+    a {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      &:hover { color: var(--text); }
+    }
+  }
 }
-
-.footer__links a:hover { color: var(--text); }
 </style>

@@ -11,7 +11,8 @@
       "WebFetch(domain:source.unsplash.com)",
       "WebSearch",
       "WebFetch(domain:allgriovernmentjobs.vercel.app)",
-      "WebFetch(domain:images.unsplash.com)"
+      "WebFetch(domain:images.unsplash.com)",
+      "Bash(node -e \"const less = require\\(''less''\\); require\\(''fs''\\).readFile\\(''./assets/css/global.less'', ''utf8'', \\(e,s\\) => less.render\\(s\\).then\\(r => console.log\\(''OK, compiled'', r.css.length, ''chars''\\)\\).catch\\(e => console.error\\(e.message\\)\\)\\)\")"
     ]
   }
 }

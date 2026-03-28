@@ -29,27 +29,27 @@ const { t } = useI18n()
   </section>
 </template>
 
-<style scoped>
-/* ─── Contact ───────────────────────────────────────────────── */
+<style scoped lang="less">
+// ─── Contact ──────────────────────────────────────────────────
 .contact {
   background: var(--bg-card);
   border-top: 1px solid var(--border);
   padding: 7rem 0;
-}
 
-.contact__heading {
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  max-width: 600px;
-  margin-bottom: 2.5rem;
-  line-height: 1.2;
-}
+  &__heading {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    max-width: 600px;
+    margin-bottom: 2.5rem;
+    line-height: 1.2;
+  }
 
-.contact__links {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  &__links {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 }
 
 .contact-link {
@@ -64,11 +64,11 @@ const { t } = useI18n()
   color: var(--text-muted);
   background: var(--bg);
   transition: border-color 0.2s, color 0.2s, background 0.2s;
-}
 
-.contact-link:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background: var(--accent-dim);
+  &:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
 }
 </style>
