@@ -93,10 +93,19 @@ onUnmounted(() => {
 
     <!-- Right: full-height photo -->
     <div class="hero__photo-wrap" aria-hidden="true">
-      <img
+      <NuxtPicture
         src="/img/avatar.jpg"
-        alt=""
-        class="hero__photo"
+        :width="1200"
+        :height="1600"
+        sizes="sm:100vw md:75vw lg:60vw"
+        format="avif,webp"
+        preload
+        :img-attrs="{
+          class: 'hero__photo',
+          alt: '',
+          fetchpriority: 'high',
+          loading: 'eager',
+        }"
       />
       <div class="hero__photo-grad" />
     </div>
@@ -190,19 +199,17 @@ onUnmounted(() => {
     @media (max-width: 480px) {
       object-position: center 60%;
     }
-  }
 
-  &__photo {
-    width: 100%;
-    height: 110%;
-    object-fit: cover;
-    object-position: center 80%;
-    display: block;
-    transform: scale(1.55);
-    transform-origin: center 80%;
+    :deep(picture) {
+      display: contents;
+    }
 
-    @media (max-width: 1024px) {
-      object-position: center 75%;
+    :deep(.hero__photo) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center -5%;
+      display: block;
     }
   }
 

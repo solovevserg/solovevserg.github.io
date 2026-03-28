@@ -18,7 +18,8 @@
       "Bash(node -e \":*)",
       "Bash(node --input-type=module:*)",
       "Bash(sed -i 's/const { t, tm, rt } = useI18n\\(\\)/const { t, tm, rt } = useTypo\\(\\)/g' \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionAbout.vue\" \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionFacts.vue\" \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionExperience.vue\" \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionTeaching.vue\" \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionEducation.vue\" \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionHero.vue\")",
-      "Bash(sed -i 's/const { t } = useI18n\\(\\)/const { t } = useTypo\\(\\)/g' \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionContact.vue\")"
+      "Bash(sed -i 's/const { t } = useI18n\\(\\)/const { t } = useTypo\\(\\)/g' \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionContact.vue\")",
+      "Bash(npm install:*)"
     ]
   }
 }

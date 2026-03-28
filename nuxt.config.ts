@@ -9,10 +9,17 @@ export default defineNuxtConfig({
   components: [{ path: '~/components', pathPrefix: false }],
 
   modules: [
+    '@nuxt/image',
     '@nuxt/content',
     '@nuxtjs/i18n',
     '@nuxtjs/sitemap',
   ],
+
+  image: {
+    formats: ['avif', 'webp'],
+    quality: 80,
+    screens: { sm: 480, md: 768, lg: 1024, xl: 1280, '2xl': 1920 },
+  },
 
   css: ['~/assets/css/global.less'],
 
