@@ -10,7 +10,10 @@ if (!post.value) {
   throw createError({ statusCode: 404, statusMessage: 'Post not found' })
 }
 
-useHead({ title: `${post.value.title} — Sergei Solovev` })
+usePageSeo({
+  title: post.value.title,
+  description: post.value.description,
+})
 </script>
 
 <template>

@@ -10,9 +10,9 @@ const year = new Date().getFullYear()
         © {{ year }} {{ t('footer.name') }} — {{ t('footer.rights') }}
       </span>
       <div class="footer__links">
-        <a href="https://github.com/solovevserg" target="_blank" rel="noopener">GitHub</a>
         <a href="https://t.me/sergsol" target="_blank" rel="noopener">Telegram</a>
         <a href="https://www.linkedin.com/in/solovevserg/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://github.com/solovevserg" target="_blank" rel="noopener">GitHub</a>
       </div>
     </div>
   </footer>

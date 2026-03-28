@@ -10,7 +10,10 @@ if (!project.value) {
   throw createError({ statusCode: 404, statusMessage: 'Project not found' })
 }
 
-useHead({ title: `${project.value.title} — Sergei Solovev` })
+usePageSeo({
+  title: project.value.title,
+  description: project.value.description,
+})
 </script>
 
 <template>

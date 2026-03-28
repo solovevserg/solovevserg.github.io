@@ -2,7 +2,7 @@
 const { t, locale } = useI18n()
 const localePath = useLocalePath()
 
-useHead({ title: `${t('blog.title')} — Sergei Solovev` })
+usePageSeo({ title: t('blog.title') })
 
 const { data: posts } = await useAsyncData('blog', () =>
   queryContent(`/${locale.value}/blog`)
