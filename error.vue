@@ -1,7 +1,7 @@
 <script setup lang="ts">
 defineProps<{ error: { statusCode: number; statusMessage?: string } }>()
 
-const { isDark, toggle, init } = useTheme()
+const { init } = useTheme()
 onMounted(init)
 
 const handleHome = () => navigateTo('/')
@@ -21,13 +21,9 @@ const stars = Array.from({ length: 40 }, (_, i) => {
 </script>
 
 <template>
-  <div class="error-page dot-bg">
-    <!-- Theme toggle -->
-    <button class="theme-btn" :aria-label="isDark ? 'Switch to light' : 'Switch to dark'" @click="toggle">
-      <svg v-if="isDark" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-      <svg v-else width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-    </button>
-
+  <div class="error-layout">
+    <AppHeader />
+    <main class="error-page dot-bg">
     <!-- Stars -->
     <div class="stars" aria-hidden="true">
       <span
@@ -65,13 +61,21 @@ const stars = Array.from({ length: 40 }, (_, i) => {
         Return to base
       </button>
     </div>
+    </main>
+    <AppFooter />
   </div>
 </template>
 
 <style>
-/* Use global so CSS vars from global.css apply */
-.error-page {
+.error-layout {
+  display: flex;
+  flex-direction: column;
   min-height: 100dvh;
+}
+
+.error-page {
+  flex: 1;
+  padding-top: var(--header-h);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,26 +83,6 @@ const stars = Array.from({ length: 40 }, (_, i) => {
   overflow: hidden;
   background-color: var(--bg);
 }
-
-/* ── Theme button ─────────────────────────────────── */
-.theme-btn {
-  position: fixed;
-  top: 1.25rem;
-  right: 1.25rem;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  border: 1px solid var(--border-md);
-  color: var(--text-muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.2s, border-color 0.2s;
-  z-index: 10;
-}
-.theme-btn:hover { color: var(--accent); border-color: var(--accent); }
 
 /* ── Stars ────────────────────────────────────────── */
 .stars { position: absolute; inset: 0; pointer-events: none; }
