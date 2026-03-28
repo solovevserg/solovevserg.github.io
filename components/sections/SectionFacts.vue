@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type FactItem = { emoji: string; title: string; desc: string }
-const { t, tm, rt } = useI18n()
+const { t, tm, rt } = useTypo()
 
 const factItems = computed<FactItem[]>(() =>
   (tm('facts.items') as any[]).map(f => ({

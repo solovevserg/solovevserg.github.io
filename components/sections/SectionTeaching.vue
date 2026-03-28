@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type TalkItem = { id: string; conf: string; title: string }
 type CourseItem = { org: string; badge: string; period: string; items: string[] }
-const { t, tm, rt } = useI18n()
+const { t, tm, rt } = useTypo()
 
 const talkItems = computed<TalkItem[]>(() =>
   (tm('teaching.talks') as any[]).map(i => ({

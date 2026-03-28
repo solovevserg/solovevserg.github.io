@@ -12,6 +12,10 @@ defineProps<{ num: string; title: string }>()
 <style scoped lang="less">
 .section-header {
   margin-bottom: 4rem;
+
+  @media (max-width: 768px) {
+    margin-bottom: 2rem;
+  }
 }
 
 .section-num {

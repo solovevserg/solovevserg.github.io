@@ -17,16 +17,25 @@ watch(menuOpen, (val) => {
   }
 })
 
+// Close mobile menu when viewport grows beyond mobile breakpoint
+onMounted(() => {
+  const onResize = () => {
+    if (window.innerWidth > 768) closeMenu()
+  }
+  window.addEventListener('resize', onResize)
+  onUnmounted(() => window.removeEventListener('resize', onResize))
+})
+
 const otherLocale = computed(() => locales.value.find(l => l.code !== locale.value))
 const isHome = computed(() => route.name?.toString().startsWith('index'))
 
-// Section anchor links for landing page
+// Section anchor links — always shown; on non-home pages link back to home with anchor
 const sectionLinks = computed(() =>
   sections.map(s => ({
     id: s.id,
     labelKey: s.labelKey,
     label: t(s.labelKey),
-    href: `#${s.id}`,
+    href: isHome.value ? `#${s.id}` : `${localePath('/')}#${s.id}`,
   }))
 )
 
@@ -40,14 +49,14 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
         <span class="logo-bracket">{</span>sergsol<span class="logo-bracket">}</span>
       </NuxtLink>
 
-      <!-- Landing: section anchor nav (left) -->
-      <nav v-if="isHome" class="header__nav header__nav--left">
+      <!-- Section anchor nav (left) — always visible, links home when not on landing -->
+      <nav class="header__nav header__nav--left">
         <a
           v-for="link in sectionLinks"
           :key="link.id"
           :href="link.href"
           class="header__nav-link"
-          :class="{ 'header__nav-link--active': activeLabelKey === link.labelKey }"
+          :class="{ 'header__nav-link--active': isHome && activeLabelKey === link.labelKey }"
         >{{ link.label }}</a>
       </nav>
 
@@ -87,9 +96,10 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
       </div>
     </div>
 
-    <!-- Scroll progress bar -->
-    <div v-if="isHome" class="progress-bar" aria-hidden="true">
+    <!-- Scroll progress bar — always in DOM to prevent 2px layout shift -->
+    <div class="progress-bar" aria-hidden="true">
       <div
+        v-if="isHome"
         class="progress-bar__fill"
         :style="{ width: `${progress}%` }"
       />
@@ -102,24 +112,22 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
     <Transition name="curtain">
       <div v-if="menuOpen" class="mobile-menu">
         <nav class="mobile-nav">
-          <template v-if="isHome">
-            <a
-              v-for="(link, i) in sectionLinks"
-              :key="link.id"
-              :href="link.href"
-              class="mobile-nav__link"
-              @click="closeMenu"
-            >
-              <span class="mobile-nav__num">0{{ i + 1 }}</span>
-              <span class="mobile-nav__label">{{ link.label }}</span>
-            </a>
-          </template>
+          <a
+            v-for="(link, i) in sectionLinks"
+            :key="link.id"
+            :href="link.href"
+            class="mobile-nav__link"
+            @click="closeMenu"
+          >
+            <span class="mobile-nav__num">0{{ i + 1 }}</span>
+            <span class="mobile-nav__label">{{ link.label }}</span>
+          </a>
           <NuxtLink
             :to="localePath(blogLink.path)"
             class="mobile-nav__link"
             @click="closeMenu"
           >
-            <span class="mobile-nav__num">0{{ isHome ? sectionLinks.length + 1 : 1 }}</span>
+            <span class="mobile-nav__num">0{{ sectionLinks.length + 1 }}</span>
             <span class="mobile-nav__label">{{ blogLink.label }}</span>
           </NuxtLink>
         </nav>
@@ -166,6 +174,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
 
   &__nav {
     display: flex;
+    align-items: center;
     gap: 2rem;
 
     @media (max-width: 768px) {

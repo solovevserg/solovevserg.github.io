@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type EduItem = { degree: string; field: string; school: string; city: string; tag: string; period: string; current?: boolean; grade?: string; thesis?: string; activities?: string }
-const { t, tm, rt } = useI18n()
+const { t, tm, rt } = useTypo()
 
 const eduItems = computed<EduItem[]>(() =>
   (tm('education.items') as any[]).map(e => ({

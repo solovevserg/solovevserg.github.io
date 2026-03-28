@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { t, tm, rt } = useI18n()
+const { t, tm, rt } = useTypo()
 const localePath = useLocalePath()
 
 const typewriterPhrases = computed(() => (tm('hero.typewriter') as any[]).map(l => rt(l)))

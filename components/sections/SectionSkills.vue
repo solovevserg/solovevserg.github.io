@@ -1,7 +1,7 @@
 <script setup lang="ts">
 type SkillKey = { name: string; level: 'expert' | 'advanced' | 'intermediate' }
 type SkillGroup = { name: string; keys: SkillKey[]; items: string[] }
-const { t, tm, rt } = useI18n()
+const { t, tm, rt } = useTypo()
 
 const skillGroups = computed<SkillGroup[]>(() =>
   (tm('skills.groups') as any[]).map(g => ({
@@ -47,7 +47,22 @@ const skillGroups = computed<SkillGroup[]>(() =>
   gap: 1.5rem;
 
   @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 768px)  { grid-template-columns: 1fr; }
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.875rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: -8px -2rem 0;
+    padding: 8px 0 0.75rem;
+    scroll-padding-left: 2rem;
+
+    &::-webkit-scrollbar { display: none; }
+    &::before, &::after  { content: ''; flex: 0 0 2rem; }
+  }
 }
 
 .skill-group {
@@ -60,6 +75,12 @@ const skillGroups = computed<SkillGroup[]>(() =>
   gap: 1rem;
 
   &__name { margin: 0; }
+
+  @media (max-width: 768px) {
+    flex: 0 0 78vw;
+    max-width: 320px;
+    scroll-snap-align: start;
+  }
 }
 
 .skill-keys {
@@ -85,6 +106,10 @@ const skillGroups = computed<SkillGroup[]>(() =>
     display: flex;
     gap: 3px;
     flex-shrink: 0;
+  }
+
+  @media (max-width: 768px) {
+    .skill-key__level { display: none; }
   }
 
   &__dot {

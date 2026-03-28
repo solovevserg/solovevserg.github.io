@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type ExpItem = { company: string; role: string; period: string; current: boolean; side: boolean; bullets: string[] }
-const { t, tm, rt } = useI18n()
+const { t, tm, rt } = useTypo()
 
 const allExpItems = computed<ExpItem[]>(() =>
   (tm('experience.items') as any[]).map(item => ({

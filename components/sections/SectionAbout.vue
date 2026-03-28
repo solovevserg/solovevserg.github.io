@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type StatItem = { value: string; label: string }
-const { t, tm, rt } = useI18n()
+const { t, tm, rt } = useTypo()
 const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ value: rt(s.value), label: rt(s.label) })))
 </script>
 

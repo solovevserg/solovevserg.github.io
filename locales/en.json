@@ -10,29 +10,34 @@
   "hero": {
     "name_first": "Sergei",
     "name_last": "Solovev",
-    "role": "Lead Frontend Developer",
-    "tagline": ["Building interfaces.", "Leading teams.", "Teaching."],
     "typewriter": [
-      "Lead Frontend Developer",
-      "Angular SPA Architect",
-      "Team Lead · 11 engineers",
-      "Lecturer at BMSTU & HSE",
-      "SDAL Studio Co-founder",
-      "HolyJS Speaker"
+      "Engineer & Developer",
+      "Speaker & Educator",
+      "Leader & Entrepreneur",
+      "Fullstack Web Developer",
+      "AI Enthusiast & Vibe Coder",
+      "Angular Expert",
+      "Frontend Developer",
+      "TypeScript Expert",
+      "IT Entrepreneur",
+      "IT Conference Speaker",
+      "Philosophy of Science PhD Candidate",
+      "UX Craftsman",
+      "HolyJS Speaker",
+      "IT Systems Architect"
     ],
     "cta_contact": "Get in touch",
-    "cta_blog": "Read blog",
-    "available": "Open to opportunities"
+    "cta_blog": "Read blog"
   },
   "stats": [
-    { "value": "8+", "label": "years of exp." },
-    { "value": "50+", "label": "projects" },
-    { "value": "100+", "label": "students" },
-    { "value": "11", "label": "team members" }
+    { "value": "8+", "label": "years in IT" },
+    { "value": "10+", "label": "projects in fintech, healthcare, mobility & more" },
+    { "value": "200+", "label": "students — course audience" },
+    { "value": "up to 11", "label": "engineers under my leadership" }
   ],
   "about": {
     "title": "About",
-    "bio": "Specialized in Angular SPA architecture and development. Led teams of up to 11 engineers, built processes for enterprise-scale projects. Teaching at HSE, BMSTU, and Quantorium. Co-founder of SDAL digital studio. Interested in philosophy, linguistics, and ballroom dancing.",
+    "bio": "I create value for businesses and people through IT expertise, critical thinking, and an academic background. I share knowledge with the community and stay open to learning myself. Passionate about logic, philosophy of AI, and linguistics.",
     "location": "Moscow, Russia",
     "languages": "Russian (native) · English (B2)",
     "edu_short": "BMSTU · Applied Informatics"
@@ -46,11 +51,12 @@
         "period": "Sept 2022 — Present",
         "current": true,
         "bullets": [
+          "Applying autonomous AI agents and chatbots",
           "SPA development with Angular 12+, RxJS, TaigaUI",
-          "Code review and architectural design decisions",
-          "Test automation: Cypress, Playwright",
-          "Monitoring: Grafana, Prometheus",
-          "CI/CD: GitLab, Docker"
+          "Code review and architectural decisions (ADR)",
+          "Test automation: Playwright, Cypress, Jest",
+          "Monitoring & incident management: Grafana, Prometheus",
+          "CI/CD: GitLab, Nginx, Docker"
         ]
       },
       {
@@ -62,7 +68,7 @@
         "bullets": [
           "Team management and hiring",
           "Full-stack TypeScript development",
-          "Ride-sharing platform: NestJS backend + Angular admin"
+          "RideNow Taxi platform: NestJS, Angular, Ionic, Telegram bots"
         ]
       },
       {
@@ -72,8 +78,9 @@
         "current": false,
         "bullets": [
           "Led a team of up to 11 developers",
-          "Angular architecture design",
-          "Enterprise projects: healthcare, security, transport"
+          "Introduced development practices and standards",
+          "Web application architecture design",
+          "Domains: healthcare, security, transport"
         ]
       },
       {
@@ -84,12 +91,13 @@
         "side": true,
         "bullets": [
           "Social media data collection tools",
-          "University analytics and reporting"
+          "University analytics and reporting",
+          "Preparing analytical briefs and supporting decision-making"
         ]
       }
     ],
     "side_title": "Side projects",
-    "side_subtitle": "Teaching · Own projects · Research"
+    "side_subtitle": "Own projects · Research"
   },
   "skills": {
     "title": "Skills",
@@ -100,45 +108,56 @@
     },
     "groups": [
       {
-        "name": "Frontend",
+        "name": "Leadership",
         "keys": [
-          { "name": "Angular",     "level": "expert" },
-          { "name": "TypeScript",  "level": "expert" },
-          { "name": "RxJS",        "level": "advanced" }
+          { "name": "Mentoring",           "level": "expert" },
+          { "name": "Team Leadership",     "level": "advanced" },
+          { "name": "Strategic Planning",  "level": "advanced" }
         ],
-        "items": ["TaigaUI", "HTML5", "CSS3", "Vue.js"]
-      },
-      {
-        "name": "Testing",
-        "keys": [
-          { "name": "Cypress",     "level": "advanced" },
-          { "name": "Playwright",  "level": "advanced" }
-        ],
-        "items": ["Jest", "Unit Testing"]
+        "items": ["Agile/Kanban", "Employee motivation", "IDP creation"]
       },
       {
         "name": "Architecture",
         "keys": [
-          { "name": "Angular SPA", "level": "expert" },
-          { "name": "NestJS",      "level": "advanced" }
+          { "name": "ADR",                   "level": "expert" },
+          { "name": "SPA Design & Scaling",  "level": "expert" },
+          { "name": "System Architecture",   "level": "advanced" }
         ],
-        "items": ["REST API", "Docker", "GitLab CI/CD"]
+        "items": ["Open API", "Async API", "UML", "Mermaid"]
+      },
+      {
+        "name": "Frontend",
+        "keys": [
+          { "name": "Angular",     "level": "expert" },
+          { "name": "RxJS",        "level": "expert" },
+          { "name": "TypeScript",  "level": "expert" }
+        ],
+        "items": ["HTML5", "CSS3", "Responsive Design"]
+      },
+      {
+        "name": "Backend",
+        "keys": [
+          { "name": "NestJS",        "level": "advanced" },
+          { "name": "ASP.NET Core",  "level": "intermediate" }
+        ],
+        "items": ["REST API", "MongoDB", "SignalR"]
+      },
+      {
+        "name": "Testing",
+        "keys": [
+          { "name": "Playwright",  "level": "expert" },
+          { "name": "Cypress",     "level": "advanced" }
+        ],
+        "items": ["Testing diamond", "Jest", "e2e"]
       },
       {
         "name": "Monitoring",
         "keys": [
           { "name": "Grafana",     "level": "advanced" },
-          { "name": "Prometheus",  "level": "intermediate" }
+          { "name": "Prometheus",  "level": "advanced" },
+          { "name": "Sentry",      "level": "advanced" }
         ],
-        "items": []
-      },
-      {
-        "name": "Leadership",
-        "keys": [
-          { "name": "Team Lead",   "level": "expert" },
-          { "name": "Mentoring",   "level": "advanced" }
-        ],
-        "items": ["Code Review", "Agile/Scrum", "Architecture Design"]
+        "items": ["Incident management", "Post-mortem analysis"]
       }
     ]
   },
@@ -202,10 +221,10 @@
         "badge": "BMSTU",
         "period": "2018 — 2022",
         "items": [
-          "Web Technologies for IU7 program (Frontend, Angular, RxJS)",
-          "Web Technologies course for SGN3 program",
-          "Web Design & Markup for ISOT",
-          "Co-founder of Data Crash Course — data analysis fundamentals"
+          "Frontend block in the software engineering curriculum",
+          "Web Technologies course for social analytics program",
+          "Web design & markup blocks in professional development courses",
+          "Data Crash Course — co-author of data analysis course"
         ]
       },
       {
@@ -230,7 +249,7 @@
         "badge": "Quant",
         "period": "2020",
         "items": [
-          "Webinars on data analysis fundamentals for educators across Russia"
+          "Webinars on data analysis fundamentals for educators throughout Russia"
         ]
       }
     ],
@@ -258,23 +277,23 @@
       {
         "emoji": "🏸",
         "title": "Badminton player",
-        "desc": "Regular badminton games are my go-to way to recharge and stay sharp."
+        "desc": "I love playing badminton in the morning before work to stay sharp and set the tone for the day."
       },
       {
         "emoji": "🕺",
         "title": "2× Dance champion",
-        "desc": "Won dance competitions twice. Trained in 5 styles — from Russian folk dancing to bachata."
+        "desc": "Won dance competitions twice. Trained in 5 styles — from Welsh folk dancing to bachata and contemporary."
       },
       {
         "emoji": "🧱",
         "title": "Redstone engineer",
-        "desc": "Built a fully functional computer inside Minecraft using only redstone logic gates."
+        "desc": "Built an 8-bit computer in Minecraft using redstone and wrote a program to output the Fibonacci sequence."
       }
     ]
   },
   "contact": {
-    "title": "Get in touch",
-    "subtitle": "Open to new projects, mentoring, and collaborations.",
+    "title": "Contacts",
+    "subtitle": "Open to proposals, projects, and collaborations.",
     "telegram": "Telegram",
     "linkedin": "LinkedIn",
     "github": "GitHub",
