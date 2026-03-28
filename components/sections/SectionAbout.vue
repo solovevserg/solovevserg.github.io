@@ -90,8 +90,8 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
   }
 
   @media (max-width: 768px) {
-    &:nth-child(2) { border-right: none; }
-    &:nth-child(3) { border-top: 1px solid var(--border); border-right: 1px solid var(--border); }
+    &:nth-child(2)   { border-right: none; }
+    &:nth-child(n+3) { border-top: 1px solid var(--border); }
   }
 }
 

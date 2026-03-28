@@ -17,6 +17,13 @@ const eduItems = computed<EduItem[]>(() =>
   }))
 )
 
+// Split text into [everything before last word, last word]
+// so last word + icon can be wrapped in white-space: nowrap
+function splitLastWord(text: string): [string, string] {
+  const i = text.lastIndexOf(' ')
+  return i === -1 ? ['', text] : [text.slice(0, i), text.slice(i + 1)]
+}
+
 const eduGroups = computed(() => {
   const map = new Map<string, EduItem[]>()
   for (const item of eduItems.value) {
@@ -52,20 +59,14 @@ const eduGroups = computed(() => {
               </div>
 
               <p class="edu-item__field">
-                {{ item.field }}
-                <span v-if="item.thesis" class="thesis-hint">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                  <span class="thesis-hint__tooltip">
-                    <em class="thesis-hint__label">{{ t('education.thesis_label') }}</em>
-                    {{ item.thesis }}
-                  </span>
-                </span>
+                <template v-if="item.thesis">{{ splitLastWord(item.field)[0] }} <span class="thesis-tail">{{ splitLastWord(item.field)[1] }}&nbsp;<span class="thesis-hint"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span class="thesis-hint__tooltip"><em class="thesis-hint__label">{{ t('education.thesis_label') }}</em>{{ item.thesis }}</span></span></span></template>
+                <template v-else>{{ item.field }}</template>
               </p>
 
               <p class="edu-item__degree">{{ item.degree }}</p>
 
               <p v-if="item.grade" class="edu-item__grade">
-                <span class="edu-item__grade-label">{{ t('education.grade_label') }}</span> {{ item.grade }}/5
+                {{ t('education.grade_label') }}: <span class="edu-item__grade-label">{{ item.grade }}/5</span>
               </p>
 
               <p v-if="item.activities" class="edu-item__activities">{{ item.activities }}</p>
@@ -220,12 +221,16 @@ const eduGroups = computed(() => {
   }
 }
 
+// ─── Thesis tail (last word + icon, kept on same line) ────────
+.thesis-tail {
+  white-space: nowrap;
+}
+
 // ─── Thesis tooltip ───────────────────────────────────────────
 .thesis-hint {
   position: relative;
   display: inline-flex;
   align-items: center;
-  margin-left: 0.3em;
   vertical-align: middle;
   color: var(--text-muted);
   cursor: default;
@@ -274,5 +279,20 @@ const eduGroups = computed(() => {
 
   &:hover .thesis-hint__tooltip,
   &:focus-within .thesis-hint__tooltip { display: block; }
+
+  @media (max-width: 768px) {
+    &__tooltip {
+      left: auto;
+      right: 0;
+      transform: none;
+      width: min(260px, 80vw);
+
+      &::after {
+        left: auto;
+        right: 1rem;
+        transform: none;
+      }
+    }
+  }
 }
 </style>

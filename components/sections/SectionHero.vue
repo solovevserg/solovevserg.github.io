@@ -114,7 +114,8 @@ onUnmounted(() => {
 // ─── Hero ─────────────────────────────────────────────────────
 .hero {
   position: relative;
-  height: calc(100dvh - var(--header-h));
+  height: calc(100vh - var(--header-h));
+  height: calc(100svh - var(--header-h));
   display: flex;
   align-items: stretch;
   overflow: hidden;

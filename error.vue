@@ -70,7 +70,8 @@ const stars = Array.from({ length: 40 }, (_, i) => {
 .error-layout {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
+  min-height: 100vh;
+  min-height: 100svh;
 }
 
 .error-page {
@@ -126,6 +127,7 @@ const stars = Array.from({ length: 40 }, (_, i) => {
   position: absolute;
   inset: 30px;
   border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, var(--accent), #1e1b4b);
   background: radial-gradient(circle at 35% 35%, var(--accent), color-mix(in srgb, var(--accent) 40%, var(--bg)));
   box-shadow: 0 0 60px rgba(99,102,241,0.35), 0 0 120px rgba(99,102,241,0.15);
   display: flex;
@@ -180,6 +182,7 @@ const stars = Array.from({ length: 40 }, (_, i) => {
 .orbit__dot--2 {
   width: 5px;
   height: 5px;
+  background: #a5b4fc;
   background: color-mix(in srgb, var(--accent) 60%, #fff);
   box-shadow: 0 0 8px var(--accent);
   top: 0;

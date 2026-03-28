@@ -1,5 +1,10 @@
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devServer: {
+    port: 3000, // Optional: default is 3000
+    host: '0.0.0.0' // Exposes the server to the local network
+  },
+
+  devtools: { enabled: false },
 
   components: [{ path: '~/components', pathPrefix: false }],
 
