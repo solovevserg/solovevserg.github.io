@@ -94,7 +94,6 @@ onUnmounted(() => {
         sizes="sm:100vw md:75vw lg:60vw"
         format="avif,webp"
         preload
-        placeholder
         :img-attrs="{
           class: 'hero__photo',
           alt: '',

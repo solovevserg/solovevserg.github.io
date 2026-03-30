@@ -1,6 +1,9 @@
 <script setup lang="ts">
 defineProps<{ error: { statusCode: number; statusMessage?: string } }>()
 
+const { init } = useTheme()
+onMounted(init)
+
 const handleHome = () => navigateTo('/')
 
 // Deterministic pseudo-random so SSR and client values match

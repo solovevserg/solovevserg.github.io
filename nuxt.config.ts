@@ -9,19 +9,11 @@ export default defineNuxtConfig({
   components: [{ path: '~/components', pathPrefix: false }],
 
   modules: [
-    '@nuxtjs/color-mode',
     '@nuxt/image',
     '@nuxt/content',
     '@nuxtjs/i18n',
     '@nuxtjs/sitemap',
   ],
-
-  colorMode: {
-    preference: 'dark',
-    fallback: 'dark',
-    dataValue: 'theme',
-    storageKey: 'theme',
-  },
 
   image: {
     formats: ['avif', 'webp'],
