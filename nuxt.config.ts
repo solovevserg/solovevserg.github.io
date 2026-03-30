@@ -36,6 +36,13 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: { lang: 'ru' },
+      script: [
+        {
+          // Anti-FOUC: apply saved theme before first paint (ADR 0007)
+          innerHTML: `(function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()`,
+          tagPriority: 'critical',
+        },
+      ],
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },

@@ -72,9 +72,9 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
           @click="setLocale(otherLocale.code)"
         >{{ otherLocale.code.toUpperCase() }}</button>
 
-        <button class="ctrl-btn" @click="toggle" :aria-label="isDark ? 'Light mode' : 'Dark mode'">
-          <IconSun v-if="isDark" />
-          <IconMoon v-else />
+        <button class="ctrl-btn theme-toggle" @click="toggle" :aria-label="isDark ? 'Light mode' : 'Dark mode'">
+          <IconSun class="theme-toggle__sun" />
+          <IconMoon class="theme-toggle__moon" />
         </button>
 
         <button
@@ -348,5 +348,15 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
 .fade-slide-leave-to {
   opacity: 0;
   transform: translateY(-4px);
+}
+</style>
+
+<style lang="less">
+// ─ Theme toggle — CSS-driven, no hydration lag (ADR 0007) ─────
+.theme-toggle__moon { display: none; }
+
+html[data-theme="light"] {
+  .theme-toggle__sun  { display: none; }
+  .theme-toggle__moon { display: block; }
 }
 </style>

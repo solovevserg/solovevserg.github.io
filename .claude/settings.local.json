@@ -24,7 +24,8 @@
       "Bash(curl -s \"https://upload.wikimedia.org/wikipedia/commons/6/69/Habr_logo_for_social_media.svg\")",
       "WebFetch(domain:logo-teka.com)",
       "Bash(grep -n \"NuxtImg\\\\|imgAttrs\\\\|v-bind\\\\|placeholder\\\\|$props\" \"D:/SERGEI SOLOVEV/solovevserg.github.io/node_modules/@nuxt/image/dist/runtime/components/NuxtPicture.vue\")",
-      "Bash(npm uninstall:*)"
+      "Bash(npm uninstall:*)",
+      "Bash(npx nuxi:*)"
     ]
   }
 }

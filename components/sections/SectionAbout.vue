@@ -98,7 +98,7 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
 // ─── About grid ───────────────────────────────────────────────
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 280px;
+  grid-template-columns: 1fr 300px;
   gap: 4rem;
   align-items: start;
 
