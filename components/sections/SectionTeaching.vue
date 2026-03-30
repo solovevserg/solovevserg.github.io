@@ -63,8 +63,8 @@ const courseItems = computed<CourseItem[]>(() =>
 
       <!-- Courses grid -->
       <p class="teaching-sub teaching-sub--spaced label-caps">{{ t('teaching.courses_title') }}</p>
-      <div class="courses-grid">
-        <div v-for="course in courseItems" :key="course.org" class="course-card card-hover">
+      <div class="courses-grid mobile-scroll-list">
+        <div v-for="course in courseItems" :key="course.org" class="course-card card-hover mobile-scroll-item">
           <div class="course-card__head">
             <span class="course-card__badge">{{ course.org }}</span>
             <span class="course-card__period">{{ course.period }}</span>
@@ -121,7 +121,7 @@ const courseItems = computed<CourseItem[]>(() =>
   }
 
   &__label {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--text);
     letter-spacing: -0.01em;
@@ -142,24 +142,11 @@ const courseItems = computed<CourseItem[]>(() =>
 
 // ─── Courses ──────────────────────────────────────────────────
 .courses-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 0.875rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin: -8px -2rem 0;
-    padding: 8px 0 0.75rem;
-    scroll-padding-left: 2rem;
-
-    &::-webkit-scrollbar { display: none; }
-    &::before, &::after  { content: ''; flex: 0 0 2rem; }
+  @media (min-width: (@bp-sm + 1px)) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -180,7 +167,7 @@ const courseItems = computed<CourseItem[]>(() =>
   }
 
   &__badge {
-    font-size: 0.88rem;
+    font-size: 0.9375rem;
     font-weight: 700;
     color: var(--text);
     letter-spacing: -0.01em;
@@ -202,7 +189,7 @@ const courseItems = computed<CourseItem[]>(() =>
     margin-top: 0.25rem;
 
     li {
-      font-size: 0.8rem;
+      font-size: 0.875rem;
       color: var(--text-muted);
       line-height: 1.5;
       padding-left: 1rem;
@@ -217,11 +204,6 @@ const courseItems = computed<CourseItem[]>(() =>
     }
   }
 
-  @media (max-width: 768px) {
-    flex: 0 0 78vw;
-    max-width: 320px;
-    scroll-snap-align: start;
-  }
 }
 
 // ─── Talks ────────────────────────────────────────────────────
@@ -320,7 +302,7 @@ const courseItems = computed<CourseItem[]>(() =>
   }
 
   &__title {
-    font-size: 0.82rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     line-height: 1.4;
     display: -webkit-box;

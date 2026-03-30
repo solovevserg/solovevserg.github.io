@@ -84,7 +84,7 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
   }
 
   &__label {
-    font-size: 0.72rem;
+    font-size: 0.78rem;
     color: var(--text-muted);
     margin-top: 0.3rem;
   }
@@ -109,8 +109,8 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
 }
 
 .about-bio {
-  font-size: 1.1rem;
-  line-height: 1.75;
+  font-size: 1.125rem;
+  line-height: 1.8;
   color: var(--text);
 }
 
@@ -132,7 +132,7 @@ const stats = computed<StatItem[]>(() => (tm('stats') as any[]).map(s => ({ valu
   }
 
   dd {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: var(--text-muted);
     line-height: 1.4;
   }

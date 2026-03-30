@@ -112,7 +112,7 @@ const eduGroups = computed(() => {
 // ─── Group: two-column on desktop ─────────────────────────────
 .edu-group {
   display: grid;
-  grid-template-columns: 220px 1fr;
+  grid-template-columns: 240px 1fr;
   gap: 4rem;
   align-items: start;
 
@@ -142,7 +142,7 @@ const eduGroups = computed(() => {
     flex-direction: column;
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 1.25rem;
 
@@ -208,7 +208,7 @@ const eduGroups = computed(() => {
   }
 
   &__degree {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     color: var(--text-muted);
     font-family: var(--font-mono);
   }
@@ -218,7 +218,7 @@ const eduGroups = computed(() => {
     align-items: center;
     gap: 0.4rem;
     margin-top: 0.5rem;
-    font-size: 0.78rem;
+    font-size: 0.8125rem;
     color: var(--text-muted);
   }
 

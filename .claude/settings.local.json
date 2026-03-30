@@ -21,7 +21,8 @@
       "Bash(sed -i 's/const { t } = useI18n\\(\\)/const { t } = useTypo\\(\\)/g' \"D:/SERGEI SOLOVEV/solovevserg.github.io/components/sections/SectionContact.vue\")",
       "Bash(npm install:*)",
       "WebFetch(domain:upload.wikimedia.org)",
-      "Bash(curl -s \"https://upload.wikimedia.org/wikipedia/commons/6/69/Habr_logo_for_social_media.svg\")"
+      "Bash(curl -s \"https://upload.wikimedia.org/wikipedia/commons/6/69/Habr_logo_for_social_media.svg\")",
+      "WebFetch(domain:logo-teka.com)"
     ]
   }
 }

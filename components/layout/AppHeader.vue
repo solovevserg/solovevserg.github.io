@@ -1,8 +1,14 @@
 <script setup lang="ts">
 const { t, locale, locales, setLocale } = useI18n()
 const localePath = useLocalePath()
-const { isDark, toggle } = useTheme()
+const colorMode = useColorMode()
 const { progress, activeLabelKey, sections } = useScrollSpy()
+
+const cycleColorMode = () => {
+  const modes = ['dark', 'light', 'system'] as const
+  const idx = modes.indexOf(colorMode.preference as typeof modes[number])
+  colorMode.preference = modes[(idx + 1) % modes.length]
+}
 
 const menuOpen = ref(false)
 const toggleMenu = () => { menuOpen.value = !menuOpen.value }
@@ -17,10 +23,10 @@ watch(menuOpen, (val) => {
   }
 })
 
-// Close mobile menu when viewport grows beyond mobile breakpoint
+// Close mobile menu when viewport grows beyond nav breakpoint
 onMounted(() => {
   const onResize = () => {
-    if (window.innerWidth > 768) closeMenu()
+    if (window.innerWidth > 1280) closeMenu()
   }
   window.addEventListener('resize', onResize)
   onUnmounted(() => window.removeEventListener('resize', onResize))
@@ -72,13 +78,25 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
           @click="setLocale(otherLocale.code)"
         >{{ otherLocale.code.toUpperCase() }}</button>
 
-        <button class="ctrl-btn" @click="toggle" :aria-label="isDark ? 'Light mode' : 'Dark mode'">
-          <svg v-if="isDark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <button
+          class="ctrl-btn"
+          @click="cycleColorMode"
+          :title="colorMode.preference === 'dark' ? 'Тёмная' : colorMode.preference === 'light' ? 'Светлая' : 'Системная'"
+          :aria-label="colorMode.preference === 'dark' ? 'Dark mode' : colorMode.preference === 'light' ? 'Light mode' : 'System mode'"
+          data-allow-mismatch="attribute"
+        >
+          <!-- Sun: light mode active -->
+          <svg v-if="colorMode.preference === 'light'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
             <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
             <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
             <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
           </svg>
+          <!-- Monitor: system mode active -->
+          <svg v-else-if="colorMode.preference === 'system'" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+          <!-- Moon: dark mode active -->
           <svg v-else width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
           </svg>
@@ -177,7 +195,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
     align-items: center;
     gap: 2rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: @bp-lg) {
       display: none;
     }
   }
@@ -191,6 +209,10 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
 
     > .header__nav-link {
       margin-right: 0.75rem;
+
+      @media (max-width: @bp-lg) {
+        display: none;
+      }
     }
   }
 
@@ -283,7 +305,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
   &--open .burger__line:nth-child(1) { transform: translateY(3.5px) rotate(45deg); }
   &--open .burger__line:nth-child(2) { transform: translateY(-3.5px) rotate(-45deg); }
 
-  @media (max-width: 768px) {
+  @media (max-width: @bp-lg) {
     display: flex;
   }
 }

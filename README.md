@@ -1,31 +1,39 @@
-# solovevserg.github.io
+# sergsol.dev
 
-Personal portfolio and blog of Sergei Solovev — Lead Frontend Developer, Angular architect, team lead, lecturer.
+Source code of **[sergsol.dev](https://sergsol.dev)** — personal portfolio and blog of Sergei Solovev, lead developer, leader and phylosopher.
 
 ## Stack
 
 - **[Nuxt 3](https://nuxt.com/)** — SSG via `nuxt generate`
+- **[@nuxt/image](https://image.nuxt.com/)** — automatic WebP/AVIF conversion, srcset, blur placeholder
 - **[@nuxt/content](https://content.nuxt.com/)** — Markdown blog with Shiki syntax highlighting
 - **[@nuxtjs/i18n](https://i18n.nuxtjs.org/)** — Bilingual (RU / EN), `prefix_except_default` strategy
-- **Vue 3** Composition API — no UI framework, all styles hand-written
+- **Vue 3** Composition API — no UI framework, all styles hand-written in LESS
 - **GitHub Actions** → **GitHub Pages** — automated deploy on push to `master`
 
 ## Project structure
 
 ```
-├── assets/css/        # Global CSS variables and base styles
+├── assets/css/
+│   ├── global.less    # Utility classes, design tokens, base styles
+│   └── vars.less      # Breakpoint variables (@bp-sm, @bp-md, …)
 ├── components/
-│   └── layout/        # AppHeader, AppFooter
+│   ├── icons/         # SVG icon components (Telegram, LinkedIn, GitHub, Habr, HH)
+│   ├── layout/        # AppHeader, AppFooter
+│   ├── sections/      # Landing page sections
+│   └── shared/        # SectionHeader, BadgeCurrent, …
 ├── composables/       # useScrollSpy, useTheme
 ├── content/           # Blog posts (Markdown)
 │   ├── en/blog/
 │   └── ru/blog/
+├── docs/decisions/    # Architecture Decision Records (ADR)
 ├── locales/           # i18n strings
 │   ├── en.json
 │   └── ru.json
 ├── pages/
 │   ├── index.vue      # Landing page (all sections)
 │   └── blog/          # Blog list + post pages
+├── plugins/           # theme.client.ts — theme initialisation
 ├── public/            # Static assets (images, favicon)
 └── .github/workflows/ # CI/CD
 ```

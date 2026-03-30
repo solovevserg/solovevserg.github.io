@@ -16,18 +16,17 @@ const skillGroups = computed<SkillGroup[]>(() =>
   <section id="skills" class="section">
     <div class="container">
       <SectionHeader num="/ 05" :title="t('skills.title')" />
-      <div class="skills-grid">
-        <div v-for="group in skillGroups" :key="group.name" class="skill-group">
+      <div class="skills-grid mobile-scroll-list">
+        <div v-for="group in skillGroups" :key="group.name" class="skill-group mobile-scroll-item">
           <h3 class="skill-group__name label-caps">{{ group.name }}</h3>
           <div class="skill-keys">
             <div v-for="key in group.keys" :key="key.name" class="skill-key">
               <span class="skill-key__name">{{ key.name }}</span>
-              <span class="skill-key__dots" aria-hidden="true">
+              <span class="skill-key__dots" :title="t(`skills.levels.${key.level}`)" aria-hidden="true">
                 <span class="skill-key__dot" :class="{ 'skill-key__dot--filled': true }" />
                 <span class="skill-key__dot" :class="{ 'skill-key__dot--filled': key.level === 'advanced' || key.level === 'expert' }" />
                 <span class="skill-key__dot" :class="{ 'skill-key__dot--filled': key.level === 'expert' }" />
               </span>
-              <span class="skill-key__level">{{ t(`skills.levels.${key.level}`) }}</span>
             </div>
           </div>
           <div v-if="group.items.length" class="skill-tags">
@@ -42,26 +41,15 @@ const skillGroups = computed<SkillGroup[]>(() =>
 <style scoped lang="less">
 // ─── Skills ───────────────────────────────────────────────────
 .skills-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 
-  @media (max-width: 1024px) { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: (@bp-sm + 1px)) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 0.875rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin: -8px -2rem 0;
-    padding: 8px 0 0.75rem;
-    scroll-padding-left: 2rem;
-
-    &::-webkit-scrollbar { display: none; }
-    &::before, &::after  { content: ''; flex: 0 0 2rem; }
+  @media (min-width: (@bp-md + 1px)) {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -75,12 +63,6 @@ const skillGroups = computed<SkillGroup[]>(() =>
   gap: 1rem;
 
   &__name { margin: 0; }
-
-  @media (max-width: 768px) {
-    flex: 0 0 78vw;
-    max-width: 320px;
-    scroll-snap-align: start;
-  }
 }
 
 .skill-keys {
@@ -95,7 +77,7 @@ const skillGroups = computed<SkillGroup[]>(() =>
   gap: 0.5rem;
 
   &__name {
-    font-size: 0.85rem;
+    font-size: 0.9375rem;
     font-weight: 600;
     color: var(--text);
     flex: 1;
@@ -106,10 +88,7 @@ const skillGroups = computed<SkillGroup[]>(() =>
     display: flex;
     gap: 3px;
     flex-shrink: 0;
-  }
-
-  @media (max-width: 768px) {
-    .skill-key__level { display: none; }
+    margin-left: 0.25rem;
   }
 
   &__dot {
@@ -119,15 +98,6 @@ const skillGroups = computed<SkillGroup[]>(() =>
     background: var(--border-md);
 
     &--filled { background: var(--accent); }
-  }
-
-  &__level {
-    font-family: var(--font-mono);
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    flex-shrink: 0;
-    width: 6.5rem;
-    text-align: right;
   }
 }
 
@@ -140,7 +110,7 @@ const skillGroups = computed<SkillGroup[]>(() =>
 }
 
 .skill-tag {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   color: var(--text-muted);
   background: var(--bg-subtle);

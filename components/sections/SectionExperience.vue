@@ -42,8 +42,8 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
       <div class="side-block">
         <p class="side-block__label">{{ t('experience.side_title') }}</p>
         <p class="side-block__sub">{{ t('experience.side_subtitle') }}</p>
-        <div class="side-list">
-          <article v-for="item in sideItems" :key="item.company" class="side-card card-hover">
+        <div class="side-list mobile-scroll-list">
+          <article v-for="item in sideItems" :key="item.company" class="side-card card-hover mobile-scroll-item">
             <div class="side-card__meta">
               <span class="mono-period">{{ item.period }}</span>
               <BadgeCurrent v-if="item.current" />
@@ -85,7 +85,7 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
 
   &__body {
     display: grid;
-    grid-template-columns: 260px 1fr;
+    grid-template-columns: 300px 1fr;
     gap: 2rem;
     align-items: start;
   }
@@ -105,7 +105,7 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
   }
 
   &__role {
-    font-size: 0.85rem;
+    font-size: 0.9375rem;
     color: var(--accent);
     line-height: 1.4;
   }
@@ -117,7 +117,7 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
     gap: 0.75rem;
 
     li {
-      font-size: 0.925rem;
+      font-size: 1rem;
       color: var(--text-muted);
       padding-left: 1.25rem;
       position: relative;
@@ -163,31 +163,18 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
   }
 
   &__sub {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     color: var(--text-muted);
     margin-bottom: 1.75rem;
   }
 }
 
 .side-list {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
 
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 0.875rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin: -8px -2rem 0;
-    padding: 8px 0 0.75rem;
-    scroll-padding-left: 2rem;
-
-    &::-webkit-scrollbar { display: none; }
-    &::before, &::after  { content: ''; flex: 0 0 2rem; }
+  @media (min-width: (@bp-sm + 1px)) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -212,7 +199,7 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
   }
 
   &__role {
-    font-size: 0.8rem;
+    font-size: 0.875rem;
     color: var(--accent);
     margin-bottom: 0.875rem;
   }
@@ -224,7 +211,7 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
     gap: 0.4rem;
 
     li {
-      font-size: 0.825rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
       padding-left: 1rem;
       position: relative;
@@ -241,10 +228,5 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
     }
   }
 
-  @media (max-width: 768px) {
-    flex: 0 0 78vw;
-    max-width: 320px;
-    scroll-snap-align: start;
-  }
 }
 </style>

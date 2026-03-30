@@ -15,8 +15,8 @@ const factItems = computed<FactItem[]>(() =>
   <section id="facts" class="section section--alt">
     <div class="container">
       <SectionHeader num="/ 06" :title="t('facts.title')" />
-      <div class="facts-grid">
-        <div v-for="fact in factItems" :key="fact.title" class="fact-card card-hover">
+      <div class="facts-grid mobile-scroll-list">
+        <div v-for="fact in factItems" :key="fact.title" class="fact-card card-hover mobile-scroll-item">
           <span class="fact-card__emoji" aria-hidden="true">{{ fact.emoji }}</span>
           <h3 class="fact-card__title">{{ fact.title }}</h3>
           <p class="fact-card__desc">{{ fact.desc }}</p>
@@ -29,24 +29,11 @@ const factItems = computed<FactItem[]>(() =>
 <style scoped lang="less">
 // ─── Fun Facts ────────────────────────────────────────────────
 .facts-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 
-  @media (max-width: 768px) {
-    display: flex;
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 0.875rem;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    margin: -8px -2rem 0;
-    padding: 8px 0 0.75rem;
-    scroll-padding-left: 2rem;
-
-    &::-webkit-scrollbar { display: none; }
-    &::before, &::after  { content: ''; flex: 0 0 2rem; }
+  @media (min-width: (@bp-sm + 1px)) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -72,15 +59,9 @@ const factItems = computed<FactItem[]>(() =>
   }
 
   &__desc {
-    font-size: 0.875rem;
+    font-size: 0.9375rem;
     color: var(--text-muted);
     line-height: 1.65;
-  }
-
-  @media (max-width: 768px) {
-    flex: 0 0 78vw;
-    max-width: 320px;
-    scroll-snap-align: start;
   }
 }
 </style>
