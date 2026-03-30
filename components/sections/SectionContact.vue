@@ -44,9 +44,10 @@ const { t } = useTypo()
     font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 800;
     letter-spacing: -0.03em;
-    max-width: 600px;
+    max-width: 820px;
     margin-bottom: 2.5rem;
     line-height: 1.2;
+    color: var(--text-muted);
   }
 
   &__links {

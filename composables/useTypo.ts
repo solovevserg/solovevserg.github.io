@@ -5,18 +5,25 @@ import {
   ellipses,
   hyphenatedWords,
   numberUnits,
+  orphans,
   shortWords,
 } from 'richtypo/rules/common';
 
 function applyTypo(text: string, locale: string): string {
-  return richtypo([
+  const rules = [
     shortWords,
     numberUnits,
     degreeSigns,
     ellipses,
     hyphenatedWords,
     dashesBasic,
-  ], text)
+  ]
+
+  if (text.trim().split(/\s+/).length >= 5) {
+    rules.unshift(orphans)
+  }
+
+  return richtypo(rules, text)
     .replace(/&nbsp;/g, '\u00A0')
     .replace(/<nobr>(.*?)<\/nobr>/g, '$1')
 }
