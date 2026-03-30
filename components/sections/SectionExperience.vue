@@ -1,10 +1,14 @@
 <script setup lang="ts">
-type ExpItem = { company: string; role: string; period: string; current: boolean; side: boolean; bullets: string[] }
+type ExpItem  = { company: string; logo?: string; role: string; period: string; current: boolean; side: boolean; bullets: string[] }
+type ExpPhase = { role: string; period: string; current: boolean; bullets: string[] }
+type ExpGroup = { company: string; logo?: string; current: boolean; phases: ExpPhase[] }
+
 const { t, tm, rt } = useTypo()
 
 const allExpItems = computed<ExpItem[]>(() =>
   (tm('experience.items') as any[]).map(item => ({
     company: rt(item.company),
+    logo: item.logo ? rt(item.logo) : undefined,
     role: rt(item.role),
     period: rt(item.period),
     current: item.current as boolean,
@@ -12,7 +16,27 @@ const allExpItems = computed<ExpItem[]>(() =>
     bullets: (item.bullets as any[]).map(b => rt(b)),
   }))
 )
-const expItems = computed(() => allExpItems.value.filter(i => !i.side))
+
+const expGroups = computed<ExpGroup[]>(() => {
+  const groups: ExpGroup[] = []
+  for (const item of allExpItems.value.filter(i => !i.side)) {
+    const existing = groups.find(g => g.company === item.company)
+    if (existing) {
+      existing.phases.push({ role: item.role, period: item.period, current: item.current, bullets: item.bullets })
+      if (item.current) existing.current = true
+      if (!existing.logo && item.logo) existing.logo = item.logo
+    } else {
+      groups.push({
+        company: item.company,
+        logo: item.logo,
+        current: item.current,
+        phases: [{ role: item.role, period: item.period, current: item.current, bullets: item.bullets }],
+      })
+    }
+  }
+  return groups
+})
+
 const sideItems = computed(() => allExpItems.value.filter(i => i.side))
 </script>
 
@@ -21,19 +45,28 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
     <div class="container">
       <SectionHeader num="/ 02" :title="t('experience.title')" />
       <div class="exp-list">
-        <article v-for="item in expItems" :key="item.company" class="exp-card">
-          <div class="exp-card__top">
-            <span class="mono-period">{{ item.period }}</span>
-            <BadgeCurrent v-if="item.current" />
+        <article v-for="group in expGroups" :key="group.company" class="exp-card">
+          <div class="exp-card__header">
+            <IconTBank v-if="group.logo === 'tbank'" :size="36" class="exp-card__logo" />
+            <IconQoollo v-else-if="group.logo === 'qoollo'" :size="36" class="exp-card__logo" />
+            <h3 class="exp-card__company">{{ group.company }}</h3>
+            <BadgeCurrent v-if="group.current" />
           </div>
-          <div class="exp-card__body">
-            <div class="exp-card__title-row">
-              <h3 class="exp-card__company">{{ item.company }}</h3>
-              <p class="exp-card__role">{{ item.role }}</p>
+          <div
+            v-for="(phase, i) in group.phases"
+            :key="phase.period"
+            class="exp-card__phase"
+            :class="{ 'exp-card__phase--divider': i > 0 }"
+          >
+            <div class="exp-card__body">
+              <div class="exp-card__left">
+                <span class="mono-period">{{ phase.period }}</span>
+                <p class="exp-card__role">{{ phase.role }}</p>
+              </div>
+              <ul class="exp-card__bullets">
+                <li v-for="bullet in phase.bullets" :key="bullet">{{ bullet }}</li>
+              </ul>
             </div>
-            <ul class="exp-card__bullets">
-              <li v-for="bullet in item.bullets" :key="bullet">{{ bullet }}</li>
-            </ul>
           </div>
         </article>
       </div>
@@ -76,23 +109,16 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
   &:first-child { border-top: 1px solid var(--border); }
   &:last-child  { border-bottom: none; }
 
-  &__top {
+  &__header {
     display: flex;
     align-items: center;
-    gap: 0.875rem;
-    margin-bottom: 1.25rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
 
-  &__body {
-    display: grid;
-    grid-template-columns: 300px 1fr;
-    gap: 2rem;
-    align-items: start;
-  }
-
-  &__title-row {
-    position: sticky;
-    top: calc(var(--header-h) + 1.5rem);
+  &__logo {
+    flex-shrink: 0;
+    border-radius: 6px;
   }
 
   &__company {
@@ -101,7 +127,28 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
     color: var(--text);
     letter-spacing: -0.03em;
     line-height: 1.1;
-    margin-bottom: 0.4rem;
+  }
+
+  &__phase {
+    &--divider {
+      margin-top: 2rem;
+      padding-top: 2rem;
+    }
+  }
+
+  &__body {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  &__left {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
   }
 
   &__role {
@@ -134,15 +181,22 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: @bp-sm) {
     padding: 2rem 0;
+
+    &__header { margin-bottom: 1.5rem; }
 
     &__body {
       grid-template-columns: 1fr;
-      gap: 1.25rem;
+      gap: 0.75rem;
     }
 
-    &__title-row { position: static; }
+    &__left { position: static; }
+
+    &__phase--divider {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+    }
   }
 }
 
@@ -227,6 +281,5 @@ const sideItems = computed(() => allExpItems.value.filter(i => i.side))
       }
     }
   }
-
 }
 </style>

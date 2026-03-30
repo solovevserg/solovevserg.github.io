@@ -34,7 +34,7 @@
   },
   "stats": [
     { "value": "8+", "label": "years in IT" },
-    { "value": "10+", "label": "projects in fintech, healthcare, mobility & more" },
+    { "value": "10+", "label": "projects in fintech, security, mobility & more" },
     { "value": "200+", "label": "students — course audience" },
     { "value": "up to 11", "label": "engineers under my leadership" }
   ],
@@ -50,6 +50,7 @@
     "items": [
       {
         "company": "T-Bank",
+        "logo": "tbank",
         "role": "Lead Developer",
         "period": "Sept 2022 — Present",
         "current": true,
@@ -76,14 +77,28 @@
       },
       {
         "company": "Qoollo",
+        "logo": "qoollo",
         "role": "Frontend Department Head",
-        "period": "July 2017 — Aug 2022",
+        "period": "June 2020 — Aug 2022",
         "current": false,
         "bullets": [
           "Led a team of up to 11 developers",
           "Introduced development practices and standards",
           "Web application architecture design",
           "Domains: healthcare, security, transport"
+        ]
+      },
+      {
+        "company": "Qoollo",
+        "role": "Intern → Senior Developer",
+        "period": "July 2017 — June 2020",
+        "current": false,
+        "bullets": [
+          "Angular SPA and Ionic mobile app development",
+          "Backend with C# ASP.NET Core and WPF",
+          "Built AIS for a government client: 800+ tasks, 350+ components",
+          "Requirements analysis and legacy system support",
+          "Grew from intern to senior developer"
         ]
       },
       {
@@ -187,8 +202,7 @@
         "degree": "Master's degree",
         "period": "2020 — 2022",
         "grade": "4.7",
-        "thesis": "Analytical tools for the study of social graphs (using the example of the analysis of BMSTU students' social connections on VK)",
-        "activities": "Laboratory of Informatization of Social Analysis · Cycling club"
+        "thesis": "Analytical tools for the study of social graphs (using the example of the analysis of BMSTU students' social connections on VK)"
       },
       {
         "tag": "BSc",
@@ -198,8 +212,7 @@
         "degree": "Bachelor's degree",
         "period": "2016 — 2020",
         "grade": "4.97",
-        "thesis": "Methods and technologies for interactive visualization of social network data",
-        "activities": "Data Crash Course"
+        "thesis": "Methods and technologies for interactive visualization of social network data"
       },
       {
         "tag": "11th",
@@ -208,9 +221,7 @@
         "field": "Mathematics (advanced)",
         "degree": "High School Diploma",
         "period": "Sep 2005 — Jun 2016",
-        "grade": "4.8",
-        "activities": "3 golden cups in Intellectual Club · Olympiad diplomas in math, CS & astronomy · Basketball team"
-      }
+        "grade": "4.8"      }
     ]
   },
   "teaching": {
