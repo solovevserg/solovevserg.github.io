@@ -139,7 +139,7 @@ onUnmounted(() => {
     flex-shrink: 0;
     display: flex;
     align-items: center;
-    padding-left: max(2rem, calc((100vw - 1280px) / 2 + 2rem));
+    padding-left: clamp(2rem, calc((100vw - 1280px) / 2 + 2rem), 14rem);
     padding-right: 4rem;
     padding-top: 2rem;
     padding-bottom: 2.5rem;

@@ -11,7 +11,7 @@
     "name_first": "Sergei",
     "name_last": "Solovev",
     "typewriter": [
-      "Developer. Leader. Philosopher",
+      "Developer. Leader. Philosopher.",
       "Speaker & Educator",
       "Fullstack Web Developer",
       "IT Entrepreneur",
@@ -21,15 +21,14 @@
       "Angular Expert",
       "Frontend Developer",
       "TypeScript Expert",
-      "Engineer",
       "IT Conference Speaker",
       "Philosophy of Science PhD Candidate",
       "Husband of a Wonderful Woman",
-      "Good UX lover",
+      "Good UX Connoisseur",
       "HolyJS Speaker",
       "IT Systems Architect"
     ],
-    "role": "Lead Frontend Developer",
+    "role": "Lead Developer",
     "cta_contact": "Get in touch",
     "cta_blog": "Read blog"
   },
@@ -51,13 +50,13 @@
     "items": [
       {
         "company": "T-Bank",
-        "role": "Lead Developer (Angular)",
+        "role": "Lead Developer",
         "period": "Sept 2022 — Present",
         "current": true,
         "bullets": [
           "Applying autonomous AI agents and chatbots",
+          "Architectural solution design via ADR/RFC",
           "SPA development with Angular 12+, RxJS, TaigaUI",
-          "Code review and architectural decisions (ADR)",
           "Test automation: Playwright, Cypress, Jest",
           "Monitoring & incident management: Grafana, Prometheus",
           "CI/CD: GitLab, Nginx, Docker"
@@ -124,7 +123,7 @@
         "name": "Architecture",
         "keys": [
           { "name": "ADR",                   "level": "expert" },
-          { "name": "SPA Design & Scaling",  "level": "expert" },
+          { "name": "SPA Design",           "level": "expert" },
           { "name": "System Architecture",   "level": "advanced" }
         ],
         "items": ["Open API", "Async API", "UML", "Mermaid"]
@@ -232,20 +231,20 @@
         ]
       },
       {
-        "org": "Higher School of Economics",
-        "badge": "HSE",
-        "period": "2020 — 2021",
-        "items": [
-          "Co-authored web design course for secondary school students (HSE Kids)"
-        ]
-      },
-      {
         "org": "Qoollo",
         "badge": "Qoollo",
         "period": "2019 — 2021",
         "items": [
           "Qoollo.Edu — internal courses on Angular, TypeScript, RxJS",
           "Qoollo.Summer — lectures and mentoring for student interns"
+        ]
+      },
+      {
+        "org": "Higher School of Economics",
+        "badge": "HSE",
+        "period": "2020 — 2021",
+        "items": [
+          "Co-authored web design course for secondary school students (HSE Kids)"
         ]
       },
       {
@@ -302,7 +301,7 @@
     "linkedin": "LinkedIn",
     "github": "GitHub",
     "habr": "Habr",
-    "hh": "Resume (HH)"
+    "hh": "Resume on HH"
   },
   "blog": {
     "title": "Blog",
