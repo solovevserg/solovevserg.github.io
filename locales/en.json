@@ -227,18 +227,23 @@
   "teaching": {
     "title": "Knowledge Sharing",
     "talks_title": "Conference Talks",
-    "courses_title": "Courses & Lectures",
+    "publications_title": "Publications",
+    "courses_title": "Courses",
+    "courses_show": "Show all courses",
+    "courses_hide": "Collapse",
     "github_cta": "Course materials on GitHub",
+    "elibrary_cta": "VAK / RSCI Publications",
+    "habr_cta": "Articles on Habr",
     "courses": [
       {
         "org": "Bauman Moscow State Technical University",
         "badge": "BMSTU",
         "period": "2018 — 2022",
         "items": [
-          "Frontend block in the software engineering curriculum",
           "Web Technologies course for social analytics program",
-          "Web design & markup blocks in professional development courses",
-          "Data Crash Course — co-author of data analysis course"
+          "Data Crash Course — co-author of data analysis course",
+          "Frontend block in the software engineering curriculum",
+          "Web design & markup blocks in professional development courses"
         ]
       },
       {

@@ -22,6 +22,26 @@ const courseItems = computed<CourseItem[]>(() =>
     items: (c.items as any[]).map(i => rt(i)),
   }))
 )
+
+const coursesExpanded = ref(false)
+const playerRef = ref<HTMLElement>()
+
+function selectTalk(id: string) {
+  activeTalkId.value = id
+  const el = playerRef.value
+  if (!el) return
+  const headerH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 0
+  const top = el.getBoundingClientRect().top + window.scrollY - headerH - 16
+  if (el.getBoundingClientRect().top < headerH) {
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
+}
+
+const publicationLinks = [
+  { label: 'teaching.elibrary_cta', url: 'https://www.elibrary.ru/author_items.asp?authorid=1019717', short: 'elibrary.ru' },
+  { label: 'teaching.habr_cta', url: 'https://habr.com/ru/users/SolovevSerg/articles/', short: 'habr.com' },
+  { label: 'teaching.github_cta', url: 'https://github.com/solovevserg/studies', short: 'github.com' },
+]
 </script>
 
 <template>
@@ -38,7 +58,7 @@ const courseItems = computed<CourseItem[]>(() =>
             :key="talk.id"
             class="talk-item"
             :class="{ 'talk-item--active': currentTalkId === talk.id }"
-            @click="activeTalkId = talk.id"
+            @click="selectTalk(talk.id)"
           >
             <span class="talk-item__num">0{{ i + 1 }}</span>
             <div class="talk-item__info">
@@ -48,7 +68,7 @@ const courseItems = computed<CourseItem[]>(() =>
             <svg class="talk-item__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
           </button>
         </div>
-        <div class="talks__player">
+        <div ref="playerRef" class="talks__player">
           <div class="talks__frame-wrap">
             <iframe
               :src="embedUrl"
@@ -61,29 +81,42 @@ const courseItems = computed<CourseItem[]>(() =>
         </div>
       </div>
 
-      <!-- Courses grid -->
-      <p class="teaching-sub teaching-sub--spaced label-caps">{{ t('teaching.courses_title') }}</p>
-      <div class="courses-grid mobile-scroll-list">
-        <div v-for="course in courseItems" :key="course.org" class="course-card card-hover mobile-scroll-item">
-          <div class="course-card__head">
-            <span class="course-card__badge">{{ course.org }}</span>
-            <span class="course-card__period">{{ course.period }}</span>
-          </div>
-          <ul class="course-card__list">
-            <li v-for="item in course.items" :key="item">{{ item }}</li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- GitHub CTA -->
-      <div class="teaching-cta">
-        <a href="https://github.com/solovevserg/studies" target="_blank" rel="noopener" class="repo-link card-hover">
+      <!-- Publications -->
+      <p class="teaching-sub teaching-sub--spaced label-caps">{{ t('teaching.publications_title') }}</p>
+      <div class="publications-grid">
+        <a v-for="link in publicationLinks" :key="link.url" :href="link.url" target="_blank" rel="noopener" class="repo-link card-hover">
           <div class="repo-link__body">
-            <span class="repo-link__label">{{ t('teaching.github_cta') }}</span>
-            <span class="repo-link__url">github.com/solovevserg/studies</span>
+            <span class="repo-link__label">{{ t(link.label) }}</span>
+            <span class="repo-link__url">{{ link.short }}</span>
           </div>
           <svg class="repo-link__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
         </a>
+      </div>
+
+      <!-- Courses -->
+      <p class="teaching-sub teaching-sub--spaced label-caps">{{ t('teaching.courses_title') }}</p>
+      <div class="courses-collapse" :class="{ 'courses-collapse--open': coursesExpanded }">
+        <div class="courses-grid mobile-scroll-list">
+          <div v-for="course in courseItems" :key="course.org" class="course-card card-hover mobile-scroll-item">
+            <div class="course-card__head">
+              <span class="course-card__badge">{{ course.org }}</span>
+              <span class="course-card__period">{{ course.period }}</span>
+            </div>
+            <ul class="course-card__list">
+              <li v-for="item in course.items" :key="item">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div v-if="!coursesExpanded" class="courses-toggle">
+        <button class="courses-toggle__btn" @click="coursesExpanded = true">
+          {{ t('teaching.courses_show') }}
+        </button>
+      </div>
+      <div v-else class="courses-toggle">
+        <button class="courses-toggle__btn" @click="coursesExpanded = false">
+          {{ t('teaching.courses_hide') }}
+        </button>
       </div>
     </div>
   </section>
@@ -95,10 +128,77 @@ const courseItems = computed<CourseItem[]>(() =>
   &--spaced { margin-top: 3.5rem; }
 }
 
-.teaching-cta {
-  margin-top: 3rem;
+// ─── Publications grid ───────────────────────────────────────
+.publications-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+
+  @media (max-width: @bp-sm) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Courses collapse ────────────────────────────────────────
+.courses-collapse {
+  position: relative;
+  max-height: 8rem;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding-top: 4px;
+  margin-top: -4px;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 6rem;
+    background: linear-gradient(to bottom, transparent, var(--bg));
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  &--open {
+    max-height: 1000px;
+
+    &::after { opacity: 0; }
+  }
+
+  @media (max-width: @bp-sm) {
+    max-height: none;
+    overflow: visible;
+
+    &::after { display: none; }
+  }
+}
+
+.courses-toggle {
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
+
+  @media (max-width: @bp-sm) {
+    display: none;
+  }
+
+  &__btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.5rem 1.5rem;
+    font-family: inherit;
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+
+    &:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+  }
 }
 
 // ─── Repo link ────────────────────────────────────────────────
@@ -118,6 +218,8 @@ const courseItems = computed<CourseItem[]>(() =>
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+    flex: 1;
+    min-width: 0;
   }
 
   &__label {
@@ -242,7 +344,7 @@ const courseItems = computed<CourseItem[]>(() =>
     }
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: @bp-sm) {
     grid-template-columns: 1fr;
     &__player { position: static; order: -1; }
   }
@@ -263,10 +365,17 @@ const courseItems = computed<CourseItem[]>(() =>
   font-family: inherit;
   transition: border-color 0.2s, background 0.2s, transform 0.2s;
 
-  &:hover {
-    border-color: var(--border-md);
-    background: var(--bg-subtle);
-    transform: translateX(3px);
+  @media (hover: hover) {
+    &:hover {
+      border-color: var(--border-md);
+      background: var(--bg-subtle);
+    }
+
+    @media (min-width: (@bp-sm + 1px)) {
+      &:hover {
+        transform: translateX(3px);
+      }
+    }
   }
 
   &--active {
@@ -318,8 +427,14 @@ const courseItems = computed<CourseItem[]>(() =>
     color: var(--text-xmuted);
     transition: color 0.2s;
 
-    .talk-item--active &,
-    .talk-item:hover & { color: var(--accent); }
+    @media (hover: hover) {
+      .talk-item--active &,
+      .talk-item:hover & { color: var(--accent); }
+    }
+
+    @media (max-width: @bp-sm) {
+      display: none;
+    }
   }
 }
 </style>
