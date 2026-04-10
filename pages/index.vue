@@ -27,11 +27,11 @@ useHead(() => ({
   <div>
     <SectionHero />
     <SectionAbout />
-    <SectionExperience />
-    <SectionTeaching />
-    <SectionEducation />
-    <SectionSkills />
-    <SectionFacts />
-    <SectionContact />
+    <LazySectionExperience />
+    <LazySectionTeaching />
+    <LazySectionEducation />
+    <LazySectionSkills />
+    <LazySectionFacts />
+    <LazySectionContact />
   </div>
 </template>
