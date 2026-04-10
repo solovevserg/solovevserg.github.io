@@ -294,6 +294,11 @@
     "title": "Fun Facts",
     "items": [
       {
+        "emoji": "💢",
+        "title": "Redstone engineer",
+        "desc": "Built an 8-bit computer in Minecraft using redstone and wrote a program to output the Fibonacci sequence."
+      },
+      {
         "emoji": "🏸",
         "title": "Badminton player",
         "desc": "I love playing badminton in the morning before work to stay sharp and set the tone for the day."
@@ -302,11 +307,6 @@
         "emoji": "🕺",
         "title": "2× Dance champion",
         "desc": "Won dance competitions twice. Trained in 5 styles — from Welsh folk dancing to bachata and contemporary."
-      },
-      {
-        "emoji": "💢",
-        "title": "Redstone engineer",
-        "desc": "Built an 8-bit computer in Minecraft using redstone and wrote a program to output the Fibonacci sequence."
       }
     ]
   },

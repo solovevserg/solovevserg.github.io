@@ -2,43 +2,33 @@
 const { t, tm, rt } = useTypo()
 const localePath = useLocalePath()
 
-const typewriterPhrases = computed(() => (tm('hero.typewriter') as any[]).map(l => rt(l)))
-const typeText = ref('')
-const typeIndex = ref(0)
-let typeTimer: ReturnType<typeof setTimeout> | null = null
+const phrases = computed(() => (tm('hero.typewriter') as any[]).map(l => rt(l)))
+const typeText = ref(phrases.value[0] ?? '')
 
-const runTypewriter = () => {
-  const phrases = typewriterPhrases.value
-  if (!phrases.length) return
-  const target = phrases[typeIndex.value]
-  const cur = typeText.value
+let stopped = false
+const sleep = (ms: number) => new Promise<void>(r => { setTimeout(r, ms) })
 
-  if (cur.length < target.length) {
-    typeText.value = target.slice(0, cur.length + 1)
-    typeTimer = setTimeout(runTypewriter, 60)
-  } else {
-    typeTimer = setTimeout(() => {
-      const erase = () => {
-        if (typeText.value.length > 0) {
-          typeText.value = typeText.value.slice(0, -1)
-          typeTimer = setTimeout(erase, 30)
-        } else {
-          typeIndex.value = (typeIndex.value + 1) % phrases.length
-          typeTimer = setTimeout(runTypewriter, 350)
-        }
-      }
-      typeTimer = setTimeout(erase, 2000)
-    }, 0)
+async function runTypewriter() {
+  let i = 0
+  await sleep(1000)
+  while (!stopped) {
+    while (typeText.value.length > 0 && !stopped) {
+      typeText.value = typeText.value.slice(0, -1)
+      await sleep(30)
+    }
+    i = (i + 1) % phrases.value.length
+    await sleep(350)
+    const target = phrases.value[i]
+    for (let c = 1; c <= target.length && !stopped; c++) {
+      typeText.value = target.slice(0, c)
+      await sleep(60)
+    }
+    await sleep(2000)
   }
 }
 
-onMounted(() => {
-  runTypewriter()
-})
-
-onUnmounted(() => {
-  if (typeTimer) clearTimeout(typeTimer)
-})
+onMounted(runTypewriter)
+onUnmounted(() => { stopped = true })
 </script>
 
 <template>

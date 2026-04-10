@@ -35,8 +35,8 @@ export function useTypo() {
   const t = (...args: Parameters<typeof i18n.t>): string =>
     applyTypo(i18n.t(...args) as string, locale.value)
 
-  const rt = (...args: Parameters<typeof i18n.rt>): string =>
-    applyTypo(i18n.rt(...args), locale.value)
+  const rt = (message: any, ...rest: any[]): string =>
+    applyTypo((i18n.rt as Function)(message, ...rest), locale.value)
 
   return { ...i18n, t, rt }
 }
