@@ -1,7 +1,7 @@
 # Рефакторинг качества кода
 
-* Статус: реализовано
-* Дата: 2026-03-28
+- Статус: реализовано
+- Дата: 2026-03-28
 
 ## Контекст
 
@@ -17,6 +17,7 @@
 SVG нужно синхронно редактировать несколько файлов.
 
 **Решение.** Создать три компонента в `components/icons/`:
+
 - `IconTelegram.vue`
 - `IconLinkedin.vue`
 - `IconGithub.vue`
@@ -34,20 +35,34 @@ SVG нужно синхронно редактировать несколько 
 
 ```less
 @media (max-width: 768px) {
-  display: flex; flex-direction: row; overflow-x: auto;
-  gap: 0.875rem; scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch; scrollbar-width: none;
-  margin: -8px -2rem 0; padding: 8px 0 0.75rem;
-  scroll-padding-left: 2rem;
-  &::-webkit-scrollbar { display: none; }
-  &::before, &::after  { content: ''; flex: 0 0 2rem; }
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0.875rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin: -8px -2rem 0;
+    padding: 8px 0 0.75rem;
+    scroll-padding-left: 2rem;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    &::before,
+    &::after {
+        content: '';
+        flex: 0 0 2rem;
+    }
 }
 ```
 
 И идентичный snap для дочерних карточек:
+
 ```less
 @media (max-width: 768px) {
-  flex: 0 0 78vw; max-width: 320px; scroll-snap-align: start;
+    flex: 0 0 78vw;
+    max-width: 320px;
+    scroll-snap-align: start;
 }
 ```
 
@@ -57,6 +72,7 @@ SVG нужно синхронно редактировать несколько 
 `SectionFacts.vue` (`.facts-grid` / `.fact-card`).
 
 **Решение.** Добавить в `assets/css/global.less` два утилитарных класса:
+
 - `.mobile-scroll-list` — для контейнера
 - `.mobile-scroll-item` — для дочерней карточки
 
@@ -70,14 +86,14 @@ SVG нужно синхронно редактировать несколько 
 
 **Проблема.** Семь компонентов определяют типы в теле `<script setup>`:
 
-| Компонент | Типы |
-|---|---|
-| SectionAbout | `StatItem` |
-| SectionSkills | `SkillGroup` |
-| SectionExperience | `ExpItem` |
-| SectionEducation | `EduItem` |
-| SectionTeaching | `TalkItem`, `CourseItem` |
-| SectionFacts | `FactItem` |
+| Компонент         | Типы                     |
+| ----------------- | ------------------------ |
+| SectionAbout      | `StatItem`               |
+| SectionSkills     | `SkillGroup`             |
+| SectionExperience | `ExpItem`                |
+| SectionEducation  | `EduItem`                |
+| SectionTeaching   | `TalkItem`, `CourseItem` |
+| SectionFacts      | `FactItem`               |
 
 **Решение.** Создать `types/index.ts`, экспортировать все интерфейсы.
 Заменить локальные объявления на `import type { ... } from '~/types'`.
@@ -116,10 +132,12 @@ SVG нужно синхронно редактировать несколько 
 ## Последствия
 
 **Положительные:**
+
 - Суммарно удалено ~100 строк дублирующегося кода
 - Изменение SVG-иконки — правка одного файла вместо двух
 - Мобильное поведение карточек изменяется в одном месте
 - Типы централизованы и можно использовать повторно
 
 **Отрицательные / риски:**
+
 - Нет. Изменения чисто структурные, поведение не меняется.

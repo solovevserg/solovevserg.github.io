@@ -1,7 +1,7 @@
 # SEO-улучшения лендинга: метатеги, OGP, JSON-LD
 
-* Статус: принято
-* Дата: 2026-03-28
+- Статус: принято
+- Дата: 2026-03-28
 
 ## Контекст и постановка задачи
 
@@ -53,11 +53,12 @@ meta: [
 
 ---
 
-### Вариант C — Composable `useSeoMeta` + локализованные данные *(выбранный)*
+### Вариант C — Composable `useSeoMeta` + локализованные данные _(выбранный)_
 
 Использовать встроенный в Nuxt 3 хелпер `useSeoMeta` совместно с `useI18n` и `useRequestURL`. Общие статические теги (image, type, site_name) остаются в `nuxt.config.ts`, а динамические (title, description, url, hreflang) — в composable `usePageSeo`, вызываемом на каждой странице.
 
 **Плюсы:**
+
 - `useSeoMeta` — идиоматичный Nuxt 3 API, безопасен по типам, устраняет дублирование
 - Локализация через `useI18n` покрывает ru/en из коробки
 - Один composable → единое место добавления новых тегов
@@ -116,31 +117,32 @@ app: {
 ```ts
 // composables/usePageSeo.ts
 export function usePageSeo(options?: { title?: string; description?: string }) {
-  const { t, locale } = useI18n()
-  const url = useRequestURL()
+    const { t, locale } = useI18n()
+    const url = useRequestURL()
 
-  const title = options?.title ?? `${t('hero.name_first')} ${t('hero.name_last')} — Lead Frontend Developer`
-  const description = options?.description ?? t('about.bio')
+    const title =
+        options?.title ?? `${t('hero.name_first')} ${t('hero.name_last')} — Lead Frontend Developer`
+    const description = options?.description ?? t('about.bio')
 
-  useSeoMeta({
-    title,
-    ogTitle: title,
-    description,
-    ogDescription: description,
-    ogUrl: url.href,
-    twitterTitle: title,
-    twitterDescription: description,
-  })
+    useSeoMeta({
+        title,
+        ogTitle: title,
+        description,
+        ogDescription: description,
+        ogUrl: url.href,
+        twitterTitle: title,
+        twitterDescription: description,
+    })
 
-  // hreflang alternate links
-  useHead({
-    link: [
-      { rel: 'alternate', hreflang: 'ru',    href: `https://sergsol.dev/` },
-      { rel: 'alternate', hreflang: 'en',    href: `https://sergsol.dev/en/` },
-      { rel: 'alternate', hreflang: 'x-default', href: `https://sergsol.dev/` },
-      { rel: 'canonical', href: url.href },
-    ],
-  })
+    // hreflang alternate links
+    useHead({
+        link: [
+            { rel: 'alternate', hreflang: 'ru', href: `https://sergsol.dev/` },
+            { rel: 'alternate', hreflang: 'en', href: `https://sergsol.dev/en/` },
+            { rel: 'alternate', hreflang: 'x-default', href: `https://sergsol.dev/` },
+            { rel: 'canonical', href: url.href },
+        ],
+    })
 }
 ```
 
@@ -162,23 +164,25 @@ usePageSeo({ title: post.title, description: post.description })
 
 ```ts
 useHead({
-  script: [{
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify({
-      '@context': 'https://schema.org',
-      '@type': 'Person',
-      name: 'Sergei Solovev',
-      url: 'https://sergsol.dev',
-      image: 'https://sergsol.dev/img/avatar.jpg',
-      jobTitle: 'Lead Frontend Developer',
-      worksFor: { '@type': 'Organization', name: 'T-Bank' },
-      sameAs: [
-        'https://github.com/solovevserg',
-        'https://linkedin.com/in/solovevserg',
-        'https://t.me/solovevserg',
-      ],
-    }),
-  }],
+    script: [
+        {
+            type: 'application/ld+json',
+            innerHTML: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'Person',
+                name: 'Sergei Solovev',
+                url: 'https://sergsol.dev',
+                image: 'https://sergsol.dev/img/avatar.jpg',
+                jobTitle: 'Lead Frontend Developer',
+                worksFor: { '@type': 'Organization', name: 'T-Bank' },
+                sameAs: [
+                    'https://github.com/solovevserg',
+                    'https://linkedin.com/in/solovevserg',
+                    'https://t.me/solovevserg',
+                ],
+            }),
+        },
+    ],
 })
 ```
 
@@ -200,19 +204,21 @@ useHead({
 ## Последствия
 
 **Положительные:**
+
 - Карточки при шаринге в Telegram, Twitter/X, LinkedIn, ВКонтакте будут показывать фото, имя и описание
 - Поисковики получат однозначный canonical и hreflang, что устранит дублирование ru/en страниц
 - JSON-LD Person улучшает Knowledge Panel в Google по запросу имени
 
 **Отрицательные / риски:**
+
 - Без OGP-изображения правильного размера ряд соцсетей покажет карточку без фото — нужно подготовить файл до деплоя
 - `useRequestURL()` на статике возвращает URL сборки, а не финальный домен — нужно убедиться, что `NUXT_PUBLIC_SITE_URL` или `site.url` выставлены корректно при `nuxt generate`
 - hreflang на SPA-роутах не индексируется без SSR/SSG — корректно только при `nuxt generate` (текущий режим)
 
 ## Ссылки
 
-* [Nuxt 3 — useSeoMeta](https://nuxt.com/docs/api/composables/use-seo-meta)
-* [Open Graph Protocol](https://ogp.me/)
-* [Schema.org — Person](https://schema.org/Person)
-* [Google — hreflang](https://developers.google.com/search/docs/specialty/international/localized-versions)
-* [@nuxtjs/sitemap](https://nuxtseo.com/sitemap/getting-started/introduction)
+- [Nuxt 3 — useSeoMeta](https://nuxt.com/docs/api/composables/use-seo-meta)
+- [Open Graph Protocol](https://ogp.me/)
+- [Schema.org — Person](https://schema.org/Person)
+- [Google — hreflang](https://developers.google.com/search/docs/specialty/international/localized-versions)
+- [@nuxtjs/sitemap](https://nuxtseo.com/sitemap/getting-started/introduction)

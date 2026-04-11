@@ -1,7 +1,7 @@
 # Перенос типографической обработки текстов на этап сборки
 
-* Статус: предложено
-* Дата: 2026-04-10
+- Статус: предложено
+- Дата: 2026-04-10
 
 ## Контекст и постановка задачи
 
@@ -31,33 +31,40 @@
 // plugins/vite-typo.ts
 import { Plugin } from 'vite'
 import richtypo from 'richtypo'
-import { shortWords, orphans, numberUnits, dashesBasic, ellipses, degreeSigns, hyphenatedWords } from 'richtypo/rules/common'
+import {
+    shortWords,
+    orphans,
+    numberUnits,
+    dashesBasic,
+    ellipses,
+    degreeSigns,
+    hyphenatedWords,
+} from 'richtypo/rules/common'
 
 function processValue(value: unknown): unknown {
-  if (typeof value === 'string') return applyTypo(value)
-  if (Array.isArray(value)) return value.map(processValue)
-  if (typeof value === 'object' && value !== null) {
-    return Object.fromEntries(
-      Object.entries(value).map(([k, v]) => [k, processValue(v)])
-    )
-  }
-  return value
+    if (typeof value === 'string') return applyTypo(value)
+    if (Array.isArray(value)) return value.map(processValue)
+    if (typeof value === 'object' && value !== null) {
+        return Object.fromEntries(Object.entries(value).map(([k, v]) => [k, processValue(v)]))
+    }
+    return value
 }
 
 export default function viteTypoPlugin(): Plugin {
-  return {
-    name: 'vite-typo',
-    transform(code, id) {
-      if (!/locales\/[a-z]{2}\.json$/.test(id)) return null
-      const json = JSON.parse(code)
-      const processed = processValue(json)
-      return `export default ${JSON.stringify(processed)}`
-    },
-  }
+    return {
+        name: 'vite-typo',
+        transform(code, id) {
+            if (!/locales\/[a-z]{2}\.json$/.test(id)) return null
+            const json = JSON.parse(code)
+            const processed = processValue(json)
+            return `export default ${JSON.stringify(processed)}`
+        },
+    }
 }
 ```
 
 В `nuxt.config.ts`:
+
 ```ts
 vite: {
   plugins: [viteTypoPlugin()],
@@ -65,6 +72,7 @@ vite: {
 ```
 
 **Плюсы:**
+
 - Обработка происходит один раз при загрузке модуля (сборка или dev-сервер)
 - Не нужны промежуточные файлы — исходные JSON остаются единственным источником правды
 - Hot reload работает автоматически — Vite перезагружает модуль при изменении JSON
@@ -72,6 +80,7 @@ vite: {
 - Нулевой runtime overhead
 
 **Минусы:**
+
 - Нужно учитывать, что `@nuxtjs/i18n` с `lazy: true` загружает JSON через собственный механизм — необходимо проверить совместимость с `transform` хуком Vite
 - Типографические правила применяются ко всем строкам без исключения (включая технические — nav labels, периоды). Может потребоваться механизм исключений (например, ключи, начинающиеся с `_raw_`)
 
@@ -89,31 +98,34 @@ import path from 'path'
 const SRC = 'locales'
 const DEST = 'locales-build'
 
-for (const file of fs.readdirSync(SRC).filter(f => f.endsWith('.json'))) {
-  const raw = JSON.parse(fs.readFileSync(path.join(SRC, file), 'utf-8'))
-  const processed = processValue(raw) // та же рекурсивная обработка
-  fs.mkdirSync(DEST, { recursive: true })
-  fs.writeFileSync(path.join(DEST, file), JSON.stringify(processed, null, 2))
+for (const file of fs.readdirSync(SRC).filter((f) => f.endsWith('.json'))) {
+    const raw = JSON.parse(fs.readFileSync(path.join(SRC, file), 'utf-8'))
+    const processed = processValue(raw) // та же рекурсивная обработка
+    fs.mkdirSync(DEST, { recursive: true })
+    fs.writeFileSync(path.join(DEST, file), JSON.stringify(processed, null, 2))
 }
 ```
 
 В `package.json`:
+
 ```json
 {
-  "scripts": {
-    "typo": "tsx scripts/apply-typo.ts",
-    "dev": "npm run typo && nuxt dev",
-    "generate": "npm run typo && nuxt generate"
-  }
+    "scripts": {
+        "typo": "tsx scripts/apply-typo.ts",
+        "dev": "npm run typo && nuxt dev",
+        "generate": "npm run typo && nuxt generate"
+    }
 }
 ```
 
 **Плюсы:**
+
 - Максимально простая и прозрачная реализация
 - Можно инспектировать `locales-build/*.json` для отладки
 - Не зависит от внутренних механизмов Vite или `@nuxtjs/i18n`
 
 **Минусы:**
+
 - Два набора файлов — `locales-build/` нужно добавить в `.gitignore`
 - В dev-режиме при изменении `locales/*.json` нужно перезапускать скрипт вручную или добавлять file watcher (chokidar)
 - `langDir` в конфиге указывает на генерируемую директорию — может запутать контрибьюторов
@@ -129,22 +141,24 @@ for (const file of fs.readdirSync(SRC).filter(f => f.endsWith('.json'))) {
 import { defineNuxtModule } from '@nuxt/kit'
 
 export default defineNuxtModule({
-  setup(_, nuxt) {
-    nuxt.hook('build:before', () => {
-      // прочитать и обработать locales/*.json
-      // записать в .nuxt/locales-processed/*.json
-      // обновить i18n.langDir
-    })
-  },
+    setup(_, nuxt) {
+        nuxt.hook('build:before', () => {
+            // прочитать и обработать locales/*.json
+            // записать в .nuxt/locales-processed/*.json
+            // обновить i18n.langDir
+        })
+    },
 })
 ```
 
 **Плюсы:**
+
 - Идиоматичный Nuxt-подход — модуль в `modules/`
 - Обработанные файлы в `.nuxt/` — чистое рабочее дерево
 - Можно интегрироваться с `builder:watch` для dev-режима
 
 **Минусы:**
+
 - Зависит от внутренних хуков `@nuxtjs/i18n`, которые могут измениться между версиями
 - Сложнее в реализации и отладке, чем Vite-плагин или скрипт
 - Нужно понять, в какой момент жизненного цикла `@nuxtjs/i18n` читает файлы и можно ли их подменить
@@ -156,10 +170,12 @@ export default defineNuxtModule({
 Сохранить текущую реализацию из ADR 0002.
 
 **Плюсы:**
+
 - Уже работает, протестировано
 - Нет риска регрессии
 
 **Минусы:**
+
 - Все перечисленные в разделе «Контекст» проблемы остаются
 
 ## Рекомендация
@@ -167,6 +183,7 @@ export default defineNuxtModule({
 **Вариант A (Vite-плагин)** — оптимальный баланс между простотой и интеграцией.
 
 Обоснование:
+
 1. **Один источник правды** — нет промежуточных файлов, в отличие от варианта B.
 2. **Dev и build** — Vite автоматически перезапускает `transform` при изменении файла. Не нужен отдельный watcher (в отличие от B) и не нужны хуки `@nuxtjs/i18n` (в отличие от C).
 3. **Минимальная связанность** — плагин оперирует на уровне Vite (загрузка модулей), а не на уровне конкретного фреймворка. Переживёт обновления `@nuxtjs/i18n`.
@@ -188,12 +205,14 @@ export default defineNuxtModule({
 ## Последствия
 
 **Положительные:**
+
 - Нулевой runtime overhead: типографика применяется один раз при сборке
 - Компоненты становятся проще — стандартный `useI18n()` без обёрток
 - `richtypo` уходит из production-бандла (devDependency)
 - Единый источник правды — исходные `locales/*.json`
 
 **Отрицательные / риски:**
+
 - Типографика применяется ко всем строкам без исключения. Если какие-то ключи не должны обрабатываться, нужен механизм исключений (конвенция именования или whitelist)
 - При обновлении `@nuxtjs/i18n` может измениться механизм загрузки JSON — потребуется адаптация плагина
 - Строки в DOM по-прежнему отличаются от исходного JSON (как и сейчас), но теперь промежуточный результат можно увидеть через отладку Vite-плагина

@@ -1,13 +1,14 @@
 # Автоматическая расстановка неразрывных пробелов в текстах локалей
 
-* Статус: предложено
-* Дата: 2026-03-28
+- Статус: предложено
+- Дата: 2026-03-28
 
 ## Контекст и постановка задачи
 
 Тексты в файлах `locales/ru.json` и `locales/en.json` отображаются напрямую через `t()` из `@nuxtjs/i18n`. В типографически значимых местах — перед короткими словами, единицами измерения, тире — браузер может переносить строку, что ухудшает читаемость. Расставлять `&nbsp;` вручную в JSON-файлах неудобно и легко забыть при редактировании.
 
 Примеры проблемных мест в русском тексте:
+
 - «до 11 человек» → перенос после «до»
 - «8+ лет» → перенос перед «лет»
 - «т. е.», «т. д.» → разрыв между частями сокращения
@@ -31,10 +32,12 @@
 ```
 
 **Плюсы:**
+
 - Никакого дополнительного кода
 - Полный контроль над каждым случаем
 
 **Минусы:**
+
 - JSON-файлы становятся нечитаемыми в редакторе
 - При каждом редактировании текста нужно снова думать о типографике
 - Не масштабируется — легко пропустить при добавлении нового контента
@@ -52,20 +55,20 @@ import ruRules from 'richtypo/rules/ru'
 import enRules from 'richtypo/rules/en'
 
 function applyTypo(text: string, locale: string): string {
-  const rules = locale === 'ru' ? ruRules : enRules
-  return richtypo(rules, text)
-    .replace(/&nbsp;/g, '\u00A0')       // HTML entity → Unicode
-    .replace(/<nobr>(.*?)<\/nobr>/g, '$1') // убрать <nobr> теги из текстовых узлов
+    const rules = locale === 'ru' ? ruRules : enRules
+    return richtypo(rules, text)
+        .replace(/&nbsp;/g, '\u00A0') // HTML entity → Unicode
+        .replace(/<nobr>(.*?)<\/nobr>/g, '$1') // убрать <nobr> теги из текстовых узлов
 }
 
 export function useTypo() {
-  const i18n = useI18n()
-  const { locale } = i18n
-  const t = (...args: Parameters<typeof i18n.t>): string =>
-    applyTypo(i18n.t(...args) as string, locale.value)
-  const rt = (...args: Parameters<typeof i18n.rt>): string =>
-    applyTypo(i18n.rt(...args), locale.value)
-  return { ...i18n, t, rt }
+    const i18n = useI18n()
+    const { locale } = i18n
+    const t = (...args: Parameters<typeof i18n.t>): string =>
+        applyTypo(i18n.t(...args) as string, locale.value)
+    const rt = (...args: Parameters<typeof i18n.rt>): string =>
+        applyTypo(i18n.rt(...args), locale.value)
+    return { ...i18n, t, rt }
 }
 ```
 
@@ -74,12 +77,14 @@ export function useTypo() {
 Использование в компонентах — `const { t } = useTypo()` вместо `const { t } = useI18n()`.
 
 **Плюсы:**
+
 - JSON остаётся чистым
 - Правила централизованы в одной библиотеке, не нужно поддерживать регулярки вручную
 - `useTypo()` — дроп-ин замена `useI18n()`: интерфейс `t` и `rt` сохраняется, миграция сводится к замене одной строки импорта
 - Поддерживает ru и en из коробки
 
 **Минусы:**
+
 - Внешняя зависимость (richtypo)
 - Сложнее дебажить: строка в JSON и строка в DOM различаются
 - `<nobr>` теги из библиотеки нужно стрипать для текстовых узлов Vue
@@ -93,17 +98,19 @@ export function useTypo() {
 ```ts
 // plugins/typo.ts
 export default defineNuxtPlugin((nuxtApp) => {
-  nuxtApp.provide('typo', (str: string) => applyTypo(str))
+    nuxtApp.provide('typo', (str: string) => applyTypo(str))
 })
 ```
 
 В шаблонах: `{{ $typo(t('hero.cta_contact')) }}`
 
 **Плюсы:**
+
 - Доступен везде без импорта
 - Легко отключить глобально
 
 **Минусы:**
+
 - Менее идиоматично для Nuxt 3 (composables предпочтительнее плагинов `provide`)
 - Всё равно требует ручного оборачивания каждого `t()` в шаблоне
 
@@ -118,6 +125,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 ```
 
 В `nuxt.config.ts`:
+
 ```ts
 i18n: {
   langDir: 'locales-processed/',
@@ -126,11 +134,13 @@ i18n: {
 ```
 
 **Плюсы:**
+
 - Нулевой overhead в рантайме
 - Исходные JSON-файлы остаются чистыми для редактирования
 - Можно запускать как `pre-generate` хук — обработанные файлы попадают в статику
 
 **Минусы:**
+
 - Усложняет pipeline: нужно синхронизировать исходные и обработанные файлы
 - В dev-режиме нужен watch за изменениями локалей
 - Риск «двойного источника правды»
@@ -142,10 +152,12 @@ i18n: {
 Перенести длинные типографически чувствительные тексты (bio, описания фактов) из JSON в `.md`-файлы и использовать `@nuxt/content`. Markdown позволяет использовать HTML-сущности и типографические знаки нативно.
 
 **Плюсы:**
+
 - Для длинных текстов — наиболее гибкий подход
 - Редактор Markdown понимает типографику
 
 **Минусы:**
+
 - Не решает проблему коротких строк (labels, stats, periods)
 - Избыточно для коротких значений
 
@@ -154,6 +166,7 @@ i18n: {
 **Принят Вариант 2 (composable `useTypo`)** на основе библиотеки `richtypo` (npm, v7).
 
 Поэтапный план:
+
 1. Установить `richtypo`: `npm install richtypo`
 2. Создать `composables/useTypo.ts` — обёртка над `useI18n()`, обрабатывает `t()` и `rt()` через `richtypo`
 3. Применить `useTypo()` в компонентах с прозой: `SectionAbout`, `SectionFacts`, `SectionExperience`, `SectionContact`, `SectionTeaching`
@@ -162,9 +175,11 @@ i18n: {
 ## Последствия
 
 **Положительные:**
+
 - Типографическое качество текстов повышается автоматически при добавлении нового контента
 - JSON-файлы остаются читаемыми и редактируемыми
 
 **Отрицательные / риски:**
+
 - Возможны ложные срабатывания (richtypo применяет правила агрессивно — принято как допустимое)
 - `<nobr>` теги из библиотеки стрипаются в `applyTypo`, поэтому гипhenated words не оборачиваются в `<nobr>` — при необходимости можно вернуть через `v-html`

@@ -1,7 +1,7 @@
 # Оптимизация загрузки изображений
 
-* Статус: реализовано
-* Дата: 2026-03-28
+- Статус: реализовано
+- Дата: 2026-03-28
 
 ## Контекст и постановка задачи
 
@@ -11,11 +11,13 @@
 - **OGP-превью** — `og:image` / `twitter:image` в мета-тегах.
 
 Текущее состояние тега:
+
 ```html
 <img src="/img/avatar.jpg" alt="" class="hero__photo" />
 ```
 
 **Проблемы:**
+
 - Файл весит 7.5 МБ — в ~35–50 раз больше нормы для hero-изображения
 - Нет атрибутов `width` / `height` → браузер не знает размер до загрузки → **CLS** (Cumulative Layout Shift)
 - Нет `fetchpriority="high"` → браузер не понимает, что это критичный ресурс
@@ -39,20 +41,23 @@
 Обработать изображения вручную (Squoosh, ImageMagick, Sharp CLI), добавить WebP/AVIF версии и управлять ими через `<picture>` + `srcset` в шаблоне.
 
 **Плюсы:**
+
 - Нулевая зависимость от дополнительных модулей
 - Файлы уже готовы и версионированы в репозитории
 - Полный контроль над кропом и размерами
 
 **Минусы:**
+
 - Ручная работа при каждой замене фото
 - Нужно вручную генерировать 4–6 вариантов (размер × формат)
 - Нет автоматического `blur placeholder`
 
 ---
 
-### Вариант B — Модуль `@nuxt/image` *(выбранный)*
+### Вариант B — Модуль `@nuxt/image` _(выбранный)_
 
 Установить официальный модуль Nuxt Image. Заменить `<img>` на `<NuxtImg>` / `<NuxtPicture>`. Модуль при `nuxt generate` автоматически:
+
 - конвертирует в WebP/AVIF
 - генерирует `srcset` для указанных брейкпоинтов
 - добавляет `width`/`height` для предотвращения CLS
@@ -75,27 +80,29 @@ image: {
 ```html
 <!-- SectionHero.vue — вместо <img> -->
 <NuxtPicture
-  src="/img/avatar.jpg"
-  :imgAttrs="{
+    src="/img/avatar.jpg"
+    :imgAttrs="{
     class: 'hero__photo',
     alt: '',
     fetchpriority: 'high',
     loading: 'eager',
   }"
-  sizes="100vw sm:100vw md:75vw lg:60vw"
-  :width="1200"
-  :height="1600"
-  format="avif,webp"
+    sizes="100vw sm:100vw md:75vw lg:60vw"
+    :width="1200"
+    :height="1600"
+    format="avif,webp"
 />
 ```
 
 **Плюсы:**
+
 - Конвертация и оптимизация автоматически на этапе сборки
 - `srcset` + `sizes` из одной строки конфига
 - Официальный модуль, хорошо интегрирован с Nuxt SSG
 - Поддержка blur placeholder из коробки
 
 **Минусы:**
+
 - Дополнительная зависимость и время сборки
 - При SSG всё равно нужен исходник хорошего качества — файл 7.5 МБ придётся уменьшить вручную до ~2–3 МБ (исходник для конвертации)
 
@@ -106,10 +113,12 @@ image: {
 Загрузить фото в CDN, использовать URL-параметры для ресайза и формата: `https://res.cloudinary.com/.../avatar.jpg?w=800&f=avif&q=80`.
 
 **Плюсы:**
+
 - Минимальные изменения кода
 - Edge-кэш по всему миру
 
 **Минусы:**
+
 - Внешняя зависимость и платный тариф при росте трафика
 - Фото на стороннем сервере — нежелательно для персонального портфолио
 - Усложняет деплой на GitHub Pages (статика)
@@ -121,12 +130,14 @@ image: {
 ### Чек-лист реализации
 
 #### Шаг 1 — Установка `@nuxt/image`
+
 - [x] `npm install @nuxt/image`
 - [x] Добавить в `nuxt.config.ts`: `modules: ['@nuxt/image', ...]`, настроить `image: { formats, quality, screens }`
 - [x] Заменить `<img>` в `SectionHero.vue` на `<NuxtPicture>` с `sizes`, `format`, `fetchpriority="high"`
 - [x] Убрать ручной `<link rel="preload">` (модуль добавит его сам через `preload: true`)
 
 #### Шаг 2 — Верификация
+
 - [ ] Запустить Lighthouse (Mobile): LCP < 2.5 с, CLS < 0.1
 - [ ] Проверить Network → фильтр Images: размер WebP/AVIF на мобильном < 100 КБ, на десктопе < 250 КБ
 - [ ] Убедиться, что `og:image` по-прежнему указывает на JPG-файл (не WebP — плохая поддержка в превью)
@@ -134,20 +145,22 @@ image: {
 ## Последствия
 
 **Положительные:**
+
 - LCP сократится с ~3–5 с до < 1 с на мобильном (при 4G)
 - CLS исчезнет благодаря явным `width`/`height`
 - `fetchpriority="high"` позволяет браузеру начать загрузку hero-фото параллельно с разбором CSS, не дожидаясь очереди
 - `srcset` сэкономит ~70–80 % трафика на мобильных устройствах
 
 **Отрицательные / риски:**
+
 - Время сборки `nuxt generate` вырастет на несколько секунд (однократная конвертация изображений)
 - AVIF не поддерживается в IE и старых Edge — `<picture>` с fallback на WebP → JPG решает это автоматически
 - Исходный файл `avatar.jpg` уже уменьшен до оптимального размера — `@nuxt/image` конвертирует его эффективно
 
 ## Ссылки
 
-* [@nuxt/image](https://image.nuxt.com/)
-* [web.dev — Optimize LCP](https://web.dev/optimize-lcp/)
-* [web.dev — fetchpriority](https://web.dev/articles/fetch-priority)
-* [Squoosh](https://squoosh.app/) — браузерный инструмент сжатия
-* [Google PageSpeed Insights](https://pagespeed.web.dev/)
+- [@nuxt/image](https://image.nuxt.com/)
+- [web.dev — Optimize LCP](https://web.dev/optimize-lcp/)
+- [web.dev — fetchpriority](https://web.dev/articles/fetch-priority)
+- [Squoosh](https://squoosh.app/) — браузерный инструмент сжатия
+- [Google PageSpeed Insights](https://pagespeed.web.dev/)

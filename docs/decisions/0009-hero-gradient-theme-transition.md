@@ -1,7 +1,7 @@
 # Плавный переход градиента героя при смене темы
 
-* Статус: отклонено (в пользу варианта с CSS-маской)
-* Дата: 2026-03-30
+- Статус: отклонено (в пользу варианта с CSS-маской)
+- Дата: 2026-03-30
 
 ## Контекст и постановка задачи
 
@@ -9,16 +9,20 @@
 
 ```less
 &__photo-grad {
-  background:
-    radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, var(--bg) 72%),
-    linear-gradient(to right, var(--bg) 0%, transparent 28%);
+    background:
+        radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, var(--bg) 72%),
+        linear-gradient(to right, var(--bg) 0%, transparent 28%);
 }
 ```
 
 `var(--bg)` меняется при переключении темы (`#0c0c0e` ↔ `#f5f5f3`). В `global.less` задан глобальный переход:
 
 ```less
-html { transition: background 0.3s, color 0.3s; }
+html {
+    transition:
+        background 0.3s,
+        color 0.3s;
+}
 ```
 
 **Проблема:** CSS-переходы не работают на `background` с `radial-gradient()` / `linear-gradient()`, потому что браузер не умеет интерполировать градиенты, содержащие CSS-переменные. Результат — градиент щёлкает мгновенно (белый → чёрный или наоборот), пока остальной фон плавно переходит.
@@ -31,7 +35,7 @@ html { transition: background 0.3s, color 0.3s; }
 
 ## Рассмотренные варианты
 
-### Вариант A — Два оверлея с переключением `opacity` *(рекомендуемый)*
+### Вариант A — Два оверлея с переключением `opacity` _(рекомендуемый)_
 
 Создать два отдельных элемента: один с тёмным градиентом, другой со светлым. Переключать `opacity` между ними — CSS отлично анимирует `opacity`.
 
@@ -42,42 +46,48 @@ html { transition: background 0.3s, color 0.3s; }
 
 ```less
 .hero__photo-grad {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 
-  &--dark {
-    background:
-      radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, #0c0c0e 72%),
-      linear-gradient(to right, #0c0c0e 0%, transparent 28%);
-    opacity: 1;
-  }
+    &--dark {
+        background:
+            radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, #0c0c0e 72%),
+            linear-gradient(to right, #0c0c0e 0%, transparent 28%);
+        opacity: 1;
+    }
 
-  &--light {
-    background:
-      radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, #f5f5f3 72%),
-      linear-gradient(to right, #f5f5f3 0%, transparent 28%);
-    opacity: 0;
-  }
+    &--light {
+        background:
+            radial-gradient(ellipse 75% 88% at 62% 46%, transparent 30%, #f5f5f3 72%),
+            linear-gradient(to right, #f5f5f3 0%, transparent 28%);
+        opacity: 0;
+    }
 }
 ```
 
 ```less
 // В unscoped-блоке (управление через data-theme):
-html[data-theme="light"] {
-  .hero__photo-grad--dark  { opacity: 0; }
-  .hero__photo-grad--light { opacity: 1; }
+html[data-theme='light'] {
+    .hero__photo-grad--dark {
+        opacity: 0;
+    }
+    .hero__photo-grad--light {
+        opacity: 1;
+    }
 }
 ```
 
 **Плюсы:**
+
 - CSS-only, без JS
 - `opacity` анимируется плавно браузером всегда
 - Работает синхронно с остальными переходами темы
 - Цвета хардкодятся один раз — значения совпадают с переменными в `global.less`
 
 **Минусы:**
+
 - Цвета фона (`#0c0c0e`, `#f5f5f3`) дублируются в компоненте; при изменении палитры нужно обновить оба места
 - Два DOM-элемента вместо одного (незначительно)
 
@@ -89,13 +99,17 @@ html[data-theme="light"] {
 
 ```css
 @property --bg-val {
-  syntax: '<color>';
-  inherits: true;
-  initial-value: #0c0c0e;
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #0c0c0e;
 }
 
-html[data-theme="light"] { --bg-val: #f5f5f3; }
-html { transition: --bg-val 0.3s; }
+html[data-theme='light'] {
+    --bg-val: #f5f5f3;
+}
+html {
+    transition: --bg-val 0.3s;
+}
 ```
 
 Затем использовать `--bg-val` вместо `var(--bg)` в градиентах.
@@ -141,8 +155,10 @@ html { transition: --bg-val 0.3s; }
 ## Последствия
 
 **Положительные:**
+
 - Плавная и единообразная смена темы по всей странице
 - Лучший perceived quality
 
 **Отрицательные / риски:**
+
 - При изменении цветов темы в `global.less` нужно не забыть обновить хардкодные значения в `SectionHero.vue` — риск рассинхронизации. Митигируется комментарием с явной ссылкой на переменные.

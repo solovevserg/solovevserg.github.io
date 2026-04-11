@@ -1,7 +1,7 @@
 # Устранение FOUC при переключении темы
 
-* Статус: реализовано
-* Дата: 2026-03-30
+- Статус: реализовано
+- Дата: 2026-03-30
 
 ## Контекст и постановка задачи
 
@@ -29,22 +29,23 @@ FOUC заметен только пользователям со светлой 
 
 ## Рассмотренные варианты
 
-### Вариант A — Инлайн-скрипт в `<head>` *(выбранный)*
+### Вариант A — Инлайн-скрипт в `<head>` _(выбранный)_
 
 Добавить синхронный `<script>` в `<head>` **до** подключения стилей. Браузер выполняет его немедленно, до первой отрисовки страницы.
 
 ```html
 <head>
-  <script>
-    (function() {
-      try {
-        var t = localStorage.getItem('theme');
-        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.dataset.theme = t;
-      } catch(e) {}
-    })();
-  </script>
-  <link rel="stylesheet" ...>
+    <script>
+        ;(function () {
+            try {
+                var t = localStorage.getItem('theme')
+                if (!t)
+                    t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+                document.documentElement.dataset.theme = t
+            } catch (e) {}
+        })()
+    </script>
+    <link rel="stylesheet" ... />
 </head>
 ```
 
@@ -52,18 +53,19 @@ FOUC заметен только пользователям со светлой 
 
 ```typescript
 app: {
-  head: {
-    script: [
-      {
-        innerHTML: `(function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()`,
-        tagPosition: 'head',
-      }
-    ]
-  }
+    head: {
+        script: [
+            {
+                innerHTML: `(function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()`,
+                tagPosition: 'head',
+            },
+        ]
+    }
 }
 ```
 
 **Порядок выполнения:**
+
 1. Браузер парсит `<head>`
 2. **Выполняет инлайн-скрипт** → `data-theme` установлен
 3. Загружает CSS → применяет корректный селектор (`:root` или `:root[data-theme="light"]`)
@@ -72,12 +74,14 @@ app: {
 **Размер:** ~150 байт минифицированного JS.
 
 **Плюсы:**
+
 - Полностью устраняет FOUC
 - Работает в SSG без сервера
 - Не требует новых зависимостей
 - Совместим с существующей CSS-архитектурой
 
 **Минусы:**
+
 - Блокирует парсинг HTML на ~1мс (незначительно, скрипт синхронный но крошечный)
 - Нужно продублировать логику определения темы (есть в `useTheme.ts`)
 
@@ -88,15 +92,23 @@ app: {
 Убрать JS-управление темой полностью. Тема определяется только системными настройками через CSS:
 
 ```less
-:root { /* тёмная тема */ }
-@media (prefers-color-scheme: light) { :root { /* светлая тема */ } }
+:root {
+    /* тёмная тема */
+}
+@media (prefers-color-scheme: light) {
+    :root {
+        /* светлая тема */
+    }
+}
 ```
 
 **Плюсы:**
+
 - Нулевой JS, нулевой FOUC
 - Мгновенная реакция на смену системной темы
 
 **Минусы:**
+
 - Пользователь **не может выбрать тему** независимо от ОС
 - Полностью теряется кнопка переключения в хедере
 - Несовместимо с текущим UX
@@ -118,7 +130,11 @@ app: {
 Скрыть `<body>` до выполнения JS:
 
 ```html
-<style>html:not([data-theme]) body { visibility: hidden }</style>
+<style>
+    html:not([data-theme]) body {
+        visibility: hidden;
+    }
+</style>
 ```
 
 **Плюсы:** не требует инлайн-скрипта.
@@ -144,15 +160,17 @@ app: {
 ## Последствия
 
 **Положительные:**
+
 - FOUC устранён для всех пользователей
 - Воспринимаемая скорость загрузки улучшается
 
 **Отрицательные / риски:**
+
 - ~1мс дополнительной синхронной блокировки парсинга (практически незаметно)
 - Дублирование логики «прочитать localStorage + системная тема» (оригинал в `useTheme.ts`)
 - Nuxt может экранировать `innerHTML` скрипта — нужно проверить генерацию HTML
 
 ## Ссылки
 
-* [FOUC — MDN](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Loading)
-* [Anti-FOUC technique — CSS-Tricks](https://css-tricks.com/flash-of-inaccurate-color-theme-fout/)
+- [FOUC — MDN](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Loading)
+- [Anti-FOUC technique — CSS-Tricks](https://css-tricks.com/flash-of-inaccurate-color-theme-fout/)

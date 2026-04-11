@@ -1,334 +1,331 @@
 {
-  "common": {
-    "current": "current"
-  },
-  "nav": {
-    "home": "Home",
-    "blog": "Blog",
-    "portfolio": "Portfolio"
-  },
-  "hero": {
-    "name_first": "Sergei",
-    "name_last": "Solovev",
-    "typewriter": [
-      "Developer. Leader. Philosopher.",
-      "Speaker & Educator",
-      "Fullstack Web Developer",
-      "IT Entrepreneur",
-      "Computer Languages Expert",
-      "AI Enthusiast & Vibe Coder",
-      "Lead Developer",
-      "Angular Expert",
-      "Frontend Developer",
-      "TypeScript Expert",
-      "IT Conference Speaker",
-      "Philosophy of Science PhD Candidate",
-      "Husband of a Wonderful Woman",
-      "Good UX Connoisseur",
-      "HolyJS Speaker",
-      "IT Systems Architect"
-    ],
-    "role": "Lead Developer",
-    "cta_contact": "Get in touch",
-    "cta_blog": "Read blog"
-  },
-  "stats": [
-    { "value": "8+", "label": "years in IT" },
-    { "value": "10+", "label": "projects in fintech, security, mobility & more" },
-    { "value": "200+", "label": "students — course audience" },
-    { "value": "up to 11", "label": "engineers under my leadership" }
-  ],
-  "about": {
-    "title": "About",
-    "bio": "I create value for businesses and people through IT expertise, critical thinking, and an academic background. I share knowledge with the community and stay open to learning myself. Passionate about logic, philosophy of AI, and linguistics.",
-    "location": "Moscow, Russia",
-    "languages": "Russian (native) · English (B2)",
-    "edu_short": "BMSTU · Applied Informatics"
-  },
-  "experience": {
-    "title": "Experience",
-    "items": [
-      {
-        "company": "T-Bank",
-        "logo": "tbank",
-        "role": "Lead Developer",
-        "period": "Sept 2022 — Present",
-        "current": true,
-        "bullets": [
-          "Applying autonomous AI agents and chatbots",
-          "Architectural solution design via ADR/RFC",
-          "SPA development with Angular 12+, RxJS, TaigaUI",
-          "Test automation: Playwright, Cypress, Jest",
-          "Monitoring & incident management: Grafana, Prometheus",
-          "CI/CD: GitLab, Nginx, Docker"
-        ]
-      },
-      {
-        "company": "SDAL Web Studio",
-        "role": "Co-founder, CEO",
-        "period": "Sept 2019 — Present",
-        "current": true,
-        "side": true,
-        "bullets": [
-          "Team management and hiring",
-          "Full-stack TypeScript development",
-          "RideNow Taxi platform: NestJS, Angular, Ionic, Telegram bots"
-        ]
-      },
-      {
-        "company": "Qoollo",
-        "logo": "qoollo",
-        "role": "Frontend Department Head",
-        "period": "June 2020 — Aug 2022",
-        "current": false,
-        "bullets": [
-          "Led a team of up to 11 developers",
-          "Introduced development practices and standards",
-          "Web application architecture design",
-          "Domains: healthcare, security, transport"
-        ]
-      },
-      {
-        "company": "Qoollo",
-        "role": "Intern → Senior Developer",
-        "period": "July 2017 — June 2020",
-        "current": false,
-        "bullets": [
-          "Angular SPA and Ionic mobile app development",
-          "Backend with C# ASP.NET Core and WPF",
-          "Built AIS for a government client: 800+ tasks, 350+ components",
-          "Requirements analysis and legacy system support",
-          "Grew from intern to senior developer"
-        ]
-      },
-      {
-        "company": "BMSTU",
-        "role": "Data Analyst",
-        "period": "Sept 2020 — Aug 2021",
-        "current": false,
-        "side": true,
-        "bullets": [
-          "Social media data collection tools",
-          "University analytics and reporting",
-          "Preparing analytical briefs and supporting decision-making"
-        ]
-      }
-    ],
-    "side_title": "Side projects",
-    "side_subtitle": "Own projects · Research"
-  },
-  "skills": {
-    "title": "Skills",
-    "levels": {
-      "expert": "Expert",
-      "advanced": "Advanced",
-      "intermediate": "Intermediate"
+    "common": {
+        "current": "current"
     },
-    "groups": [
-      {
-        "name": "Leadership",
-        "keys": [
-          { "name": "Mentoring",           "level": "expert" },
-          { "name": "Team Leadership",     "level": "advanced" },
-          { "name": "Strategic Planning",  "level": "advanced" }
+    "nav": {
+        "home": "Home",
+        "blog": "Blog",
+        "portfolio": "Portfolio"
+    },
+    "hero": {
+        "name_first": "Sergei",
+        "name_last": "Solovev",
+        "typewriter": [
+            "Developer. Leader. Philosopher.",
+            "Speaker & Educator",
+            "Fullstack Web Developer",
+            "IT Entrepreneur",
+            "Computer Languages Expert",
+            "AI Enthusiast & Vibe Coder",
+            "Lead Developer",
+            "Angular Expert",
+            "Frontend Developer",
+            "TypeScript Expert",
+            "IT Conference Speaker",
+            "Philosophy of Science PhD Candidate",
+            "Husband of a Wonderful Woman",
+            "Good UX Connoisseur",
+            "HolyJS Speaker",
+            "IT Systems Architect"
         ],
-        "items": ["Agile/Kanban", "Employee motivation", "IDP creation"]
-      },
-      {
-        "name": "Architecture",
-        "keys": [
-          { "name": "ADR",                   "level": "expert" },
-          { "name": "SPA Design",           "level": "expert" },
-          { "name": "System Architecture",   "level": "advanced" }
-        ],
-        "items": ["Open API", "Async API", "UML", "Mermaid"]
-      },
-      {
-        "name": "Frontend",
-        "keys": [
-          { "name": "Angular",     "level": "expert" },
-          { "name": "RxJS",        "level": "expert" },
-          { "name": "TypeScript",  "level": "expert" }
-        ],
-        "items": ["HTML5", "CSS3", "Responsive Design"]
-      },
-      {
-        "name": "Backend",
-        "keys": [
-          { "name": "NestJS",        "level": "advanced" },
-          { "name": "ASP.NET Core",  "level": "intermediate" }
-        ],
-        "items": ["REST API", "MongoDB", "SignalR"]
-      },
-      {
-        "name": "Testing",
-        "keys": [
-          { "name": "Playwright",  "level": "expert" },
-          { "name": "Cypress",     "level": "advanced" }
-        ],
-        "items": ["Testing diamond", "Jest", "e2e"]
-      },
-      {
-        "name": "Monitoring",
-        "keys": [
-          { "name": "Grafana",     "level": "advanced" },
-          { "name": "Prometheus",  "level": "advanced" },
-          { "name": "Sentry",      "level": "advanced" }
-        ],
-        "items": ["Incident management", "Post-mortem analysis"]
-      }
-    ]
-  },
-  "education": {
-    "title": "Education",
-    "thesis_label": "Thesis topic:",
-    "grade_label": "GPA",
-    "items": [
-      {
-        "tag": "PhD",
-        "school": "Bauman Moscow State Technical University",
-        "city": "Moscow",
-        "field": "Philosophy of Science & Technology",
-        "degree": "PhD candidate (in progress)",
-        "period": "Sep 2023 — Aug 2026",
-        "current": true,
-        "thesis": "Philosophical and methodological aspects of knowledge representation in the structure of artificial languages"
-      },
-      {
-        "tag": "MSc",
-        "school": "Bauman Moscow State Technical University",
-        "city": "Moscow",
-        "field": "Applied Computer Science",
-        "degree": "Master's degree",
-        "period": "2020 — 2022",
-        "grade": "4.7",
-        "thesis": "Analytical tools for the study of social graphs (using the example of the analysis of BMSTU students' social connections on VK)"
-      },
-      {
-        "tag": "BSc",
-        "school": "Bauman Moscow State Technical University",
-        "city": "Moscow",
-        "field": "Applied Computer Science",
-        "degree": "Bachelor's degree",
-        "period": "2016 — 2020",
-        "grade": "4.97",
-        "thesis": "Methods and technologies for interactive visualization of social network data"
-      },
-      {
-        "tag": "11th",
-        "school": "School №1360",
-        "city": "Moscow",
-        "field": "Mathematics (advanced)",
-        "degree": "High School Diploma",
-        "period": "Sep 2005 — Jun 2016",
-        "grade": "4.8"      }
-    ]
-  },
-  "teaching": {
-    "title": "Knowledge Sharing",
-    "talks_title": "Conference Talks",
-    "publications_title": "Publications",
-    "courses_title": "Courses",
-    "courses_show": "Show all courses",
-    "courses_hide": "Collapse",
-    "github_cta": "Course materials on GitHub",
-    "elibrary_cta": "VAK / RSCI Publications",
-    "habr_cta": "Articles on Habr",
-    "courses": [
-      {
-        "org": "Bauman Moscow State Technical University",
-        "badge": "BMSTU",
-        "period": "2018 — 2022",
-        "items": [
-          "Web Technologies course for social analytics program",
-          "Data Crash Course — co-author of data analysis course",
-          "Frontend block in the software engineering curriculum",
-          "Web design & markup blocks in professional development courses"
-        ]
-      },
-      {
-        "org": "Qoollo",
-        "badge": "Qoollo",
-        "period": "2019 — 2021",
-        "items": [
-          "Qoollo.Edu — internal courses on Angular, TypeScript, RxJS",
-          "Qoollo.Summer — lectures and mentoring for student interns"
-        ]
-      },
-      {
-        "org": "Higher School of Economics",
-        "badge": "HSE",
-        "period": "2020 — 2021",
-        "items": [
-          "Co-authored web design course for secondary school students (HSE Kids)"
-        ]
-      },
-      {
-        "org": "Quantorium / IT-Cube",
-        "badge": "Quant",
-        "period": "2020",
-        "items": [
-          "Webinars on data analysis fundamentals for educators throughout Russia"
-        ]
-      }
+        "role": "Lead Developer",
+        "cta_contact": "Get in touch",
+        "cta_blog": "Read blog"
+    },
+    "stats": [
+        { "value": "8+", "label": "years in IT" },
+        { "value": "10+", "label": "projects in fintech, security, mobility & more" },
+        { "value": "200+", "label": "students — course audience" },
+        { "value": "up to 11", "label": "engineers under my leadership" }
     ],
-    "talks": [
-      {
-        "id": "PT_sS6uWEMQ",
-        "conf": "HolyJS",
-        "title": "Typing eval and new Function: a JS interpreter on TypeScript types"
-      },
-      {
-        "id": "zl7GngwGcaM",
-        "conf": "HolyJS",
-        "title": "From Roman emperors to Temporal API: mastering dates and time in JS"
-      },
-      {
-        "id": "FSj_rL6IuY8",
-        "conf": "HolyJS",
-        "title": "From Latin to async/await: archaeological excavations of JavaScript"
-      }
-    ]
-  },
-  "facts": {
-    "title": "Fun Facts",
-    "items": [
-      {
-        "emoji": "💢",
-        "title": "Redstone engineer",
-        "desc": "Built an 8-bit computer in Minecraft using redstone and wrote a program to output the Fibonacci sequence."
-      },
-      {
-        "emoji": "🏸",
-        "title": "Badminton player",
-        "desc": "I love playing badminton in the morning before work to stay sharp and set the tone for the day."
-      },
-      {
-        "emoji": "🕺",
-        "title": "2× Dance champion",
-        "desc": "Won dance competitions twice. Trained in 5 styles — from Welsh folk dancing to bachata and contemporary."
-      }
-    ]
-  },
-  "contact": {
-    "title": "Contacts",
-    "subtitle": "Open to proposals, projects, and collaborations.",
-    "telegram": "Telegram",
-    "linkedin": "LinkedIn",
-    "github": "GitHub",
-    "habr": "Habr",
-    "hh": "Resume on HH"
-  },
-  "blog": {
-    "title": "Blog",
-    "empty": "No posts yet."
-  },
-  "portfolio": {
-    "title": "Portfolio",
-    "empty": "No projects yet."
-  },
-  "footer": {
-    "name": "Sergei Solovev",
-    "rights": "All rights reserved"
-  }
+    "about": {
+        "title": "About",
+        "bio": "I create value for businesses and people through IT expertise, critical thinking, and an academic background. I share knowledge with the community and stay open to learning myself. Passionate about logic, philosophy of AI, and linguistics.",
+        "location": "Moscow, Russia",
+        "languages": "Russian (native) · English (B2)",
+        "edu_short": "BMSTU · Applied Informatics"
+    },
+    "experience": {
+        "title": "Experience",
+        "items": [
+            {
+                "company": "T-Bank",
+                "logo": "tbank",
+                "role": "Lead Developer",
+                "period": "Sept 2022 — Present",
+                "current": true,
+                "bullets": [
+                    "Applying autonomous AI agents and chatbots",
+                    "Architectural solution design via ADR/RFC",
+                    "SPA development with Angular 12+, RxJS, TaigaUI",
+                    "Test automation: Playwright, Cypress, Jest",
+                    "Monitoring & incident management: Grafana, Prometheus",
+                    "CI/CD: GitLab, Nginx, Docker"
+                ]
+            },
+            {
+                "company": "SDAL Web Studio",
+                "role": "Co-founder, CEO",
+                "period": "Sept 2019 — Present",
+                "current": true,
+                "side": true,
+                "bullets": [
+                    "Team management and hiring",
+                    "Full-stack TypeScript development",
+                    "RideNow Taxi platform: NestJS, Angular, Ionic, Telegram bots"
+                ]
+            },
+            {
+                "company": "Qoollo",
+                "logo": "qoollo",
+                "role": "Frontend Department Head",
+                "period": "June 2020 — Aug 2022",
+                "current": false,
+                "bullets": [
+                    "Led a team of up to 11 developers",
+                    "Introduced development practices and standards",
+                    "Web application architecture design",
+                    "Domains: healthcare, security, transport"
+                ]
+            },
+            {
+                "company": "Qoollo",
+                "role": "Intern → Senior Developer",
+                "period": "July 2017 — June 2020",
+                "current": false,
+                "bullets": [
+                    "Angular SPA and Ionic mobile app development",
+                    "Backend with C# ASP.NET Core and WPF",
+                    "Built AIS for a government client: 800+ tasks, 350+ components",
+                    "Requirements analysis and legacy system support",
+                    "Grew from intern to senior developer"
+                ]
+            },
+            {
+                "company": "BMSTU",
+                "role": "Data Analyst",
+                "period": "Sept 2020 — Aug 2021",
+                "current": false,
+                "side": true,
+                "bullets": [
+                    "Social media data collection tools",
+                    "University analytics and reporting",
+                    "Preparing analytical briefs and supporting decision-making"
+                ]
+            }
+        ],
+        "side_title": "Side projects",
+        "side_subtitle": "Own projects · Research"
+    },
+    "skills": {
+        "title": "Skills",
+        "levels": {
+            "expert": "Expert",
+            "advanced": "Advanced",
+            "intermediate": "Intermediate"
+        },
+        "groups": [
+            {
+                "name": "Leadership",
+                "keys": [
+                    { "name": "Mentoring", "level": "expert" },
+                    { "name": "Team Leadership", "level": "advanced" },
+                    { "name": "Strategic Planning", "level": "advanced" }
+                ],
+                "items": ["Agile/Kanban", "Employee motivation", "IDP creation"]
+            },
+            {
+                "name": "Architecture",
+                "keys": [
+                    { "name": "ADR", "level": "expert" },
+                    { "name": "SPA Design", "level": "expert" },
+                    { "name": "System Architecture", "level": "advanced" }
+                ],
+                "items": ["Open API", "Async API", "UML", "Mermaid"]
+            },
+            {
+                "name": "Frontend",
+                "keys": [
+                    { "name": "Angular", "level": "expert" },
+                    { "name": "RxJS", "level": "expert" },
+                    { "name": "TypeScript", "level": "expert" }
+                ],
+                "items": ["HTML5", "CSS3", "Responsive Design"]
+            },
+            {
+                "name": "Backend",
+                "keys": [
+                    { "name": "NestJS", "level": "advanced" },
+                    { "name": "ASP.NET Core", "level": "intermediate" }
+                ],
+                "items": ["REST API", "MongoDB", "SignalR"]
+            },
+            {
+                "name": "Testing",
+                "keys": [
+                    { "name": "Playwright", "level": "expert" },
+                    { "name": "Cypress", "level": "advanced" }
+                ],
+                "items": ["Testing diamond", "Jest", "e2e"]
+            },
+            {
+                "name": "Monitoring",
+                "keys": [
+                    { "name": "Grafana", "level": "advanced" },
+                    { "name": "Prometheus", "level": "advanced" },
+                    { "name": "Sentry", "level": "advanced" }
+                ],
+                "items": ["Incident management", "Post-mortem analysis"]
+            }
+        ]
+    },
+    "education": {
+        "title": "Education",
+        "thesis_label": "Thesis topic:",
+        "grade_label": "GPA",
+        "items": [
+            {
+                "tag": "PhD",
+                "school": "Bauman Moscow State Technical University",
+                "city": "Moscow",
+                "field": "Philosophy of Science & Technology",
+                "degree": "PhD candidate (in progress)",
+                "period": "Sep 2023 — Aug 2026",
+                "current": true,
+                "thesis": "Philosophical and methodological aspects of knowledge representation in the structure of artificial languages"
+            },
+            {
+                "tag": "MSc",
+                "school": "Bauman Moscow State Technical University",
+                "city": "Moscow",
+                "field": "Applied Computer Science",
+                "degree": "Master's degree",
+                "period": "2020 — 2022",
+                "grade": "4.7",
+                "thesis": "Analytical tools for the study of social graphs (using the example of the analysis of BMSTU students' social connections on VK)"
+            },
+            {
+                "tag": "BSc",
+                "school": "Bauman Moscow State Technical University",
+                "city": "Moscow",
+                "field": "Applied Computer Science",
+                "degree": "Bachelor's degree",
+                "period": "2016 — 2020",
+                "grade": "4.97",
+                "thesis": "Methods and technologies for interactive visualization of social network data"
+            },
+            {
+                "tag": "11th",
+                "school": "School №1360",
+                "city": "Moscow",
+                "field": "Mathematics (advanced)",
+                "degree": "High School Diploma",
+                "period": "Sep 2005 — Jun 2016",
+                "grade": "4.8"
+            }
+        ]
+    },
+    "teaching": {
+        "title": "Knowledge Sharing",
+        "talks_title": "Conference Talks",
+        "publications_title": "Publications",
+        "courses_title": "Courses",
+        "courses_show": "Show all courses",
+        "courses_hide": "Collapse",
+        "github_cta": "Course materials on GitHub",
+        "elibrary_cta": "VAK / RSCI Publications",
+        "habr_cta": "Articles on Habr",
+        "courses": [
+            {
+                "org": "Bauman Moscow State Technical University",
+                "badge": "BMSTU",
+                "period": "2018 — 2022",
+                "items": [
+                    "Web Technologies course for social analytics program",
+                    "Data Crash Course — co-author of data analysis course",
+                    "Frontend block in the software engineering curriculum",
+                    "Web design & markup blocks in professional development courses"
+                ]
+            },
+            {
+                "org": "Qoollo",
+                "badge": "Qoollo",
+                "period": "2019 — 2021",
+                "items": [
+                    "Qoollo.Edu — internal courses on Angular, TypeScript, RxJS",
+                    "Qoollo.Summer — lectures and mentoring for student interns"
+                ]
+            },
+            {
+                "org": "Higher School of Economics",
+                "badge": "HSE",
+                "period": "2020 — 2021",
+                "items": ["Co-authored web design course for secondary school students (HSE Kids)"]
+            },
+            {
+                "org": "Quantorium / IT-Cube",
+                "badge": "Quant",
+                "period": "2020",
+                "items": ["Webinars on data analysis fundamentals for educators throughout Russia"]
+            }
+        ],
+        "talks": [
+            {
+                "id": "PT_sS6uWEMQ",
+                "conf": "HolyJS",
+                "title": "Typing eval and new Function: a JS interpreter on TypeScript types"
+            },
+            {
+                "id": "zl7GngwGcaM",
+                "conf": "HolyJS",
+                "title": "From Roman emperors to Temporal API: mastering dates and time in JS"
+            },
+            {
+                "id": "FSj_rL6IuY8",
+                "conf": "HolyJS",
+                "title": "From Latin to async/await: archaeological excavations of JavaScript"
+            }
+        ]
+    },
+    "facts": {
+        "title": "Fun Facts",
+        "items": [
+            {
+                "emoji": "💢",
+                "title": "Redstone engineer",
+                "desc": "Built an 8-bit computer in Minecraft using redstone and wrote a program to output the Fibonacci sequence."
+            },
+            {
+                "emoji": "🏸",
+                "title": "Badminton player",
+                "desc": "I love playing badminton in the morning before work to stay sharp and set the tone for the day."
+            },
+            {
+                "emoji": "🕺",
+                "title": "2× Dance champion",
+                "desc": "Won dance competitions twice. Trained in 5 styles — from Welsh folk dancing to bachata and contemporary."
+            }
+        ]
+    },
+    "contact": {
+        "title": "Contacts",
+        "subtitle": "Open to proposals, projects, and collaborations.",
+        "telegram": "Telegram",
+        "linkedin": "LinkedIn",
+        "github": "GitHub",
+        "habr": "Habr",
+        "hh": "Resume on HH"
+    },
+    "blog": {
+        "title": "Blog",
+        "empty": "No posts yet."
+    },
+    "portfolio": {
+        "title": "Portfolio",
+        "empty": "No projects yet."
+    },
+    "footer": {
+        "name": "Sergei Solovev",
+        "rights": "All rights reserved"
+    }
 }

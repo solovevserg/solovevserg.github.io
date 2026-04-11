@@ -1,28 +1,36 @@
 {
-  "name": "solovevserg-site",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "nuxt dev",
-    "build": "nuxt build",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@nuxt/content": "^2.13.4",
-    "@nuxt/image": "^2.0.0",
-    "@nuxtjs/i18n": "^8.5.5",
-    "@nuxtjs/sitemap": "^8.0.8",
-    "nuxt": "^3.15.4",
-    "richtypo": "^7.0.1",
-    "vue": "^3.5.13",
-    "vue-router": "^4.5.0"
-  },
-  "devDependencies": {
-    "@nuxt/devtools": "latest",
-    "http-server": "^14.1.1",
-    "less": "^4.6.4",
-    "typescript": "^5.7.3"
-  }
+    "name": "solovevserg-site",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "nuxt dev",
+        "build": "nuxt build",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "prepare": "husky",
+        "format": "prettier --write ."
+    },
+    "lint-staged": {
+        "*.{vue,ts,js,json,less,md}": "prettier --write"
+    },
+    "dependencies": {
+        "@nuxt/content": "^2.13.4",
+        "@nuxt/image": "^2.0.0",
+        "@nuxtjs/i18n": "^8.5.5",
+        "@nuxtjs/sitemap": "^8.0.8",
+        "nuxt": "^3.15.4",
+        "richtypo": "^7.0.1",
+        "vue": "^3.5.13",
+        "vue-router": "^4.5.0"
+    },
+    "devDependencies": {
+        "@nuxt/devtools": "latest",
+        "http-server": "^14.1.1",
+        "husky": "^9.1.7",
+        "less": "^4.6.4",
+        "lint-staged": "^16.4.0",
+        "prettier": "^3.8.2",
+        "typescript": "^5.7.3"
+    }
 }

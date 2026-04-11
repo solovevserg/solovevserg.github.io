@@ -1,95 +1,90 @@
 export default defineNuxtConfig({
-  devServer: {
-    port: 3000, // Optional: default is 3000
-    host: '0.0.0.0' // Exposes the server to the local network
-  },
+    devServer: {
+        port: 3000, // Optional: default is 3000
+        host: '0.0.0.0', // Exposes the server to the local network
+    },
 
-  devtools: { enabled: false },
+    devtools: { enabled: false },
 
-  components: [{ path: '~/components', pathPrefix: false }],
+    components: [{ path: '~/components', pathPrefix: false }],
 
-  modules: [
-    '@nuxt/image',
-    '@nuxt/content',
-    '@nuxtjs/i18n',
-    '@nuxtjs/sitemap',
-  ],
+    modules: ['@nuxt/image', '@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/sitemap'],
 
-  image: {
-    formats: ['avif', 'webp'],
-    quality: 80,
-    screens: { sm: 480, md: 768, lg: 1024, xl: 1280, '2xl': 1920 },
-  },
+    image: {
+        formats: ['avif', 'webp'],
+        quality: 80,
+        screens: { sm: 480, md: 768, lg: 1024, xl: 1280, '2xl': 1920 },
+    },
 
-  css: ['~/assets/css/global.less'],
+    css: ['~/assets/css/global.less'],
 
-  vite: {
-    css: {
-      preprocessorOptions: {
-        less: {
-          additionalData: `@import "assets/css/vars.less";`,
+    vite: {
+        css: {
+            preprocessorOptions: {
+                less: {
+                    additionalData: `@import "assets/css/vars.less";`,
+                },
+            },
         },
-      },
     },
-  },
 
-  app: {
-    head: {
-      htmlAttrs: { lang: 'ru' },
-      script: [
-        {
-          // Anti-FOUC: apply saved theme before first paint (ADR 0007)
-          innerHTML: `(function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()`,
-          tagPriority: 'critical',
+    app: {
+        head: {
+            htmlAttrs: { lang: 'ru' },
+            script: [
+                {
+                    // Anti-FOUC: apply saved theme before first paint (ADR 0007)
+                    innerHTML: `(function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()`,
+                    tagPriority: 'critical',
+                },
+            ],
+            meta: [
+                { charset: 'utf-8' },
+                { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:image', content: 'https://sergsol.dev/img/avatar.jpg' },
+                { property: 'og:image:width', content: '1200' },
+                { property: 'og:image:height', content: '630' },
+                { name: 'twitter:card', content: 'summary_large_image' },
+                { name: 'twitter:image', content: 'https://sergsol.dev/img/avatar.jpg' },
+            ],
+            link: [
+                { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+                { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+            ],
         },
-      ],
-      meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { property: 'og:type',         content: 'website' },
-        { property: 'og:image',        content: 'https://sergsol.dev/img/avatar.jpg' },
-        { property: 'og:image:width',  content: '1200' },
-        { property: 'og:image:height', content: '630' },
-        { name: 'twitter:card',        content: 'summary_large_image' },
-        { name: 'twitter:image',       content: 'https://sergsol.dev/img/avatar.jpg' },
-      ],
-      link: [
-        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-      ],
     },
-  },
 
-  i18n: {
-    locales: [
-      { code: 'ru', language: 'ru-RU', name: 'Русский', file: 'ru.json' },
-      { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
-    ],
-    defaultLocale: 'ru',
-    strategy: 'prefix_except_default',
-    langDir: 'locales/',
-    lazy: true,
-  },
-
-  content: {
-    highlight: {
-      theme: {
-        default: 'github-dark',
-        light: 'github-light',
-      },
-      langs: ['typescript', 'javascript', 'html', 'css', 'json', 'bash', 'vue'],
+    i18n: {
+        locales: [
+            { code: 'ru', language: 'ru-RU', name: 'Русский', file: 'ru.json' },
+            { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
+        ],
+        defaultLocale: 'ru',
+        strategy: 'prefix_except_default',
+        langDir: 'locales/',
+        lazy: true,
     },
-  },
 
-  nitro: {
-    prerender: {
-      crawlLinks: true,
+    content: {
+        highlight: {
+            theme: {
+                default: 'github-dark',
+                light: 'github-light',
+            },
+            langs: ['typescript', 'javascript', 'html', 'css', 'json', 'bash', 'vue'],
+        },
     },
-  },
 
-  site: {
-    url: 'https://sergsol.dev',
-  },
+    nitro: {
+        prerender: {
+            crawlLinks: true,
+        },
+    },
 
-  compatibilityDate: '2024-11-01',
+    site: {
+        url: 'https://sergsol.dev',
+    },
+
+    compatibilityDate: '2024-11-01',
 })

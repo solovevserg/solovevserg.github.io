@@ -13,7 +13,7 @@ Source code of **[sergsol.dev](https://sergsol.dev)** — personal portfolio and
 
 ## Project structure
 
-```
+```text
 ├── assets/css/
 │   ├── global.less    # Utility classes, design tokens, base styles
 │   └── vars.less      # Breakpoint variables (@bp-sm, @bp-md, …)
@@ -41,9 +41,19 @@ Source code of **[sergsol.dev](https://sergsol.dev)** — personal portfolio and
 ## Getting started
 
 ```bash
-npm install
+npm install   # также устанавливает git pre-commit хук через husky
 npm run dev
 ```
+
+## Code formatting
+
+The project uses [Prettier](https://prettier.io/) for automatic code formatting. A pre-commit hook (via [husky](https://typicode.github.io/husky/) + [lint-staged](https://github.com/lint-staged/lint-staged)) formats only the staged files before each commit.
+
+```bash
+npm run format   # format all files at once
+```
+
+Config: [`.prettierrc`](.prettierrc) — no semicolons, single quotes, 100-char line width.
 
 ## Build & preview
 
