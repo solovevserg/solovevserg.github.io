@@ -30,7 +30,8 @@
             "mcp__zotero-mcp__search_library",
             "mcp__zotero-mcp__get_item_abstract",
             "mcp__zotero-mcp__get_item_details",
-            "Bash(npx husky:*)"
+            "Bash(npx husky:*)",
+            "WebFetch(domain:i18n.nuxtjs.org)"
         ]
     }
 }

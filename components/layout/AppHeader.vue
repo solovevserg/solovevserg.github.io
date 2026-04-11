@@ -30,7 +30,20 @@ onMounted(() => {
     onUnmounted(() => window.removeEventListener('resize', onResize))
 })
 
+const switchLocalePath = useSwitchLocalePath()
+
 const otherLocale = computed(() => locales.value.find((l) => l.code !== locale.value))
+const otherLocalePath = computed(() =>
+    otherLocale.value ? switchLocalePath(otherLocale.value.code) : '/'
+)
+
+function switchLang(e: MouseEvent) {
+    if (!otherLocale.value) return
+    if (e.ctrlKey || e.metaKey || e.shiftKey) return
+    e.preventDefault()
+    setLocale(otherLocale.value.code)
+}
+
 const isHome = computed(() => route.name?.toString().startsWith('index'))
 
 // Section anchor links — always shown; on non-home pages link back to home with anchor
@@ -73,9 +86,9 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
                     {{ blogLink.label }}
                 </NuxtLink>
 
-                <button v-if="otherLocale" class="ctrl-btn" @click="setLocale(otherLocale.code)">
+                <a v-if="otherLocale" :href="otherLocalePath" class="ctrl-btn" @click="switchLang">
                     {{ otherLocale.code.toUpperCase() }}
-                </button>
+                </a>
 
                 <button
                     class="ctrl-btn theme-toggle"
