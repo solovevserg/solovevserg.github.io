@@ -261,6 +261,10 @@ onUnmounted(() => {
     &__name {
         display: flex;
         flex-direction: column;
+        font-family:
+            system-ui,
+            -apple-system,
+            sans-serif;
         font-size: clamp(3.8rem, 8vw, 7.5rem);
         font-weight: 900;
         line-height: 0.9;
