@@ -6,7 +6,7 @@ defineProps<{ size?: number }>()
     <svg
         :width="size ?? 20"
         :height="size ?? 20"
-        viewBox="0 0 180 180"
+        viewBox="30 30 120 120"
         fill="currentColor"
         aria-hidden="true"
     >

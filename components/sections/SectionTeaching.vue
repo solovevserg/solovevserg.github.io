@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import IconElibrary from '~/components/icons/IconElibrary.vue'
+import IconHabr from '~/components/icons/IconHabr.vue'
+import IconGithub from '~/components/icons/IconGithub.vue'
+
 type TalkItem = { id: string; conf: string; title: string }
 type CourseItem = { org: string; badge: string; period: string; items: string[] }
 const { t, tm, rt } = useTypo()
@@ -43,16 +47,19 @@ const publicationLinks = [
         label: 'teaching.elibrary_cta',
         url: 'https://www.elibrary.ru/author_items.asp?authorid=1019717',
         short: 'elibrary.ru',
+        icon: IconElibrary,
     },
     {
         label: 'teaching.habr_cta',
         url: 'https://habr.com/ru/users/SolovevSerg/articles/',
         short: 'habr.com',
+        icon: IconHabr,
     },
     {
         label: 'teaching.github_cta',
         url: 'https://github.com/solovevserg/studies',
         short: 'github.com',
+        icon: IconGithub,
     },
 ]
 </script>
@@ -127,6 +134,7 @@ const publicationLinks = [
                     rel="noopener"
                     class="repo-link card-hover"
                 >
+                    <component :is="link.icon" :size="44" class="repo-link__icon" />
                     <div class="repo-link__body">
                         <span class="repo-link__label">{{ t(link.label) }}</span>
                         <span class="repo-link__url">{{ link.short }}</span>
@@ -284,6 +292,15 @@ const publicationLinks = [
 
     &:hover .repo-link__arrow {
         transform: translate(2px, -2px);
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        color: var(--text-muted);
+
+        @media (max-width: @bp-md) and (min-width: (@bp-sm + 1px)) {
+            display: none;
+        }
     }
 
     &__body {
