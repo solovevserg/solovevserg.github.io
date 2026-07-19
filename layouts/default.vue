@@ -1,5 +1,10 @@
 <template>
     <div class="layout">
+        <IntroCurtain />
+        <FilmGrain />
+        <CustomCursor />
+        <ChapterRail />
+
         <AppHeader />
         <main class="layout__main">
             <slot />

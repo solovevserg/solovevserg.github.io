@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { locale } = useI18n()
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
 const route = useRoute()
 
 const { data: project } = await useAsyncData(`project-${route.params.slug}`, () =>
@@ -17,49 +18,92 @@ usePageSeo({
 </script>
 
 <template>
-    <article class="container project">
-        <header class="project__header">
-            <h1 class="project__title">{{ project?.title }}</h1>
-            <p v-if="project?.description" class="project__desc">{{ project?.description }}</p>
-        </header>
+    <div class="container page">
+        <NuxtLink :to="localePath('/portfolio')" class="back">
+            <span class="back__arrow" aria-hidden="true">←</span>
+            {{ t('portfolio.back') }}
+        </NuxtLink>
 
-        <ContentRenderer v-if="project" :value="project" class="project__body" />
-    </article>
+        <article>
+            <header class="project__head">
+                <SplitText
+                    :text="project?.title ?? ''"
+                    tag="h1"
+                    class="project__title"
+                    :stagger="45"
+                />
+                <p v-if="project?.description" v-reveal data-reveal="up" class="project__lead">
+                    {{ project.description }}
+                </p>
+            </header>
+
+            <ContentRenderer v-if="project" :value="project" class="prose" />
+        </article>
+    </div>
 </template>
 
 <style scoped lang="less">
-.project {
-    max-width: 680px;
+.page {
+    max-width: 46rem;
+    padding-top: 3rem;
+    padding-bottom: 7rem;
 
-    &__header {
-        margin-bottom: 2rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid var(--color-border);
+    // Узкая колонка по центру: поле маргиналий здесь не нужно
+    @media (min-width: (@bp-lg + 1px)) {
+        padding-left: var(--gutter);
     }
 
-    &__title {
-        font-size: clamp(1.6rem, 4vw, 2.2rem);
-        line-height: 1.2;
-        margin-bottom: 0.5rem;
+    @media (max-width: @bp-sm) {
+        padding-top: 2rem;
+        padding-bottom: 4rem;
     }
+}
 
-    &__desc {
-        color: var(--color-muted);
-        font-size: 1.05rem;
-    }
+.back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-2);
+    transition: color 0.4s var(--ease-out-quart);
 
-    &__body {
-        :deep(h2) {
-            font-size: 1.4rem;
-            margin: 2rem 0 0.75rem;
+    &:hover {
+        color: var(--rubric);
+
+        .back__arrow {
+            transform: translateX(-4px);
         }
-        :deep(p) {
-            margin-bottom: 1rem;
-        }
-        :deep(ul) {
-            padding-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
     }
+}
+
+.back__arrow {
+    transition: transform 0.4s var(--ease-out-expo);
+}
+
+.project__head {
+    padding-bottom: 2.5rem;
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid var(--rule);
+}
+
+.project__title {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    color: var(--fg);
+}
+
+.project__lead {
+    margin-top: 1.5rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--fg-2);
+    text-wrap: pretty;
 }
 </style>

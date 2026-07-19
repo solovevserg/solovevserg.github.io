@@ -3,3 +3,10 @@
 @bp-sm: 768px;
 @bp-md: 1024px;
 @bp-lg: 1280px;
+
+// ─── Easings (LESS-зеркало CSS-переменных из global.less) ────
+// Нужны там, где значение подставляется в @keyframes или в
+// сокращённую запись transition внутри scoped-блоков.
+@ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+@ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+@ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);

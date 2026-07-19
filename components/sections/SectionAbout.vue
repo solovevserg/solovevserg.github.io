@@ -1,208 +1,182 @@
 <script setup lang="ts">
 type StatItem = { value: string; label: string }
 const { t, tm, rt } = useTypo()
+
 const stats = computed<StatItem[]>(() =>
     (tm('stats') as any[]).map((s) => ({ value: rt(s.value), label: rt(s.label) }))
 )
 </script>
 
 <template>
-    <section id="about" class="section">
+    <section id="about" class="section section--ruled">
         <div class="container">
-            <SectionHeader num="/ 01" :title="t('about.title')" />
-            <!-- Stats row -->
-            <div class="about-stats">
-                <div v-for="stat in stats" :key="stat.label" class="about-stat">
-                    <span class="about-stat__value">{{ stat.value }}</span>
-                    <span class="about-stat__label">{{ stat.label }}</span>
-                </div>
-            </div>
+            <SectionHeader num="01" :title="t('about.title')" :kicker="t('about.kicker')" />
 
-            <div class="about-grid">
-                <p class="about-bio">{{ t('about.bio') }}</p>
-                <dl class="about-meta">
-                    <div class="meta-row">
-                        <dt>
-                            <svg
-                                width="14"
-                                height="14"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                <circle cx="12" cy="10" r="3" />
-                            </svg>
-                        </dt>
+            <div class="about">
+                <!-- Инициал абзаца набран рубрикой — как в манускрипте (ADR 0019) -->
+                <p v-reveal data-reveal="up" class="about__bio">{{ t('about.bio') }}</p>
+
+                <dl class="about__meta">
+                    <div v-reveal="{ delay: 80 }" data-reveal="up" class="about__row">
+                        <dt><IconPin /></dt>
                         <dd>{{ t('about.location') }}</dd>
                     </div>
-                    <div class="meta-row">
-                        <dt>
-                            <svg
-                                width="14"
-                                height="14"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
-                                />
-                                <polyline points="22,6 12,13 2,6" />
-                            </svg>
-                        </dt>
+                    <div v-reveal="{ delay: 140 }" data-reveal="up" class="about__row">
+                        <dt><IconMail /></dt>
                         <dd>
                             <a
                                 href="https://t.me/sergsol"
                                 target="_blank"
                                 rel="noopener"
-                                class="link"
+                                class="about__link link-underline"
                                 >@sergsol</a
                             >
                         </dd>
                     </div>
-                    <div class="meta-row">
-                        <dt>
-                            <svg
-                                width="14"
-                                height="14"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            >
-                                <circle cx="12" cy="12" r="10" />
-                                <line x1="2" y1="12" x2="22" y2="12" />
-                                <path
-                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
-                                />
-                            </svg>
-                        </dt>
+                    <div v-reveal="{ delay: 200 }" data-reveal="up" class="about__row">
+                        <dt><IconGlobe /></dt>
                         <dd>{{ t('about.languages') }}</dd>
                     </div>
-                    <div class="meta-row">
-                        <dt>
-                            <svg
-                                width="14"
-                                height="14"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                                <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                            </svg>
-                        </dt>
+                    <div v-reveal="{ delay: 260 }" data-reveal="up" class="about__row">
+                        <dt><IconCap /></dt>
                         <dd>{{ t('about.edu_short') }}</dd>
                     </div>
                 </dl>
             </div>
+
+            <!-- Регистр цифр -->
+            <dl class="ledger">
+                <div
+                    v-for="(stat, i) in stats"
+                    :key="stat.label"
+                    v-reveal="{ delay: i * 90 }"
+                    data-reveal="up"
+                    class="ledger__cell"
+                >
+                    <dt class="ledger__value">{{ stat.value }}</dt>
+                    <dd class="ledger__label">{{ stat.label }}</dd>
+                </div>
+            </dl>
         </div>
     </section>
 </template>
 
 <style scoped lang="less">
-// ─── About stats ──────────────────────────────────────────────
-.about-stats {
+// ─── Заявление + маргиналии ──────────────────────────────────
+.about {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    overflow: hidden;
-    margin-bottom: 3rem;
-
-    @media (max-width: 768px) {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-.about-stat {
-    display: flex;
-    flex-direction: column;
-    padding: 1.25rem 1.5rem;
-    border-right: 1px solid var(--border);
-
-    &:last-child {
-        border-right: none;
-    }
-
-    &__value {
-        font-size: 1.75rem;
-        font-weight: 800;
-        letter-spacing: -0.04em;
-        color: var(--text);
-        line-height: 1;
-    }
-
-    &__label {
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        margin-top: 0.3rem;
-    }
-
-    @media (max-width: 768px) {
-        &:nth-child(2) {
-            border-right: none;
-        }
-        &:nth-child(n + 3) {
-            border-top: 1px solid var(--border);
-        }
-    }
-}
-
-// ─── About grid ───────────────────────────────────────────────
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr 17rem;
     gap: 4rem;
     align-items: start;
+    margin-bottom: 6rem;
 
-    @media (max-width: 768px) {
+    @media (max-width: @bp-md) {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 2.5rem;
+        margin-bottom: 3.5rem;
     }
 }
 
-.about-bio {
-    font-size: 1.125rem;
-    line-height: 1.8;
-    color: var(--text);
+.about__bio {
+    max-width: 22em;
+    font-size: clamp(1.2rem, 2.1vw, 1.85rem);
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: -0.015em;
+    color: var(--fg);
+    text-wrap: pretty;
+
+    // Рубричный инициал
+    &::first-letter {
+        float: left;
+        margin: 0.06em 0.1em 0 0;
+        font-size: 3.6em;
+        font-weight: 900;
+        line-height: 0.78;
+        color: var(--rubric);
+    }
 }
 
-.about-meta {
+.about__meta {
     display: flex;
     flex-direction: column;
-    gap: 0.875rem;
+    gap: 1rem;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--rule);
+
+    @media (max-width: @bp-md) {
+        padding-top: 1.5rem;
+    }
 }
 
-.meta-row {
+.about__row {
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
 
     dt {
-        color: var(--text-muted);
-        padding-top: 2px;
         flex-shrink: 0;
+        padding-top: 3px;
+        color: var(--rubric);
     }
 
     dd {
-        font-size: 0.9375rem;
-        color: var(--text-muted);
-        line-height: 1.4;
+        font-size: 0.82rem;
+        line-height: 1.5;
+        color: var(--fg-2);
     }
 }
 
-.link {
-    color: var(--accent);
-    &:hover {
-        text-decoration: underline;
+.about__link {
+    color: var(--fg);
+}
+
+// ─── Регистр цифр ────────────────────────────────────────────
+.ledger {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--rule-strong);
+
+    @media (max-width: @bp-sm) {
+        grid-template-columns: repeat(2, 1fr);
     }
+}
+
+.ledger__cell {
+    padding: 1.75rem 1.5rem 0 0;
+    border-right: 1px solid var(--rule);
+
+    &:last-child {
+        border-right: none;
+    }
+
+    @media (max-width: @bp-sm) {
+        padding: 1.25rem 1rem 1.25rem 0;
+
+        &:nth-child(2n) {
+            border-right: none;
+        }
+        &:nth-child(n + 3) {
+            border-top: 1px solid var(--rule);
+        }
+    }
+}
+
+.ledger__value {
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    color: var(--fg);
+}
+
+.ledger__label {
+    margin-top: 0.75rem;
+    max-width: 15em;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    color: var(--fg-2);
 }
 </style>

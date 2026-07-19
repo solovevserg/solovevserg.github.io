@@ -1,42 +1,89 @@
 <script setup lang="ts">
-defineProps<{ num: string; title: string }>()
+/**
+ * Шапка главы: рубричный номер на поле + крупный заголовок (ADR 0019).
+ */
+withDefaults(
+    defineProps<{
+        /** Номер главы, например «03» */
+        num: string
+        title: string
+        /** Надзаголовок мелким моноширинным */
+        kicker?: string
+        /** Обводной вариант заголовка */
+        outline?: boolean
+    }>(),
+    { kicker: '', outline: false }
+)
 </script>
 
 <template>
-    <header class="section-header">
-        <span class="section-num">{{ num }}</span>
-        <h2 class="section-heading">{{ title }}</h2>
+    <header class="chapter">
+        <div class="chapter__meta">
+            <span class="chapter__num">{{ num }}</span>
+            <span v-reveal data-reveal="rule" class="chapter__rule" />
+            <span v-if="kicker" v-reveal data-reveal="up" class="chapter__kicker mono-label">
+                {{ kicker }}
+            </span>
+        </div>
+
+        <SplitText
+            :text="title"
+            tag="h2"
+            class="chapter__title display"
+            :class="{ 'display--outline': outline }"
+            :stagger="60"
+        />
     </header>
 </template>
 
 <style scoped lang="less">
-.section-header {
-    margin-bottom: 4rem;
+.chapter {
+    margin-bottom: 5rem;
 
-    @media (max-width: 768px) {
-        margin-bottom: 2rem;
+    @media (max-width: @bp-sm) {
+        margin-bottom: 2.5rem;
     }
 }
 
-.section-num {
+.chapter__meta {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+
+    @media (max-width: @bp-sm) {
+        gap: 0.875rem;
+        margin-bottom: 1rem;
+    }
+}
+
+// Рубричный инициал — красный номер главы, как на полях манускрипта
+.chapter__num {
     font-family: var(--font-mono);
     font-size: 0.72rem;
     font-weight: 500;
-    color: var(--accent);
     letter-spacing: 0.1em;
-    display: block;
-    margin-bottom: 0.6rem;
+    color: var(--rubric);
+    flex-shrink: 0;
 }
 
-.section-heading {
-    font-size: clamp(2.4rem, 5.5vw, 4rem);
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 0.92;
-    color: var(--text);
+.chapter__rule {
+    height: 1px;
+    width: 5rem;
+    background: var(--rule-strong);
+    flex-shrink: 0;
 
-    @media (max-width: 768px) {
-        font-size: clamp(1.8rem, 9vw, 2.8rem);
+    @media (max-width: @bp-sm) {
+        width: 2.5rem;
     }
+}
+
+.chapter__kicker {
+    min-width: 0;
+}
+
+.chapter__title {
+    font-size: clamp(2.6rem, 7vw, 5.5rem);
+    color: var(--fg);
 }
 </style>

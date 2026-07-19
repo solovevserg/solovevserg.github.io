@@ -1,7 +1,8 @@
 # FOUC фона и анимация фото на prod
 
-- Статус: предложено
+- Статус: реализовано
 - Дата: 2026-04-18
+- Реализовано: 2026-07-16 в рамках редизайна (ADR 0019)
 
 ## Контекст и постановка задачи
 
@@ -210,16 +211,18 @@ html {
 
 #### Вариант A (inline style):
 
-- [ ] Добавить `app.head.style` в `nuxt.config.ts` с inline CSS для `background`
-- [ ] Убедиться что `tagPriority: 'critical'` ставит тег **до** `<link rel="stylesheet">`
+- [x] Добавить `app.head.style` в `nuxt.config.ts` с inline CSS для `background`
+- [x] Убедиться что `tagPriority: 'critical'` ставит тег **до** `<link rel="stylesheet">`
 - [ ] Проверить на prod (после деплоя): нет серого flash при холодном кэше
 
 #### Вариант B (убрать `opacity` из `*`):
 
-- [ ] Удалить `opacity 0.2s` из блока `*,*::before,*::after` в `global.less`
-- [ ] Найти все компоненты, где opacity-переход нужен явно, и добавить им `transition: opacity 0.2s`
-- [ ] Проверить: фото в SectionHero появляется мгновенно
-- [ ] Проверить: hover-эффекты с opacity не нарушены
+- [x] Удалить `opacity 0.2s` из блока `*,*::before,*::after` в `global.less` —
+      при редизайне (ADR 0019) wildcard-переход убран целиком; переходы
+      объявляются точечно в компонентах
+- [x] Найти все компоненты, где opacity-переход нужен явно, и добавить им `transition: opacity 0.2s`
+- [x] Проверить: фото в SectionHero появляется мгновенно
+- [x] Проверить: hover-эффекты с opacity не нарушены
 
 ## Последствия
 

@@ -5,11 +5,26 @@
     "nav": {
         "home": "Home",
         "blog": "Blog",
-        "portfolio": "Portfolio"
+        "portfolio": "Portfolio",
+        "menu": "Menu",
+        "close": "Close"
+    },
+    "rail": {
+        "title": "Chapters"
+    },
+    "cursor": {
+        "write": "Write",
+        "read": "Read",
+        "open": "Open",
+        "play": "Play"
     },
     "hero": {
         "name_first": "Sergei",
         "name_last": "Solovev",
+        "eyebrow": "Lead Developer · Philosopher of Science",
+        "hud_left": "Moscow, Russia",
+        "hud_right": "55.75° N · 37.62° E",
+        "scroll": "Scroll",
         "typewriter": [
             "Developer. Leader. Philosopher.",
             "Speaker & Educator",
@@ -40,6 +55,7 @@
     ],
     "about": {
         "title": "About",
+        "kicker": "Moscow · in IT since 2017",
         "bio": "I create value for businesses and people through IT expertise, critical thinking, and an academic background. I share knowledge with the community and stay open to learning myself. Passionate about logic, philosophy of AI, and linguistics.",
         "location": "Moscow, Russia",
         "languages": "Russian (native) · English (B2)",
@@ -47,6 +63,8 @@
     },
     "experience": {
         "title": "Experience",
+        "kicker": "8+ years · from intern to lead",
+        "side_badge": "Side project",
         "items": [
             {
                 "company": "T-Bank",
@@ -113,12 +131,11 @@
                     "Preparing analytical briefs and supporting decision-making"
                 ]
             }
-        ],
-        "side_title": "Side projects",
-        "side_subtitle": "Own projects · Research"
+        ]
     },
     "skills": {
         "title": "Skills",
+        "kicker": "Six domains",
         "levels": {
             "expert": "Expert",
             "advanced": "Advanced",
@@ -181,7 +198,8 @@
     },
     "education": {
         "title": "Education",
-        "thesis_label": "Thesis topic:",
+        "kicker": "BMSTU · 2016 — 2026",
+        "thesis_label": "Thesis topic",
         "grade_label": "GPA",
         "items": [
             {
@@ -227,6 +245,7 @@
     },
     "teaching": {
         "title": "Knowledge Sharing",
+        "kicker": "Talks · Papers · Courses",
         "talks_title": "Conference Talks",
         "publications_title": "Publications",
         "courses_title": "Courses",
@@ -289,6 +308,7 @@
     },
     "facts": {
         "title": "Fun Facts",
+        "kicker": "Beyond code",
         "items": [
             {
                 "emoji": "💢",
@@ -309,23 +329,36 @@
     },
     "contact": {
         "title": "Contacts",
+        "kicker": "Five ways to reach me",
         "subtitle": "Open to proposals, projects, and collaborations.",
         "telegram": "Telegram",
         "linkedin": "LinkedIn",
         "github": "GitHub",
         "habr": "Habr",
-        "hh": "Resume on HH"
+        "hh": "Resume"
     },
     "blog": {
         "title": "Blog",
-        "empty": "No posts yet."
+        "kicker": "Notes on engineering and languages",
+        "empty": "No posts yet.",
+        "read": "Read",
+        "back": "All posts"
     },
     "portfolio": {
         "title": "Portfolio",
-        "empty": "No projects yet."
+        "kicker": "Projects",
+        "empty": "No projects yet.",
+        "back": "All projects"
+    },
+    "error": {
+        "title": "Page not found",
+        "subtitle": "There is no such folio in this manuscript — the page may have moved, or never existed at all.",
+        "home": "Back home"
     },
     "footer": {
         "name": "Sergei Solovev",
-        "rights": "All rights reserved"
+        "rights": "All rights reserved",
+        "colophon": "Nuxt · LESS · no trackers",
+        "to_top": "Top"
     }
 }

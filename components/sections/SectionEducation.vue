@@ -6,11 +6,11 @@ type EduItem = {
     city: string
     tag: string
     period: string
-    current?: boolean
+    current: boolean
     grade?: string
     thesis?: string
-    activities?: string
 }
+
 const { t, tm, rt } = useTypo()
 
 const eduItems = computed<EduItem[]>(() =>
@@ -24,25 +24,8 @@ const eduItems = computed<EduItem[]>(() =>
         current: !!e.current,
         grade: e.grade ? rt(e.grade) : undefined,
         thesis: e.thesis ? rt(e.thesis) : undefined,
-        activities: e.activities ? rt(e.activities) : undefined,
     }))
 )
-
-// Split text into [everything before last word, last word]
-// so last word + icon can be wrapped in white-space: nowrap
-function splitLastWord(text: string): [string, string] {
-    const i = text.lastIndexOf(' ')
-    return i === -1 ? ['', text] : [text.slice(0, i), text.slice(i + 1)]
-}
-
-// Mobile bottom sheet for thesis (tooltip goes off-screen on mobile)
-const activeThesis = ref<string | null>(null)
-function toggleThesis(item: EduItem) {
-    activeThesis.value = activeThesis.value === item.thesis ? null : (item.thesis ?? null)
-}
-watch(activeThesis, (val) => {
-    if (import.meta.client) document.body.style.overflow = val ? 'hidden' : ''
-})
 
 const eduGroups = computed(() => {
     const map = new Map<string, EduItem[]>()
@@ -60,360 +43,259 @@ const eduGroups = computed(() => {
 </script>
 
 <template>
-    <section id="education" class="section section--alt">
+    <section id="education" class="section section--ruled section--raise">
         <div class="container">
-            <SectionHeader num="/ 04" :title="t('education.title')" />
-            <div class="edu-timeline">
-                <div v-for="group in eduGroups" :key="group.school" class="edu-group">
-                    <!-- Left: org name (desktop anchor) -->
-                    <div class="edu-group__sidebar">
-                        <h3 class="edu-group__org">{{ group.school }}</h3>
-                        <p class="edu-group__city">{{ group.city }}</p>
+            <SectionHeader num="04" :title="t('education.title')" :kicker="t('education.kicker')" />
+
+            <div class="edu">
+                <div v-for="group in eduGroups" :key="group.school" class="edu__group">
+                    <div class="edu__side">
+                        <h3 class="edu__school">{{ group.school }}</h3>
+                        <p class="edu__city">{{ group.city }}</p>
                     </div>
 
-                    <!-- Right: timeline track -->
-                    <div class="edu-group__track">
-                        <div v-for="item in group.items" :key="item.degree" class="edu-item">
-                            <!-- Date sits at dot level -->
-                            <div class="edu-item__dateline">
-                                <span class="edu-item__period">{{ item.period }}</span>
+                    <ol class="edu__track">
+                        <span v-reveal data-reveal="rule-y" class="edu__line" aria-hidden="true" />
+
+                        <li
+                            v-for="(item, i) in group.items"
+                            :key="item.degree"
+                            v-reveal="{ delay: 150 + i * 120 }"
+                            data-reveal="up"
+                            class="edu__item"
+                        >
+                            <div class="edu__meta">
+                                <span class="edu__period">{{ item.period }}</span>
                                 <BadgeCurrent v-if="item.current" />
                             </div>
 
-                            <p class="edu-item__field">
-                                <template v-if="item.thesis"
-                                    >{{ splitLastWord(item.field)[0] }}
-                                    <span class="thesis-tail"
-                                        >{{ splitLastWord(item.field)[1] }}&nbsp;<span
-                                            class="thesis-hint"
-                                            @click.stop="toggleThesis(item)"
-                                            ><svg
-                                                width="13"
-                                                height="13"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke="currentColor"
-                                                stroke-width="2.2"
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                aria-hidden="true"
-                                            >
-                                                <circle cx="12" cy="12" r="10" />
-                                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
-                                                <line x1="12" y1="17" x2="12.01" y2="17" /></svg
-                                            ><span class="thesis-hint__tooltip"
-                                                ><em class="thesis-hint__label">{{
-                                                    t('education.thesis_label')
-                                                }}</em
-                                                >{{ item.thesis }}</span
-                                            ></span
-                                        ></span
-                                    ></template
-                                >
-                                <template v-else>{{ item.field }}</template>
-                            </p>
+                            <div class="edu__head">
+                                <span class="edu__tag" aria-hidden="true">{{ item.tag }}</span>
+                                <div class="edu__titles">
+                                    <h4 class="edu__field">{{ item.field }}</h4>
+                                    <p class="edu__degree">
+                                        {{ item.degree }}
+                                        <span v-if="item.grade" class="edu__grade">
+                                            {{ t('education.grade_label') }} {{ item.grade }}/5
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
 
-                            <p class="edu-item__degree">{{ item.degree }}</p>
-
-                            <p v-if="item.grade" class="edu-item__grade">
-                                {{ t('education.grade_label') }}:
-                                <span class="edu-item__grade-label">{{ item.grade }}/5</span>
-                            </p>
-
-                            <p v-if="item.activities" class="edu-item__activities">
-                                {{ item.activities }}
-                            </p>
-                        </div>
-                    </div>
+                            <!-- Тема работы вынесена в текст: в подсказке её никто не читал,
+                                 а у этих работ содержание — сильная часть биографии -->
+                            <figure v-if="item.thesis" class="edu__thesis">
+                                <figcaption class="edu__thesis-label">
+                                    {{ t('education.thesis_label') }}
+                                </figcaption>
+                                <blockquote class="edu__thesis-text">{{ item.thesis }}</blockquote>
+                            </figure>
+                        </li>
+                    </ol>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Mobile thesis bottom sheet -->
-    <Teleport to="body">
-        <Transition name="sheet">
-            <div v-if="activeThesis" class="thesis-sheet" @click="activeThesis = null">
-                <div class="thesis-sheet__panel" @click.stop>
-                    <p class="thesis-sheet__label">{{ t('education.thesis_label') }}</p>
-                    <p class="thesis-sheet__text">{{ activeThesis }}</p>
-                </div>
-            </div>
-        </Transition>
-    </Teleport>
 </template>
 
 <style scoped lang="less">
-// ─── Timeline container ───────────────────────────────────────
-.edu-timeline {
+.edu {
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 5rem;
+
+    @media (max-width: @bp-sm) {
+        gap: 3rem;
+    }
 }
 
-// ─── Group: two-column on desktop ─────────────────────────────
-.edu-group {
+.edu__group {
     display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 4rem;
+    grid-template-columns: 15rem 1fr;
+    gap: 3.5rem;
     align-items: start;
 
-    &__sidebar {
-        position: sticky;
-        top: calc(var(--header-h) + 2rem);
-    }
-
-    &__org {
-        font-size: 1.5rem;
-        font-weight: 800;
-        letter-spacing: -0.03em;
-        color: var(--text);
-        line-height: 1.2;
-    }
-
-    &__city {
-        margin-top: 0.35rem;
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        font-family: var(--font-mono);
-    }
-
-    &__track {
-        border-left: 1.5px solid var(--border-md);
-        display: flex;
-        flex-direction: column;
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: @bp-md) {
         grid-template-columns: 1fr;
-        gap: 1.25rem;
-
-        &__sidebar {
-            position: static;
-        }
-
-        &__org {
-            font-size: 0.82rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            color: var(--text-muted);
-            padding-left: 1rem;
-            border-left: 2px solid var(--accent);
-        }
-
-        &__city {
-            padding-left: 1rem;
-        }
+        gap: 1.5rem;
     }
 }
 
-// ─── Timeline item ────────────────────────────────────────────
-.edu-item {
+// ─── Учебное заведение ───────────────────────────────────────
+.edu__side {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+
+    @media (max-width: @bp-md) {
+        position: static;
+        padding-left: 1rem;
+        border-left: 2px solid var(--rubric);
+    }
+}
+
+.edu__school {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+}
+
+.edu__city {
+    margin-top: 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--fg-2);
+}
+
+// ─── Хроника ─────────────────────────────────────────────────
+.edu__track {
     position: relative;
-    padding: 0 0 2.5rem 2.5rem;
+    padding-left: 2.5rem;
+
+    @media (max-width: @bp-sm) {
+        padding-left: 1.5rem;
+    }
+}
+
+// Линия вычерчивается сверху вниз, когда хроника входит в кадр
+.edu__line {
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+    bottom: 0.4rem;
+    width: 1px;
+    background: var(--rule-strong);
+}
+
+.edu__item {
+    position: relative;
+    padding-bottom: 3rem;
 
     &:last-child {
         padding-bottom: 0;
     }
 
-    // Dot centered on the border-left line
+    // Отметка на линии
     &::before {
         content: '';
         position: absolute;
-        left: -5px;
-        top: 0.22rem;
-        width: 9px;
-        height: 9px;
+        left: calc(-2.5rem - 3px);
+        top: 0.45rem;
+        width: 7px;
+        height: 7px;
         border-radius: 50%;
-        background: var(--bg-card);
-        border: 2px solid var(--accent);
-        z-index: 1;
-    }
+        background: var(--rubric);
 
-    // Date row — sits right at dot level
-    &__dateline {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 0.6rem;
-    }
-
-    &__period {
-        font-family: var(--font-mono);
-        font-size: 0.72rem;
-        font-weight: 500;
-        color: var(--accent);
-    }
-
-    &__field {
-        font-size: 1.15rem;
-        font-weight: 700;
-        color: var(--text);
-        letter-spacing: -0.02em;
-        line-height: 1.3;
-        margin-bottom: 0.25rem;
-    }
-
-    &__degree {
-        font-size: 0.875rem;
-        color: var(--text-muted);
-        font-family: var(--font-mono);
-    }
-
-    &__grade {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-        margin-top: 0.5rem;
-        font-size: 0.8125rem;
-        color: var(--text-muted);
-    }
-
-    &__grade-label {
-        font-family: var(--font-mono);
-        font-size: 0.65rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        background: var(--accent-dim);
-        color: var(--accent);
-        padding: 0.1em 0.45em;
-        border-radius: 4px;
-    }
-
-    &__activities {
-        margin-top: 0.4rem;
-        font-size: 0.72rem;
-        color: var(--text-xmuted);
-        line-height: 1.5;
-
-        @media (max-width: 768px) {
-            display: none;
+        @media (max-width: @bp-sm) {
+            left: calc(-1.5rem - 3px);
         }
     }
 }
 
-// ─── Thesis tail (last word + icon, kept on same line) ────────
-.thesis-tail {
+.edu__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.edu__period {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--rubric);
+}
+
+.edu__head {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+}
+
+// Обводная степень — крупная пометка на поле
+.edu__tag {
+    flex-shrink: 0;
+    width: 4.5rem;
+    font-family: var(--font-display-outline);
+    font-size: 1.6rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    color: transparent;
+    -webkit-text-stroke: 1px var(--fg-3);
+
+    @media (max-width: @bp-sm) {
+        width: auto;
+        font-size: 1.2rem;
+    }
+}
+
+.edu__titles {
+    min-width: 0;
+}
+
+.edu__field {
+    font-size: clamp(1.05rem, 2vw, 1.5rem);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.025em;
+    color: var(--fg);
+}
+
+.edu__degree {
+    margin-top: 0.4rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: var(--fg-2);
+}
+
+.edu__grade {
+    padding: 0.15rem 0.45rem;
+    font-size: 0.58rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rubric);
+    background: var(--rubric-dim);
     white-space: nowrap;
 }
 
-// ─── Thesis tooltip ───────────────────────────────────────────
-.thesis-hint {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    vertical-align: middle;
-    color: var(--text-muted);
-    cursor: default;
+// ─── Тема работы ─────────────────────────────────────────────
+.edu__thesis {
+    margin-top: 1.25rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--rubric);
 
-    svg {
-        display: block;
-        flex-shrink: 0;
-    }
-
-    &__tooltip {
-        display: none;
-        position: absolute;
-        bottom: calc(100% + 8px);
-        left: 50%;
-        transform: translateX(-50%);
-        width: 260px;
-        background: var(--bg-card);
-        border: 1px solid var(--border-md);
-        border-radius: var(--radius);
-        padding: 0.65rem 0.85rem;
-        font-size: 0.78rem;
-        font-style: italic;
-        color: var(--text-muted);
-        line-height: 1.55;
-        box-shadow: var(--shadow-sm);
-        white-space: normal;
-        z-index: 10;
-        pointer-events: none;
-
-        &::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 5px solid transparent;
-            border-top-color: var(--border-md);
-        }
-    }
-
-    &__label {
-        display: block;
-        font-size: 0.7rem;
-        font-style: normal;
-        font-weight: 600;
-        color: var(--accent);
-        margin-bottom: 0.25rem;
-    }
-
-    @media (hover: hover) {
-        &:hover .thesis-hint__tooltip,
-        &:focus-within .thesis-hint__tooltip {
-            display: block;
-        }
+    @media (min-width: (@bp-md + 1px)) {
+        margin-left: 5.75rem;
     }
 }
-</style>
 
-<style>
-/* ─── Thesis bottom sheet (mobile) ───────────────────────── */
-.thesis-sheet {
-    position: fixed;
-    inset: 0;
-    z-index: 300;
-    background: rgba(0, 0, 0, 0.45);
-    display: flex;
-    align-items: flex-end;
-    padding: 0 0.75rem 0.75rem;
-}
-.thesis-sheet__panel {
-    width: 100%;
-    background: var(--bg-card);
-    border: 1px solid var(--border-md);
-    border-radius: 16px;
-    padding: 1.25rem 1.5rem 1.75rem;
-    box-shadow: 0 -4px 32px rgba(0, 0, 0, 0.4);
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-}
-.thesis-sheet__label {
-    font-size: 0.7rem;
-    font-weight: 700;
+.edu__thesis-label {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--accent);
-}
-.thesis-sheet__text {
-    font-size: 0.9rem;
-    color: var(--text-muted);
-    line-height: 1.6;
-    font-style: italic;
+    color: var(--rubric);
+    margin-bottom: 0.4rem;
 }
 
-.sheet-enter-active {
-    transition: opacity 0.25s ease;
-}
-.sheet-leave-active {
-    transition: opacity 0.25s ease;
-}
-.sheet-enter-active .thesis-sheet__panel,
-.sheet-leave-active .thesis-sheet__panel {
-    transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
-}
-.sheet-enter-from,
-.sheet-leave-to {
-    opacity: 0;
-}
-.sheet-enter-from .thesis-sheet__panel,
-.sheet-leave-to .thesis-sheet__panel {
-    transform: translateY(100%);
+.edu__thesis-text {
+    max-width: 46em;
+    font-size: 0.86rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--fg-2);
+    text-wrap: pretty;
 }
 </style>

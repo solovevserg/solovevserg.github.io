@@ -25,8 +25,11 @@ export function useTypo() {
     const i18n = useI18n()
     const { locale } = i18n
 
-    const t = (...args: Parameters<typeof i18n.t>): string =>
-        applyTypo(i18n.t(...args) as string, locale.value)
+    // `Parameters<typeof i18n.t>` разрешался в последнюю перегрузку vue-i18n
+    // (key, plural, options) — TypeScript требовал три аргумента на каждый
+    // вызов `t('key')`. Сужаем сигнатуру до фактически используемой.
+    const t = (key: string, named?: Record<string, unknown>): string =>
+        applyTypo((named ? i18n.t(key, named) : i18n.t(key)) as string, locale.value)
 
     const rt = (message: any, ...rest: any[]): string =>
         applyTypo((i18n.rt as Function)(message, ...rest), locale.value)

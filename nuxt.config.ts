@@ -33,8 +33,23 @@ export default defineNuxtConfig({
             htmlAttrs: { lang: 'ru' },
             script: [
                 {
-                    // Anti-FOUC: apply saved theme before first paint (ADR 0007)
-                    innerHTML: `(function(){try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()`,
+                    // Выполняется до первой отрисовки и решает три вещи (ADR 0007, 0019):
+                    //  1. has-js  — разрешает скрытые стартовые состояния анимаций;
+                    //               без JS контент рендерится статично и целиком
+                    //  2. theme   — тема применяется до CSS, без вспышки
+                    //  3. intro   — шторка стоит с первого кадра, иначе успел бы
+                    //               мигнуть контент под ней
+                    innerHTML: `(function(){var d=document.documentElement;d.classList.add('has-js');try{var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';d.dataset.theme=t}catch(e){}try{var p=location.pathname,h=p==='/'||p==='/en'||p==='/en/';if(h&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches&&!sessionStorage.getItem('intro-played'))d.classList.add('intro')}catch(e){}})()`,
+                    tagPriority: 'critical',
+                },
+            ],
+            style: [
+                {
+                    // Фон до загрузки внешнего CSS: иначе браузер успевает
+                    // отрисовать кадр с дефолтным белым и анимирует переход
+                    // в тёмный (ADR 0015, вариант A). Значения дублируют
+                    // --bg из global.less — при смене палитры править обе точки.
+                    innerHTML: `:root{background:#08080a}:root[data-theme=light]{background:#eceae4}`,
                     tagPriority: 'critical',
                 },
             ],

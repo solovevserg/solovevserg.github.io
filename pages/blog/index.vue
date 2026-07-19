@@ -10,42 +10,47 @@ const { data: posts } = await useAsyncData('blog', () =>
 
 const formatDate = (raw: string) => {
     if (!raw) return ''
-    const d = new Date(raw)
-    return d.toLocaleDateString(locale.value === 'ru' ? 'ru-RU' : 'en-US', {
+    return new Date(raw).toLocaleDateString(locale.value === 'ru' ? 'ru-RU' : 'en-US', {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
     })
 }
+
+const slugOf = (post: { _file?: string }) => post._file?.split('/').pop()?.replace('.md', '') ?? ''
 </script>
 
 <template>
-    <div class="container page-wrap">
-        <header class="page-header">
-            <h1 class="page-title">{{ t('blog.title') }}</h1>
-        </header>
+    <div class="container page">
+        <PageHeader :title="t('blog.title')" :kicker="t('blog.kicker')" />
 
-        <p v-if="!posts?.length" class="empty">{{ t('blog.empty') }}</p>
+        <p v-if="!posts?.length" class="page__empty">{{ t('blog.empty') }}</p>
 
-        <ul v-else class="post-list">
-            <li v-for="post in posts" :key="post._path">
+        <ul v-else class="posts">
+            <li v-for="(post, i) in posts" :key="post._path">
                 <NuxtLink
-                    :to="localePath(`/blog/${post._file?.split('/').pop()?.replace('.md', '')}`)"
-                    class="post-card card-hover"
+                    v-reveal="{ delay: i * 70 }"
+                    data-reveal="up"
+                    :to="localePath(`/blog/${slugOf(post)}`)"
+                    class="post"
+                    :data-cursor="t('blog.read')"
                 >
-                    <div class="post-card__meta">
-                        <time class="post-card__date">{{ formatDate(post.date) }}</time>
-                        <span v-if="post.tags?.length" class="post-card__tags">
-                            <span v-for="tag in post.tags" :key="tag" class="post-card__tag">{{
-                                tag
-                            }}</span>
+                    <span class="post__num">{{ chapterNum(i) }}</span>
+
+                    <span class="post__body">
+                        <span class="post__meta">
+                            <time class="mono-period">{{ formatDate(post.date) }}</time>
+                            <span v-if="post.tags?.length" class="post__tags">
+                                <span v-for="tag in post.tags" :key="tag" class="post__tag">
+                                    {{ tag }}
+                                </span>
+                            </span>
                         </span>
-                    </div>
-                    <h2 class="post-card__title">{{ post.title }}</h2>
-                    <p v-if="post.description" class="post-card__desc">{{ post.description }}</p>
-                    <span class="post-card__read">{{
-                        locale === 'ru' ? 'Читать →' : 'Read →'
-                    }}</span>
+                        <h2 class="post__title">{{ post.title }}</h2>
+                        <p v-if="post.description" class="post__desc">{{ post.description }}</p>
+                    </span>
+
+                    <IconArrowUpRight :size="18" class="post__arrow" />
                 </NuxtLink>
             </li>
         </ul>
@@ -53,108 +58,122 @@ const formatDate = (raw: string) => {
 </template>
 
 <style scoped lang="less">
-.page-wrap {
-    padding-top: 4rem;
-    padding-bottom: 6rem;
-    max-width: 780px;
+.page {
+    padding-top: 5rem;
+    padding-bottom: 7rem;
+
+    @media (max-width: @bp-sm) {
+        padding-top: 2.5rem;
+        padding-bottom: 4rem;
+    }
 }
 
-.page-header {
-    margin-bottom: 3rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid var(--border);
+.page__empty {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--fg-2);
 }
 
-.page-title {
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--text);
+// ─── Список статей ───────────────────────────────────────────
+.posts {
+    border-top: 1px solid var(--rule);
 }
 
-.empty {
-    color: var(--text-muted);
-}
-
-.post-list {
-    list-style: none;
+.post {
     display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    align-items: flex-start;
+    gap: 1.5rem;
+    padding: 2rem 0.5rem;
+    border-bottom: 1px solid var(--rule);
+    transition: padding-left 0.6s var(--ease-out-expo);
+
+    &:hover {
+        padding-left: 1.25rem;
+
+        .post__title {
+            color: var(--rubric);
+        }
+        .post__arrow {
+            opacity: 1;
+            transform: translate(0, 0);
+        }
+    }
+
+    @media (max-width: @bp-sm) {
+        gap: 1rem;
+        padding: 1.5rem 0;
+    }
 }
 
-.post-card {
+.post__num {
+    flex-shrink: 0;
+    padding-top: 0.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--rubric);
+}
+
+.post__body {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding: 1.75rem 2rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: inherit;
-    text-decoration: none;
+    min-width: 0;
+}
 
-    &:hover .post-card__title {
-        color: var(--accent);
-    }
-    &:hover .post-card__read {
-        opacity: 1;
-        transform: translateX(0);
-    }
+.post__meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
 
-    &__meta {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
+.post__tags {
+    display: flex;
+    gap: 0.35rem;
+}
 
-    &__date {
-        font-family: var(--font-mono);
-        font-size: 0.75rem;
-        color: var(--text-muted);
-    }
+.post__tag {
+    padding: 0.15rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--rubric);
+    background: var(--rubric-dim);
+}
 
-    &__tags {
-        display: flex;
-        gap: 0.4rem;
-    }
+.post__title {
+    font-size: clamp(1.25rem, 2.6vw, 1.9rem);
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+    color: var(--fg);
+    transition: color 0.4s var(--ease-out-quart);
+}
 
-    &__tag {
-        font-size: 0.7rem;
-        font-weight: 500;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: var(--accent);
-        background: var(--accent-dim);
-        padding: 0.2em 0.6em;
-        border-radius: 4px;
-    }
+.post__desc {
+    max-width: 46em;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--fg-2);
+    text-wrap: pretty;
+}
 
-    &__title {
-        font-size: 1.25rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        color: var(--text);
-        transition: color 0.2s;
-    }
+.post__arrow {
+    flex-shrink: 0;
+    margin-left: auto;
+    margin-top: 0.2rem;
+    color: var(--rubric);
+    opacity: 0;
+    transform: translate(-6px, 6px);
+    transition:
+        opacity 0.4s var(--ease-out-quart),
+        transform 0.5s var(--ease-out-expo);
 
-    &__desc {
-        font-size: 0.925rem;
-        color: var(--text-muted);
-        line-height: 1.6;
-    }
-
-    &__read {
-        font-size: 0.8rem;
-        font-weight: 500;
-        color: var(--accent);
-        margin-top: 0.25rem;
-        opacity: 0;
-        transform: translateX(-4px);
-        transition:
-            opacity 0.2s,
-            transform 0.2s;
+    @media (max-width: @bp-sm) {
+        display: none;
     }
 }
 </style>

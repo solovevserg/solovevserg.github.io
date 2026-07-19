@@ -1,5 +1,11 @@
 @import './fonts.less';
 
+// ═══════════════════════════════════════════════════════════════
+//  РУБРИКАЦИЯ — дизайн-система (ADR 0019)
+//  Обсидиан · кость · вермильон. Плёночное зерно, кинетический
+//  крупный шрифт, редакционная сетка с маргиналиями.
+// ═══════════════════════════════════════════════════════════════
+
 // ─── Reset ───────────────────────────────────────────────────
 *,
 *::before,
@@ -8,86 +14,156 @@
     margin: 0;
     padding: 0;
 }
+
 html {
     scroll-behavior: smooth;
 }
+
 img,
-svg {
+svg,
+video {
     display: block;
     max-width: 100%;
 }
+
 button {
     font: inherit;
+    color: inherit;
     cursor: pointer;
     border: none;
     background: none;
 }
+
 a {
     color: inherit;
     text-decoration: none;
 }
 
+ul,
+ol {
+    list-style: none;
+}
+
 // ─── Design Tokens ───────────────────────────────────────────
 :root {
-    --bg: #0c0c0e;
-    --bg-card: #141417;
-    --bg-subtle: #1c1c20;
-    --text: #e2e2e9;
-    --text-muted: #6a6a75;
-    --text-xmuted: #2e2e36;
-    --accent: #6366f1;
-    --accent-dim: rgba(99, 102, 241, 0.12);
-    --accent-glow: 0 0 40px rgba(99, 102, 241, 0.25);
-    --border-accent: rgba(99, 102, 241, 0.3);
-    --glow-sm: 0 4px 20px rgba(99, 102, 241, 0.1);
-    --border: rgba(255, 255, 255, 0.07);
-    --border-md: rgba(255, 255, 255, 0.11);
-    --dot: rgba(255, 255, 255, 0.045);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-    --shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-    --header-bg: rgba(12, 12, 14, 0.82);
-    --current-dot: #22c55e;
+    color-scheme: dark;
 
+    // Палитра: обсидиан (фон) / кость (текст) / вермильон (рубрика)
+    --bg: #08080a;
+    --bg-raise: #0e0e12;
+    --bg-sunk: #050506;
+    --fg: #ece9e2;
+    --fg-2: #918d84;
+    --fg-3: #4a4740;
+    --rubric: #ff3b1f;
+    --rubric-soft: #ff6a4d;
+    --rubric-dim: rgba(255, 59, 31, 0.12);
+    --rubric-glow: 0 0 50px rgba(255, 59, 31, 0.3);
+    --rule: rgba(236, 233, 226, 0.13);
+    --rule-strong: rgba(236, 233, 226, 0.28);
+    --on-rubric: #08080a;
+    --live: #4ade80;
+
+    // Плёнка
+    --grain-opacity: 0.05;
+    --grain-blend: overlay;
+    --vignette: rgba(0, 0, 0, 0.55);
+
+    // Обработка фотографии (дуотон)
+    --photo-filter: grayscale(1) contrast(1.2) brightness(0.72);
+    --photo-tint: 0.16;
+    --photo-blend: color;
+
+    // Шрифты
     --font-sans: 'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    --header-h: 64px;
-    --radius: 10px;
-    --max-w: 1280px;
+    // Только для обводного текста: у Inter 900 контуры кириллицы
+    // самопересекаются и обводка идёт артефактами (ADR 0018). Залитый
+    // крупный шрифт остаётся на Inter — он самохостится и имеет
+    // настоящее начертание 900 на всех платформах.
+    --font-display-outline: system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+    // Метрика
+    --header-h: 68px;
+    --rail-w: 6.5rem;
+    --gutter: 2rem;
+    --max-w: 1440px;
+    --radius: 0px;
+
+    // Кривые
+    --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+    --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+
+    @media (max-width: @bp-sm) {
+        --gutter: 1.25rem;
+        --header-h: 60px;
+    }
 }
 
 :root[data-theme='light'] {
-    --bg: #f5f5f3;
-    --bg-card: #ffffff;
-    --bg-subtle: #eaeae7;
-    --text: #0c0c0e;
-    --text-muted: #828288;
-    --text-xmuted: #d0d0d5;
-    --accent: #4f46e5;
-    --accent-dim: rgba(79, 70, 229, 0.09);
-    --accent-glow: 0 0 40px rgba(79, 70, 229, 0.15);
-    --border-accent: rgba(79, 70, 229, 0.25);
-    --glow-sm: 0 4px 20px rgba(79, 70, 229, 0.07);
-    --border: rgba(0, 0, 0, 0.07);
-    --border-md: rgba(0, 0, 0, 0.11);
-    --dot: rgba(0, 0, 0, 0.055);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
-    --shadow: 0 4px 24px rgba(0, 0, 0, 0.09);
-    --header-bg: rgba(245, 245, 243, 0.82);
-    --current-dot: #16a34a;
+    color-scheme: light;
+
+    // Палитра: пергамент (фон) / тушь (текст) / вермильон (рубрика)
+    --bg: #eceae4;
+    --bg-raise: #f6f4ef;
+    --bg-sunk: #dfdcd4;
+    --fg: #0f0f11;
+    --fg-2: #6a665e;
+    --fg-3: #b6b2a8;
+    --rubric: #d42f16;
+    --rubric-soft: #a82410;
+    --rubric-dim: rgba(212, 47, 22, 0.1);
+    --rubric-glow: 0 0 50px rgba(212, 47, 22, 0.18);
+    --rule: rgba(15, 15, 17, 0.14);
+    --rule-strong: rgba(15, 15, 17, 0.3);
+    --on-rubric: #f6f4ef;
+    --live: #15803d;
+
+    --grain-opacity: 0.045;
+    --grain-blend: multiply;
+    --vignette: rgba(90, 84, 72, 0.3);
+
+    --photo-filter: grayscale(1) contrast(1.05) brightness(1.06);
+    --photo-tint: 0.12;
+    --photo-blend: multiply;
 }
 
-// ─── Base ─────────────────────────────────────────────────────
+// ─── Легаси-алиасы ───────────────────────────────────────────
+// Старые токены отображены на новую палитру: страницы контента и
+// разметка @nuxt/content продолжают работать без правок.
+:root {
+    --text: var(--fg);
+    --text-muted: var(--fg-2);
+    --text-xmuted: var(--fg-3);
+    --accent: var(--rubric);
+    --accent-dim: var(--rubric-dim);
+    --accent-glow: var(--rubric-glow);
+    --bg-card: var(--bg-raise);
+    --bg-subtle: var(--bg-sunk);
+    --border: var(--rule);
+    --border-md: var(--rule-strong);
+    --border-accent: var(--rubric);
+    --current-dot: var(--live);
+    --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+    --shadow-sm: 0 2px 20px rgba(0, 0, 0, 0.35);
+}
+
+// ─── Base ────────────────────────────────────────────────────
 html {
     font-family: var(--font-sans);
-    font-size: 19px;
-    color: var(--text);
+    font-size: 18px;
+    color: var(--fg);
     background: var(--bg);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    // Переход только для ручного переключения темы. Глобальный
+    // wildcard-transition убран намеренно (ADR 0015).
     transition:
-        background 0.3s,
-        color 0.3s;
+        background-color 0.45s var(--ease-out-quart),
+        color 0.45s var(--ease-out-quart);
 
-    @media (max-width: 768px) {
+    @media (max-width: @bp-sm) {
         font-size: 16px;
     }
 }
@@ -97,97 +173,508 @@ body {
     min-height: 100svh;
     display: flex;
     flex-direction: column;
+    overflow-x: hidden;
 }
 
-// ─── Scrollbar ────────────────────────────────────────────────
+::selection {
+    background: var(--rubric);
+    color: var(--on-rubric);
+}
+
+:focus-visible {
+    outline: 2px solid var(--rubric);
+    outline-offset: 3px;
+}
+
+// ─── Scrollbar ───────────────────────────────────────────────
 ::-webkit-scrollbar {
-    width: 6px;
+    width: 5px;
+    height: 5px;
 }
 ::-webkit-scrollbar-track {
-    background: var(--bg);
+    background: var(--bg-sunk);
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--bg-subtle);
-    border-radius: 3px;
+    background: var(--fg-3);
     &:hover {
-        background: var(--text-muted);
+        background: var(--rubric);
     }
 }
 
-// ─── Layout helpers ───────────────────────────────────────────
+// ─── Layout ──────────────────────────────────────────────────
 .container {
+    width: 100%;
     max-width: var(--max-w);
     margin: 0 auto;
-    padding: 0 2rem;
-    width: 100%;
+    padding: 0 var(--gutter);
+
+    // Слева освобождается поле под колонку маргиналий (ChapterRail)
+    @media (min-width: (@bp-lg + 1px)) {
+        padding-left: calc(var(--gutter) + var(--rail-w));
+    }
 }
 
-// ─── Section ──────────────────────────────────────────────────
 .section {
-    padding: 7rem 0;
+    position: relative;
+    padding: 9rem 0;
 
-    @media (max-width: 768px) {
-        padding: 4rem 0;
+    @media (max-width: @bp-md) {
+        padding: 6rem 0;
+    }
+    @media (max-width: @bp-sm) {
+        padding: 4.5rem 0;
     }
 }
 
-// ─── Dot-grid background ──────────────────────────────────────
-.dot-bg {
-    background-color: var(--bg);
-    background-image: radial-gradient(circle, var(--dot) 1px, transparent 1px);
-    background-size: 28px 28px;
+.section--ruled {
+    border-top: 1px solid var(--rule);
 }
 
-// ─── Transitions ──────────────────────────────────────────────
-*,
-*::before,
-*::after {
-    transition:
-        border-color 0.2s,
-        color 0.2s,
-        background-color 0.25s,
-        opacity 0.2s;
+.section--raise {
+    background: var(--bg-raise);
 }
 
-// ─── Card hover (lift + accent ring + glow) ───────────────────
-.card-hover {
-    transition:
-        border-color 0.2s,
-        box-shadow 0.2s,
-        transform 0.2s;
-    &:hover {
-        border-color: var(--accent);
-        box-shadow: var(--glow-sm);
-        transform: translateY(-2px);
-    }
+// Только для скринридеров: текстовый эквивалент графических индикаторов
+.u-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
-// ─── Uppercase accent label ───────────────────────────────────
-.label-caps {
-    font-size: 0.7rem;
-    font-weight: 700;
+// ─── Типографика ─────────────────────────────────────────────
+.mono-label {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent);
+    color: var(--fg-2);
 }
 
-// ─── Monospace meta period ────────────────────────────────────
 .mono-period {
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    color: var(--text-muted);
+    font-size: 0.7rem;
+    font-weight: 400;
+    letter-spacing: 0.06em;
+    color: var(--fg-2);
     white-space: nowrap;
 }
 
-// ─── Section alt background ───────────────────────────────────
-.section--alt {
-    background: var(--bg-card);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+// Рубрика — красная пометка на полях, как инициал в манускрипте
+.rubric-mark {
+    color: var(--rubric);
 }
 
-// ─── Mobile horizontal scroll grid ───────────────────────────
-@media (max-width: 768px) {
+.display {
+    font-weight: 900;
+    line-height: 0.86;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+}
+
+// Обводной вариант display (ADR 0018 — системный шрифт)
+.display--outline {
+    font-family: var(--font-display-outline);
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--fg);
+
+    @media (max-width: @bp-sm) {
+        -webkit-text-stroke-width: 1px;
+    }
+}
+
+// ─── Текст статьи (@nuxt/content) ────────────────────────────
+// Глобальный, а не scoped: ContentRenderer подставляет разметку из
+// Markdown, до которой scope-атрибуты не доходят — иначе каждый тег
+// пришлось бы оборачивать в :deep() в двух страницах сразу.
+.prose {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--fg-2);
+
+    p,
+    ul,
+    ol,
+    blockquote,
+    pre,
+    figure {
+        margin-bottom: 1.25rem;
+    }
+
+    h2,
+    h3,
+    h4 {
+        position: relative;
+        color: var(--fg);
+        letter-spacing: -0.03em;
+        line-height: 1.2;
+    }
+
+    h2 {
+        margin: 3rem 0 1rem;
+        font-size: clamp(1.4rem, 3vw, 1.9rem);
+        font-weight: 800;
+    }
+
+    h3 {
+        margin: 2.25rem 0 0.75rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    // Якорь-рубрика выезжает на поле
+    h2 a,
+    h3 a {
+        color: inherit;
+
+        &::before {
+            content: '#';
+            position: absolute;
+            left: -1.2em;
+            color: var(--rubric);
+            opacity: 0;
+            transition: opacity 0.25s var(--ease-out-quart);
+        }
+    }
+
+    h2:hover a::before,
+    h3:hover a::before {
+        opacity: 1;
+    }
+
+    a:not(h2 a):not(h3 a) {
+        color: var(--fg);
+        text-decoration: underline;
+        text-decoration-color: var(--rubric);
+        text-underline-offset: 0.2em;
+
+        &:hover {
+            color: var(--rubric);
+        }
+    }
+
+    strong {
+        color: var(--fg);
+        font-weight: 700;
+    }
+
+    ul,
+    ol {
+        padding-left: 1.25rem;
+    }
+
+    ul {
+        list-style: none;
+
+        li {
+            position: relative;
+            padding-left: 1rem;
+            margin-bottom: 0.4rem;
+
+            &::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 0.75em;
+                width: 5px;
+                height: 1px;
+                background: var(--rubric);
+            }
+        }
+    }
+
+    ol {
+        list-style: decimal;
+
+        li {
+            margin-bottom: 0.4rem;
+            padding-left: 0.25rem;
+
+            &::marker {
+                color: var(--rubric);
+                font-family: var(--font-mono);
+                font-size: 0.8em;
+            }
+        }
+    }
+
+    blockquote {
+        padding-left: 1.25rem;
+        border-left: 1px solid var(--rubric);
+        font-style: italic;
+        color: var(--fg-2);
+    }
+
+    img {
+        width: 100%;
+        border: 1px solid var(--rule);
+    }
+
+    pre.shiki {
+        padding: 1.5rem;
+        overflow-x: auto;
+        border: 1px solid var(--rule);
+        background: var(--bg-sunk) !important;
+        font-size: 0.82rem;
+        line-height: 1.7;
+
+        code {
+            font-family: var(--font-mono);
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+    }
+
+    :not(pre) > code {
+        padding: 0.15em 0.4em;
+        font-family: var(--font-mono);
+        font-size: 0.85em;
+        color: var(--rubric);
+        background: var(--rubric-dim);
+    }
+
+    hr {
+        margin: 2.5rem 0;
+        border: none;
+        border-top: 1px solid var(--rule);
+    }
+}
+
+// ─── Кнопки ──────────────────────────────────────────────────
+.btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 1rem 2rem;
+    overflow: hidden;
+    // ::before с z-index: -1 не должен проваливаться за фон секции
+    isolation: isolate;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: 1px solid var(--rule-strong);
+    color: var(--fg);
+    background: transparent;
+    transition:
+        color 0.5s var(--ease-out-expo),
+        border-color 0.5s var(--ease-out-expo);
+
+    // Заливка выезжает снизу — «штемпель»
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: var(--rubric);
+        transform: translateY(101%);
+        transition: transform 0.55s var(--ease-out-expo);
+    }
+
+    > * {
+        position: relative;
+    }
+
+    &:hover {
+        color: var(--on-rubric);
+        border-color: var(--rubric);
+
+        &::before {
+            transform: translateY(0);
+        }
+    }
+
+    &--solid {
+        color: var(--on-rubric);
+        border-color: var(--rubric);
+        background: var(--rubric);
+
+        &::before {
+            background: var(--fg);
+            transform: translateY(101%);
+        }
+
+        &:hover {
+            color: var(--bg);
+            border-color: var(--fg);
+
+            &::before {
+                transform: translateY(0);
+            }
+        }
+    }
+}
+
+// ─── Ссылка с подчёркиванием, растущим от курсора ────────────
+.link-underline {
+    position: relative;
+    display: inline-block;
+
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: -0.1em;
+        width: 100%;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.5s var(--ease-out-expo);
+    }
+
+    &:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+    }
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  МОТОРИКА
+//  Начальные (скрытые) состояния объявлены только под html.has-js —
+//  без JS контент отображается статично и полностью.
+// ═══════════════════════════════════════════════════════════════
+
+html.has-js {
+    // ─ Базовое проявление ─
+    .reveal {
+        opacity: 0;
+        transition:
+            opacity 1s var(--ease-out-expo),
+            transform 1.1s var(--ease-out-expo);
+        transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .reveal[data-reveal='up'] {
+        transform: translate3d(0, 2.2rem, 0);
+    }
+
+    .reveal[data-reveal='rise'] {
+        transform: translate3d(0, 5rem, 0) scale(0.97);
+    }
+
+    .reveal[data-reveal='left'] {
+        transform: translate3d(-2rem, 0, 0);
+    }
+
+    // Горизонтальная линейка, вычерчивающаяся слева направо
+    .reveal[data-reveal='rule'] {
+        opacity: 1;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: transform 1.2s var(--ease-out-expo) var(--reveal-delay, 0ms);
+    }
+
+    // Вертикальная линейка, вычерчивающаяся сверху вниз
+    .reveal[data-reveal='rule-y'] {
+        opacity: 1;
+        transform: scaleY(0);
+        transform-origin: top center;
+        transition: transform 1.5s var(--ease-out-expo) var(--reveal-delay, 0ms);
+    }
+
+    // Кадр: изображение выезжает из-под маски
+    .reveal[data-reveal='frame'] {
+        opacity: 1;
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 1.4s var(--ease-out-expo) var(--reveal-delay, 0ms);
+    }
+
+    .reveal.is-in {
+        opacity: 1;
+        transform: none;
+        clip-path: inset(0 0 0 0);
+    }
+
+    // ─ Пословное проявление заголовков (SplitText) ─
+    // 150%, а не 100%: маска шире строки на padding-bottom (запас под
+    // выносные), а глифы при плотном интерлиньяже display-заголовков
+    // выходят за свой line-box вверх. На меньшем сдвиге верхушки букв
+    // непроявленного заголовка видны из-под маски.
+    .split__word {
+        transform: translate3d(0, 150%, 0);
+        transition: transform 1.15s var(--ease-out-expo);
+        transition-delay: calc(var(--i, 0) * var(--split-stagger, 55ms) + var(--split-delay, 0ms));
+    }
+
+    .split.is-in .split__word {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+// Разметка масок работает всегда — она не скрывает контент сама по себе
+.split {
+    display: block;
+}
+
+.split__mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    // Компенсация обрезки выносных элементов (у, р, д, ц, щ)
+    padding-bottom: 0.16em;
+    margin-bottom: -0.16em;
+    margin-right: 0.22em;
+
+    &:last-child {
+        margin-right: 0;
+    }
+}
+
+.split__word {
+    display: inline-block;
+    will-change: transform;
+}
+
+// ─── Бегущая строка ──────────────────────────────────────────
+.marquee {
+    display: flex;
+    width: 100%;
+    overflow: hidden;
+    user-select: none;
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+
+.marquee__track {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 2.5rem;
+    padding-right: 2.5rem;
+    min-width: 100%;
+    animation: marquee-run var(--marquee-duration, 42s) linear infinite;
+    will-change: transform;
+}
+
+.marquee:hover .marquee__track {
+    animation-play-state: paused;
+}
+
+.marquee--reverse .marquee__track {
+    animation-direction: reverse;
+}
+
+@keyframes marquee-run {
+    from {
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+// ─── Мобильный горизонтальный скролл-грид ────────────────────
+@media (max-width: @bp-sm) {
     .mobile-scroll-list {
         display: flex;
         flex-direction: row;
@@ -196,22 +683,72 @@ body {
         scroll-snap-type: x mandatory;
         -webkit-overflow-scrolling: touch;
         scrollbar-width: none;
-        margin: -8px -2rem 0;
+        margin: -8px calc(-1 * var(--gutter)) 0;
         padding: 8px 0 0.75rem;
-        scroll-padding-left: 2rem;
+        scroll-padding-left: var(--gutter);
+
         &::-webkit-scrollbar {
             display: none;
         }
         &::before,
         &::after {
             content: '';
-            flex: 0 0 2rem;
+            flex: 0 0 var(--gutter);
         }
 
         .mobile-scroll-item {
-            flex: 0 0 78vw;
-            max-width: 320px;
+            flex: 0 0 80vw;
+            max-width: 340px;
             scroll-snap-align: start;
         }
+    }
+}
+
+// ─── Курсор ──────────────────────────────────────────────────
+// Системный курсор прячется только когда работает кастомный
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor [data-cursor] {
+    cursor: none;
+}
+
+// ─── Уважение к prefers-reduced-motion ───────────────────────
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    html.has-js {
+        .reveal,
+        .reveal[data-reveal='up'],
+        .reveal[data-reveal='rise'],
+        .reveal[data-reveal='left'],
+        .reveal[data-reveal='rule'],
+        .reveal[data-reveal='rule-y'],
+        .reveal[data-reveal='frame'] {
+            opacity: 1;
+            transform: none;
+            clip-path: none;
+            transition: none;
+        }
+
+        .split__word {
+            transform: none;
+            transition: none;
+        }
+    }
+
+    .marquee__track {
+        animation: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
     }
 }
