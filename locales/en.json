@@ -11,7 +11,8 @@
         "name_first": "Sergei",
         "name_last": "Solovev",
         "typewriter": [
-            "Developer. Leader. Philosopher.",
+            "Leader. Developer. Philosopher.",
+            "Product Team Lead",
             "Speaker & Educator",
             "Fullstack Web Developer",
             "IT Entrepreneur",
@@ -28,7 +29,7 @@
             "HolyJS Speaker",
             "IT Systems Architect"
         ],
-        "role": "Lead Developer",
+        "role": "Team Lead",
         "cta_contact": "Get in touch",
         "cta_blog": "Read blog"
     },
@@ -49,11 +50,26 @@
         "title": "Experience",
         "items": [
             {
-                "company": "T-Bank",
-                "logo": "tbank",
-                "role": "Lead Developer",
-                "period": "Sept 2022 — Present",
+                "company": "T-Software DC",
+                "logo": "t-technologies",
+                "role": "Team Lead",
+                "period": "July 2026 — Present",
                 "current": true,
+                "bullets": [
+                    "Leading a cross-functional product team: frontend, backend, QA, analytics",
+                    "Hiring, onboarding, growth plans and performance reviews",
+                    "Quarterly planning and roadmap together with product",
+                    "Development processes and delivery metrics",
+                    "Technical leadership: architecture decisions via ADR/RFC, review of key changes",
+                    "Stakeholder management, risk and incident management"
+                ]
+            },
+            {
+                "company": "T-Software DC",
+                "logo": "t-technologies",
+                "role": "Lead Developer",
+                "period": "Sept 2022 — July 2026",
+                "current": false,
                 "bullets": [
                     "Applying autonomous AI agents and chatbots",
                     "Architectural solution design via ADR/RFC",

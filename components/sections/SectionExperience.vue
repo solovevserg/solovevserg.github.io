@@ -67,8 +67,8 @@ const sideItems = computed(() => allExpItems.value.filter((i) => i.side))
             <div class="exp-list">
                 <article v-for="group in expGroups" :key="group.company" class="exp-card">
                     <div class="exp-card__header">
-                        <IconTBank
-                            v-if="group.logo === 'tbank'"
+                        <IconTTechnologies
+                            v-if="group.logo === 't-technologies'"
                             :size="36"
                             class="exp-card__logo"
                         />

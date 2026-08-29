@@ -12,13 +12,17 @@ import {
 function applyTypo(text: string, locale: string): string {
     const rules = [shortWords, numberUnits, degreeSigns, ellipses, hyphenatedWords, dashesBasic]
 
-    if (text.trim().split(/\s+/).length >= 5) {
+    const words = text.trim().split(/\s+/)
+    // orphans склеивает два последних слова — для длинной пары («Technical University»)
+    // это даёт неразрывный блок, который ломает узкие колонки
+    if (words.length >= 5 && words.slice(-2).join('').length <= 16) {
         rules.unshift(orphans)
     }
 
     return richtypo(rules, text)
         .replace(/&nbsp;/g, '\u00A0')
         .replace(/<nobr>(.*?)<\/nobr>/g, '$1')
+        .replace(/(^|\s)им\.\s+/g, '$1им.\u00A0')
 }
 
 export function useTypo() {
