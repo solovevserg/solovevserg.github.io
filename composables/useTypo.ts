@@ -12,10 +12,9 @@ import {
 function applyTypo(text: string, locale: string): string {
     const rules = [shortWords, numberUnits, degreeSigns, ellipses, hyphenatedWords, dashesBasic]
 
-    const words = text.trim().split(/\s+/)
-    // orphans склеивает два последних слова — для длинной пары («Technical University»)
-    // это даёт неразрывный блок, который ломает узкие колонки
-    if (words.length >= 5 && words.slice(-2).join('').length <= 16) {
+    // orphans склеивает два последних слова — нужен только длинным фразам;
+    // в коротких заголовках и названиях («Bauman Moscow State Technical University») он ломает узкие колонки
+    if (text.trim().split(/\s+/).length >= 7) {
         rules.unshift(orphans)
     }
 
