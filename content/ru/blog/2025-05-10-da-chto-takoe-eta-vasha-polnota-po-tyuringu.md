@@ -5,7 +5,7 @@ description: 'И как понять, что она есть... Нескольк
 image: '/images/blog/4/photo-1.jpg'
 telegram_message_id: 4
 telegram_url: 'https://t.me/phi_code/4'
-updated_at: '2026-11-01T20:10:00.000Z'
+updated_at: '2026-11-01T20:23:48.000Z'
 ---
 
 ![Фото 1](/images/blog/4/photo-1.jpg)
