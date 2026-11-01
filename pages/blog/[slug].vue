@@ -5,16 +5,13 @@ const localePath = useLocalePath()
 
 const CHANNEL = 'phi_code'
 
-// Поста нет в текущей локали → показываем ru-версию как заглушку с редиректом
+// Поста нет в текущей локали → показываем ru-версию как заглушку с редиректом.
+// Важно: .find(), а не .findOne() — findOne по несуществующему документу отдаёт
+// 404 из /api/_content/query и ломает prerender (SSG), find() возвращает []
 const { data: post } = await useAsyncData(`blog-${route.params.slug}`, async () => {
-    // findOne() бросает ошибку, если ничего не нашлось
-    const found = await queryContent(`/${locale.value}/blog/${route.params.slug}`)
-        .findOne()
-        .catch(() => null)
-    if (found || locale.value === 'ru') return found
-    return queryContent(`/ru/blog/${route.params.slug}`)
-        .findOne()
-        .catch(() => null)
+    const found = (await queryContent(`/${locale.value}/blog/${route.params.slug}`).find())[0]
+    if (found || locale.value === 'ru') return found ?? null
+    return (await queryContent(`/ru/blog/${route.params.slug}`).find())[0] ?? null
 })
 
 const isRuFallback = computed(() => Boolean(post.value) && locale.value !== 'ru')
