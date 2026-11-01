@@ -72,7 +72,6 @@ const formatDate = (raw: string) => {
                 </template>
             </p>
             <h1 class="post__title">{{ post?.title }}</h1>
-            <p v-if="post?.description" class="post__desc">{{ post?.description }}</p>
         </header>
 
         <ContentRenderer v-if="post" :value="post" class="post__body" />
@@ -141,8 +140,6 @@ const formatDate = (raw: string) => {
 
     &__header {
         margin-bottom: 2rem;
-        padding-bottom: 1.5rem;
-        border-bottom: 1px solid var(--border);
     }
 
     &__meta {
@@ -171,11 +168,6 @@ const formatDate = (raw: string) => {
         font-size: clamp(1.6rem, 4vw, 2.2rem);
         line-height: 1.2;
         margin: 0.5rem 0;
-    }
-
-    &__desc {
-        color: var(--text-muted);
-        font-size: 1.05rem;
     }
 
     &__body {
