@@ -4,6 +4,8 @@ on:
     schedule:
         # каждые 12 часов — внутри 24-часового окна getUpdates
         - cron: '0 6,18 * * *'
+    push:
+        branches: [master]
     workflow_dispatch:
 
 permissions:
@@ -24,6 +26,11 @@ jobs:
               uses: actions/setup-node@v4
               with:
                   node-version: 20
+                  cache: npm
+
+            # только prod-зависимости (richtypo) и без prepare-скриптов (husky)
+            - name: Install dependencies
+              run: npm ci --omit=dev --ignore-scripts
 
             # Кэш сырых апдейтов: пишется скриптом ДО обработки, чтобы при
             # падении не потерять посты (окно getUpdates — 24ч, кэш — 30 дней)
