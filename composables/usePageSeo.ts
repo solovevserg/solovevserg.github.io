@@ -1,6 +1,8 @@
 interface PageSeoOptions {
     title?: string
     description?: string
+    /** Путь к картинке от корня сайта (напр. '/images/blog/4/photo-1.jpg') — для og:image */
+    image?: string
 }
 
 export function usePageSeo(options?: PageSeoOptions) {
@@ -13,6 +15,7 @@ export function usePageSeo(options?: PageSeoOptions) {
         : `${fullName} — ${t('hero.role')}`
 
     const description = options?.description ?? t('about.bio')
+    const image = options?.image ? `https://sergsol.dev${options.image}` : undefined
 
     useSeoMeta({
         title,
@@ -20,6 +23,7 @@ export function usePageSeo(options?: PageSeoOptions) {
         ogSiteName: fullName,
         description,
         ogDescription: description,
+        ...(image ? { ogImage: image, twitterImage: image } : {}),
         ogImageAlt: fullName,
         twitterTitle: title,
         twitterDescription: description,

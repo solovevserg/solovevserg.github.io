@@ -11,6 +11,9 @@ node_modules/
 .env.*
 !.env.example
 
+# Telegram sync (кэш сырых апдейтов, хранится в actions/cache)
+.telegram-sync-cache.json
+
 # OS
 .DS_Store
 Thumbs.db
@@ -21,3 +24,4 @@ npm-debug.log*
 
 # Claude Code
 .claude/
+.playwright-mcp/

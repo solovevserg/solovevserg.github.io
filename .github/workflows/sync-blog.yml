@@ -1,0 +1,66 @@
+name: Sync blog from Telegram
+
+on:
+    schedule:
+        # каждые 12 часов — внутри 24-часового окна getUpdates
+        - cron: '0 6,18 * * *'
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+concurrency:
+    group: sync-blog
+    cancel-in-progress: false
+
+jobs:
+    sync:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+
+            # Кэш сырых апдейтов: пишется скриптом ДО обработки, чтобы при
+            # падении не потерять посты (окно getUpdates — 24ч, кэш — 30 дней)
+            - name: Restore raw updates cache
+              uses: actions/cache/restore@v4
+              with:
+                  path: .telegram-sync-cache.json
+                  key: tg-updates-${{ github.run_id }}
+                  restore-keys: tg-updates-
+
+            - name: Sync posts from Telegram
+              env:
+                  TG_BOT_TOKEN: ${{ secrets.TG_BOT_TOKEN }}
+                  TG_CHANNEL: phi_code
+              run: node scripts/sync-telegram.mjs
+
+            - name: Save raw updates cache
+              if: always()
+              continue-on-error: true
+              uses: actions/cache/save@v4
+              with:
+                  path: .telegram-sync-cache.json
+                  key: tg-updates-${{ github.run_id }}
+
+            - name: Commit and push
+              run: |
+                  git config user.name "telegram-sync-bot"
+                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                  git add content/ public/images/blog/ .telegram-sync-state.json
+                  if git diff --cached --quiet; then
+                      echo "Нет изменений — коммит не нужен"
+                      exit 0
+                  fi
+                  git commit -m "blog: sync from Telegram $(date -u '+%Y-%m-%d %H:%M UTC')"
+                  for i in 1 2 3; do
+                      if git push; then exit 0; fi
+                      git pull --rebase origin master || git rebase --abort
+                      sleep 5
+                  done
+                  exit 1

@@ -33,6 +33,14 @@ const formatDate = (raw: string) => {
                     :to="localePath(`/blog/${post._file?.split('/').pop()?.replace('.md', '')}`)"
                     class="post-card card-hover"
                 >
+                    <div v-if="post.image" class="post-card__img">
+                        <NuxtPicture
+                            :src="post.image"
+                            format="avif,webp"
+                            loading="lazy"
+                            :img-attrs="{ class: 'post-card__img-el' }"
+                        />
+                    </div>
                     <div class="post-card__meta">
                         <time class="post-card__date">{{ formatDate(post.date) }}</time>
                         <span v-if="post.tags?.length" class="post-card__tags">
@@ -100,6 +108,20 @@ const formatDate = (raw: string) => {
     &:hover .post-card__read {
         opacity: 1;
         transform: translateX(0);
+    }
+
+    &__img {
+        height: 220px;
+        margin: -0.5rem 0 0.75rem;
+        border-radius: var(--radius);
+        overflow: hidden;
+
+        :deep(img) {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
     }
 
     &__meta {

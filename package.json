@@ -9,6 +9,7 @@
         "preview": "nuxt preview",
         "postinstall": "nuxt prepare",
         "prepare": "husky",
+        "blog:sync": "node --env-file=.env scripts/sync-telegram.mjs",
         "format": "prettier --write ."
     },
     "lint-staged": {
