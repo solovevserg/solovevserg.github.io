@@ -555,7 +555,9 @@ async function main() {
     if (!all.length) {
         console.log('Нет новых постов и правок.')
         if (!DRY_RUN) {
-            await writeState(offset)
+            // state пишем только при сдвиге offset — иначе пустые прогоны
+            // будут создавать коммиты с одним лишь таймстампом
+            if (offset !== state.offset) await writeState(offset)
             await writeCache([])
         }
         return
