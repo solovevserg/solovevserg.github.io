@@ -112,7 +112,8 @@ const formatDate = (raw: string) => {
 
     &__img {
         height: 220px;
-        margin: -0.5rem 0 0.75rem;
+        /* отступ сверху = боковым паддингам карточки (2rem) */
+        margin: 0.25rem 0 0.75rem;
         border-radius: var(--radius);
         overflow: hidden;
 

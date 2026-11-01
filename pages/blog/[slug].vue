@@ -78,19 +78,21 @@ const formatDate = (raw: string) => {
         <ContentRenderer v-if="post" :value="post" class="post__body" />
 
         <footer class="post__author">
-            <NuxtPicture
-                src="/img/avatar.jpg"
-                format="avif,webp"
-                width="56"
-                height="56"
-                class="post__author-avatar"
-            />
-            <div class="post__author-info">
-                <div class="post__author-name">
-                    {{ t('hero.name_first') }} {{ t('hero.name_last') }}
+            <NuxtLink :to="localePath('/')" class="post__author-link">
+                <NuxtPicture
+                    src="/img/avatar.jpg"
+                    format="avif,webp"
+                    width="56"
+                    height="56"
+                    class="post__author-avatar"
+                />
+                <div class="post__author-info">
+                    <div class="post__author-name">
+                        {{ t('hero.name_first') }} {{ t('hero.name_last') }}
+                    </div>
+                    <div class="post__author-slogan">{{ t('blog.author_slogan') }}</div>
                 </div>
-                <div class="post__author-slogan">{{ t('blog.author_slogan') }}</div>
-            </div>
+            </NuxtLink>
         </footer>
 
         <aside v-if="post?.telegram_url" class="post__telegram">
@@ -101,9 +103,8 @@ const formatDate = (raw: string) => {
                     target="_blank"
                     rel="noopener"
                     class="post__telegram-link"
+                    >«Философский код»</a
                 >
-                    @{{ CHANNEL }}
-                </a>
             </p>
             <p class="post__telegram-hint">{{ t('blog.telegram_hint') }}</p>
             <a
@@ -288,12 +289,24 @@ const formatDate = (raw: string) => {
     }
 
     &__author {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
         margin-top: 3rem;
         padding-top: 1.5rem;
         border-top: 1px solid var(--border);
+    }
+
+    &__author-link {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        width: fit-content;
+        color: inherit;
+        text-decoration: none;
+        border-radius: var(--radius);
+        transition: opacity 0.2s;
+
+        &:hover .post__author-name {
+            color: var(--accent);
+        }
     }
 
     &__author-avatar {
