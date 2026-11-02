@@ -4,7 +4,7 @@ const year = new Date().getFullYear()
 </script>
 
 <template>
-    <footer class="footer">
+    <footer class="footer" role="contentinfo">
         <div class="container footer__inner">
             <span class="footer__copy">
                 © {{ year }} {{ t('footer.name') }} — {{ t('footer.rights') }}

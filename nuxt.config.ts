@@ -8,7 +8,7 @@ export default defineNuxtConfig({
 
     components: [{ path: '~/components', pathPrefix: false }],
 
-    modules: ['@nuxt/image', '@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/sitemap'],
+    modules: ['@nuxt/image', '@nuxt/content', '@nuxtjs/i18n', '@nuxtjs/sitemap', '@nuxtjs/robots'],
 
     image: {
         formats: ['avif', 'webp'],
@@ -106,11 +106,36 @@ export default defineNuxtConfig({
     nitro: {
         prerender: {
             crawlLinks: true,
+            // llms.txt/llms-full.txt генерирует scripts/export-blog-md.mjs в public/
+            // (ADR 0020); robots.txt пререндерит @nuxtjs/robots
+            routes: ['/robots.txt'],
         },
     },
 
     site: {
         url: 'https://sergsol.dev',
+    },
+
+    // Явно разрешаем AI-краулерам обходить сайт (RFC 9309: у каждого бота своя
+    // группа — попав в неё, бот игнорирует группу `*`)
+    robots: {
+        groups: [
+            {
+                userAgent: [
+                    'GPTBot',
+                    'OAI-SearchBot',
+                    'ChatGPT-User',
+                    'ClaudeBot',
+                    'Claude-Web',
+                    'anthropic-ai',
+                    'PerplexityBot',
+                    'Google-Extended',
+                    'CCBot',
+                    'Bytespider',
+                ],
+                allow: '/',
+            },
+        ],
     },
 
     compatibilityDate: '2024-11-01',

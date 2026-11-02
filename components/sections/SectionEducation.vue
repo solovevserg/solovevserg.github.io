@@ -60,9 +60,13 @@ const eduGroups = computed(() => {
 </script>
 
 <template>
-    <section id="education" class="section section--alt">
+    <section id="education" class="section section--alt" aria-labelledby="education-heading">
         <div class="container">
-            <SectionHeader num="/ 04" :title="t('education.title')" />
+            <SectionHeader
+                num="/ 04"
+                :title="t('education.title')"
+                heading-id="education-heading"
+            />
             <div class="edu-timeline">
                 <div v-for="group in eduGroups" :key="group.school" class="edu-group">
                     <!-- Left: org name (desktop anchor) -->

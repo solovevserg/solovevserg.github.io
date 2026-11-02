@@ -1,11 +1,12 @@
 <script setup lang="ts">
-defineProps<{ num: string; title: string }>()
+// headingId — id заголовка <h2>, на который секция ссылается через aria-labelledby
+defineProps<{ num: string; title: string; headingId?: string }>()
 </script>
 
 <template>
     <header class="section-header">
-        <span class="section-num">{{ num }}</span>
-        <h2 class="section-heading">{{ title }}</h2>
+        <span class="section-num" aria-hidden="true">{{ num }}</span>
+        <h2 class="section-heading" :id="headingId">{{ title }}</h2>
     </header>
 </template>
 

@@ -7,9 +7,9 @@ const stats = computed<StatItem[]>(() =>
 </script>
 
 <template>
-    <section id="about" class="section">
+    <section id="about" class="section" aria-labelledby="about-heading">
         <div class="container">
-            <SectionHeader num="/ 01" :title="t('about.title')" />
+            <SectionHeader num="/ 01" :title="t('about.title')" heading-id="about-heading" />
             <!-- Stats row -->
             <div class="about-stats">
                 <div v-for="stat in stats" :key="stat.label" class="about-stat">

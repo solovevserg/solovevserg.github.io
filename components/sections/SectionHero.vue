@@ -37,11 +37,11 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <section class="hero dot-bg">
+    <section class="hero dot-bg" aria-labelledby="hero-heading">
         <!-- Left panel -->
         <div class="hero__left">
             <div class="hero__left-inner">
-                <h1 class="hero__name">
+                <h1 id="hero-heading" class="hero__name">
                     <span class="hero__name-line">{{ t('hero.name_first') }}</span>
                     <span class="hero__name-line hero__name-line--accent">{{
                         t('hero.name_last')

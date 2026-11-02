@@ -4,6 +4,14 @@ const localePath = useLocalePath()
 
 usePageSeo({ title: t('blog.title') })
 
+useBreadcrumbJsonLd(() => [
+    { name: t('nav.home'), url: 'https://sergsol.dev' },
+    {
+        name: t('nav.blog'),
+        url: `https://sergsol.dev${localePath('/blog')}`,
+    },
+])
+
 const { data: posts } = await useAsyncData('blog', () =>
     queryContent(`/${locale.value}/blog`).sort({ date: -1 }).find()
 )

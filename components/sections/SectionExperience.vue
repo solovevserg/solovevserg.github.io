@@ -61,9 +61,13 @@ const sideItems = computed(() => allExpItems.value.filter((i) => i.side))
 </script>
 
 <template>
-    <section id="experience" class="section section--alt">
+    <section id="experience" class="section section--alt" aria-labelledby="experience-heading">
         <div class="container">
-            <SectionHeader num="/ 02" :title="t('experience.title')" />
+            <SectionHeader
+                num="/ 02"
+                :title="t('experience.title')"
+                heading-id="experience-heading"
+            />
             <div class="exp-list">
                 <article v-for="group in expGroups" :key="group.company" class="exp-card">
                     <div class="exp-card__header">

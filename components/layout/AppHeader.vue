@@ -60,14 +60,14 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
 </script>
 
 <template>
-    <header class="header">
+    <header class="header" role="banner">
         <div class="header__bar">
             <NuxtLink :to="localePath('/')" class="header__logo" @click="closeMenu">
                 <span class="logo-bracket">{</span>sergsol<span class="logo-bracket">}</span>
             </NuxtLink>
 
             <!-- Section anchor nav (left) — always visible, links home when not on landing -->
-            <nav class="header__nav header__nav--left">
+            <nav class="header__nav header__nav--left" aria-label="Разделы страницы">
                 <a
                     v-for="link in sectionLinks"
                     :key="link.id"
@@ -104,6 +104,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
                     :class="{ 'burger--open': menuOpen }"
                     @click="toggleMenu"
                     aria-label="Menu"
+                    :aria-expanded="menuOpen"
                 >
                     <span class="burger__line" />
                     <span class="burger__line" />
@@ -121,7 +122,7 @@ const blogLink = computed(() => ({ label: t('nav.blog'), path: '/blog' }))
     <Teleport to="body">
         <Transition name="curtain">
             <div v-if="menuOpen" class="mobile-menu">
-                <nav class="mobile-nav">
+                <nav class="mobile-nav" aria-label="Мобильное меню">
                     <a
                         v-for="(link, i) in sectionLinks"
                         :key="link.id"

@@ -17,6 +17,7 @@
 - **i18n** — `@nuxtjs/i18n`, локали `locales/ru.json` и `locales/en.json`
 - **Изображения** — `<NuxtPicture>` с `format="avif,webp"`, `placeholder`, `preload` для LCP
 - **Стили** — LESS в scoped SFC + `global.less` для утилит
+- **AI-фиды (ADR 0020)** — `scripts/export-blog-md.mjs` перед `nuxt generate` пишет `public/llms.txt`, `public/llms-full.txt`, `public/blog/*.md`. **При изменении структуры страниц (новые разделы/роуты) — обнови список страниц в этом скрипте.** AI-краулеры в robots.txt настраиваются ключом `robots` в `nuxt.config.ts` (`@nuxtjs/robots` именно v6 — v5 конфликтует со sitemap v8).
 
 ## ADR (Architecture Decision Records)
 

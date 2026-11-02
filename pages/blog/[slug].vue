@@ -26,6 +26,38 @@ usePageSeo({
     image: post.value.image,
 })
 
+// JSON-LD: BlogPosting + BreadcrumbList (ADR 0016, ADR 0020)
+const SITE = 'https://sergsol.dev'
+const postUrl = computed(() => `${SITE}${localePath(`/blog/${route.params.slug}`)}`)
+useHead(() => ({
+    script: [
+        {
+            type: 'application/ld+json',
+            innerHTML: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'BlogPosting',
+                headline: post.value?.title,
+                description: post.value?.description,
+                image: post.value?.image ? `${SITE}${post.value.image}` : undefined,
+                datePublished: post.value?.date,
+                dateModified: post.value?.updated_at ?? post.value?.date,
+                author: { '@id': `${SITE}/#person` },
+                publisher: { '@id': `${SITE}/#website` },
+                mainEntityOfPage: postUrl.value,
+                url: postUrl.value,
+                inLanguage: locale.value,
+                isAccessibleForFree: true,
+            }),
+        },
+    ],
+}))
+
+useBreadcrumbJsonLd(() => [
+    { name: t('nav.home'), url: SITE },
+    { name: t('nav.blog'), url: `${SITE}/blog` },
+    { name: post.value?.title, url: postUrl.value },
+])
+
 // заглушка: через 3 секунды переводим на ru-версию
 if (isRuFallback.value) {
     onMounted(() => {

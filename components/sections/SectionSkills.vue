@@ -16,9 +16,9 @@ const skillGroups = computed<SkillGroup[]>(() =>
 </script>
 
 <template>
-    <section id="skills" class="section">
+    <section id="skills" class="section" aria-labelledby="skills-heading">
         <div class="container">
-            <SectionHeader num="/ 05" :title="t('skills.title')" />
+            <SectionHeader num="/ 05" :title="t('skills.title')" heading-id="skills-heading" />
             <div class="skills-grid mobile-scroll-list">
                 <div
                     v-for="group in skillGroups"

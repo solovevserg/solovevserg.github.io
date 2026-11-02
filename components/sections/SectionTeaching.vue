@@ -65,9 +65,9 @@ const publicationLinks = [
 </script>
 
 <template>
-    <section id="teaching" class="section">
+    <section id="teaching" class="section" aria-labelledby="teaching-heading">
         <div class="container">
-            <SectionHeader num="/ 03" :title="t('teaching.title')" />
+            <SectionHeader num="/ 03" :title="t('teaching.title')" heading-id="teaching-heading" />
 
             <!-- Talks -->
             <p class="teaching-sub label-caps">{{ t('teaching.talks_title') }}</p>

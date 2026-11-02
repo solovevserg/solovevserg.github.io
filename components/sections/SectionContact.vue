@@ -3,9 +3,9 @@ const { t } = useTypo()
 </script>
 
 <template>
-    <section id="contact" class="contact">
+    <section id="contact" class="contact" aria-labelledby="contact-heading">
         <div class="container">
-            <SectionHeader num="/ 07" :title="t('contact.title')" />
+            <SectionHeader num="/ 07" :title="t('contact.title')" heading-id="contact-heading" />
             <h2 class="contact__heading">{{ t('contact.subtitle') }}</h2>
             <div class="contact__links">
                 <a href="https://t.me/sergsol" target="_blank" rel="noopener" class="contact-link">

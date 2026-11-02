@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const { locale } = useI18n()
+const { t, locale } = useI18n()
+const localePath = useLocalePath()
 const route = useRoute()
 
 const { data: project } = await useAsyncData(`project-${route.params.slug}`, () =>
@@ -14,6 +15,32 @@ usePageSeo({
     title: project.value.title,
     description: project.value.description,
 })
+
+// CreativeWork + хлебные крошки (ADR 0016)
+const SITE = 'https://sergsol.dev'
+const projectUrl = computed(() => `${SITE}${localePath(`/portfolio/${route.params.slug}`)}`)
+useHead(() => ({
+    script: [
+        {
+            type: 'application/ld+json',
+            innerHTML: JSON.stringify({
+                '@context': 'https://schema.org',
+                '@type': 'CreativeWork',
+                name: project.value?.title,
+                description: project.value?.description,
+                url: projectUrl.value,
+                inLanguage: locale.value,
+                author: { '@id': `${SITE}/#person` },
+            }),
+        },
+    ],
+}))
+
+useBreadcrumbJsonLd(() => [
+    { name: t('nav.home'), url: SITE },
+    { name: t('nav.portfolio'), url: `${SITE}/portfolio` },
+    { name: project.value?.title, url: projectUrl.value },
+])
 </script>
 
 <template>

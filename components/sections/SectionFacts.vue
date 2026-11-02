@@ -12,9 +12,9 @@ const factItems = computed<FactItem[]>(() =>
 </script>
 
 <template>
-    <section id="facts" class="section section--alt">
+    <section id="facts" class="section section--alt" aria-labelledby="facts-heading">
         <div class="container">
-            <SectionHeader num="/ 06" :title="t('facts.title')" />
+            <SectionHeader num="/ 06" :title="t('facts.title')" heading-id="facts-heading" />
             <div class="facts-grid mobile-scroll-list">
                 <div
                     v-for="fact in factItems"
