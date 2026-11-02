@@ -23,10 +23,17 @@ const siteTitle = 'Sergei Solovev — Team Lead / Frontend'
 const siteDescription = ru?.about?.bio ?? ''
 
 // ── Сбор списка постов из content/<locale>/blog/*.md ─────────────────────────
+// content/ может отсутствовать (в git пустые папки не коммитятся, в CI после
+// удаления всех постов каталога нет) — тогда постов просто ноль
 const posts = []
-const locales = readdirSync(contentDir, { withFileTypes: true })
-    .filter((e) => e.isDirectory())
-    .map((e) => e.name)
+let locales = []
+try {
+    locales = readdirSync(contentDir, { withFileTypes: true })
+        .filter((e) => e.isDirectory())
+        .map((e) => e.name)
+} catch {
+    // нет каталога контента — фиды соберутся без постов
+}
 
 for (const locale of locales) {
     let files = []
